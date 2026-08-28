@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FFC400">
+<title>H-yber Management | تاكسي البلد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--yellow:#FFC400;--yellow2:#FFDD33;--black:#15151A;--ink:#1F1F24;--white:#FFF;--paper:#FBFAF5;--blue:#1E5AA8;--red:#E23B2E;--green:#1F9D55;--gray:#6B6B72;--line:#E7E3D6;--shadow:0 10px 30px rgba(21,21,26,.10)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:'Tajawal',sans-serif;color:var(--ink);background:var(--paper);background-image:repeating-linear-gradient(45deg,transparent 0 34px,rgba(21,21,26,.022) 34px 36px);overflow-x:hidden}
+h1,h2,h3{font-family:'Lalezar','Tajawal',sans-serif;font-weight:400;letter-spacing:.2px}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+input,select,textarea{font-family:inherit;font-size:16px;width:100%;border:2px solid var(--line);border-radius:12px;padding:12px 13px;background:#fff;color:var(--ink);transition:.2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--yellow);box-shadow:0 0 0 4px rgba(255,196,0,.22)}
+img{max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+.checker{height:12px;background:repeating-conic-gradient(var(--black) 0 25%,var(--white) 0 50%) 0 0/18px 18px}
+.checker.thin{height:7px}
+header{position:sticky;top:0;z-index:60;background:var(--yellow);box-shadow:0 4px 18px rgba(21,21,26,.18)}
+.hrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 18px;max-width:1180px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+.logo-mark{display:flex;flex-direction:column;align-items:center;background:var(--black);border:2px solid var(--yellow);border-radius:10px;padding:4px 13px 5px;box-shadow:0 4px 0 #000,inset 0 0 14px rgba(255,196,0,.18);transition:.2s}
+.logo:hover .logo-mark{transform:translateY(-2px);box-shadow:0 6px 0 #000,inset 0 0 18px rgba(255,196,0,.3)}
+.logo-h{font-family:'Lalezar';color:var(--yellow);font-size:20px;line-height:1.1;letter-spacing:.5px}
+.logo-h i{font-style:normal;color:#fff}
+.logo-m{font-size:8.5px;font-weight:800;letter-spacing:3.5px;color:#fff;text-indent:3.5px}
+.logo .sub{font-size:11px;font-weight:800;color:var(--black);line-height:1.3}
+nav{display:flex;align-items:center;gap:6px}
+nav a{color:var(--black);text-decoration:none;font-weight:800;font-size:14px;padding:9px 12px;border-radius:9px;transition:.2s}
+nav a:hover{background:rgba(21,21,26,.12)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:11px;font-weight:800;font-size:15px;padding:12px 20px;min-height:46px;transition:.2s;text-decoration:none;border:2px solid transparent}
+.btn.dark{background:var(--black);color:var(--yellow);box-shadow:0 4px 0 #000}
+.btn.dark:hover{transform:translateY(-2px);box-shadow:0 6px 0 #000}
+.btn.dark:active{transform:translateY(2px);box-shadow:0 1px 0 #000}
+.btn.line{background:#fff;color:var(--black);border-color:var(--black)}
+.btn.line:hover{background:var(--black);color:var(--yellow)}
+.btn.call{background:var(--blue);color:#fff;box-shadow:0 4px 0 #123c74}
+.btn.wa{background:#22B358;color:#fff;box-shadow:0 4px 0 #157a3b}
+.btn.call:hover,.btn.wa:hover{transform:translateY(-2px)}
+.demo-chip{background:var(--black);color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:99px;animation:blink 2s infinite}
+@keyframes blink{50%{opacity:.55}}
+/* شريط إعلاني متحرك بدون زر إغلاق */
+.adstrip{background:linear-gradient(90deg,#FFE38A,var(--yellow) 35%,#FFE38A);animation:adIn .5s cubic-bezier(.2,.9,.3,1);overflow:hidden}
+@keyframes adIn{from{transform:translateY(-110%)}to{transform:none}}
+.ad-inner{display:flex;align-items:center;gap:12px;padding:11px 18px;max-width:1180px;margin:0 auto}
+.ad-badge{background:var(--black);color:var(--yellow);font-family:'Lalezar';font-size:15px;padding:4px 14px;border-radius:8px;white-space:nowrap;animation:blink 2.2s infinite;flex:none}
+.ad-scroll{flex:1;overflow:hidden}
+.ad-scroll b{display:inline-block;white-space:nowrap;font-weight:800;font-size:15px;color:var(--black);padding-inline-start:100%;animation:admar 18s linear infinite}
+@keyframes admar{to{transform:translateX(100%)}}
+.hero{background:linear-gradient(180deg,#1B1B20,#15151A 70%);color:#fff;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 80% -10%,rgba(255,196,0,.16),transparent 60%),radial-gradient(500px 260px at 10% 110%,rgba(30,90,168,.20),transparent 60%)}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.25fr .85fr;gap:34px;padding:54px 0 26px;align-items:center}
+.rooflight{display:inline-flex;margin-bottom:14px}
+.rooflight .lamp{background:var(--yellow);color:var(--black);font-family:'Lalezar';font-size:20px;padding:6px 22px;border-radius:10px 10px 4px 4px;box-shadow:0 0 26px rgba(255,196,0,.55),inset 0 -5px 0 rgba(0,0,0,.18);animation:glow 2.6s ease-in-out infinite}
+.rooflight .base{width:100%;height:6px;background:#000;border-radius:0 0 6px 6px;margin-top:-2px}
+@keyframes glow{50%{box-shadow:0 0 44px rgba(255,196,0,.9),inset 0 -5px 0 rgba(0,0,0,.18)}}
+.hero h1{font-size:clamp(36px,6.4vw,72px);line-height:1.05;color:#fff}
+.hero h1 em{font-style:normal;color:var(--yellow);text-shadow:0 3px 0 rgba(0,0,0,.45)}
+.hero p.lead{margin:14px 0 22px;font-size:17px;color:#CFCFD8;max-width:56ch;line-height:1.9}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.searchbar{margin-top:26px;display:flex;gap:10px;background:#fff;border-radius:14px;padding:8px;max-width:520px;box-shadow:0 14px 40px rgba(0,0,0,.35)}
+.searchbar input{border:none;padding:10px 12px;font-size:16px}
+.searchbar .btn{white-space:nowrap;min-height:44px}
+.meter{background:#fff;color:var(--black);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;transform:rotate(-1.4deg)}
+.meter .top{background:var(--black);color:var(--yellow);font-family:'Lalezar';font-size:19px;padding:10px 18px;display:flex;justify-content:space-between;align-items:center}
+.meter .top .dot{width:10px;height:10px;border-radius:50%;background:var(--green);animation:blink 1.6s infinite}
+.meter .grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
+.meter .cell{background:#fff;padding:16px 14px;text-align:center}
+.meter .num{font-family:'Lalezar';font-size:34px;line-height:1;color:var(--black)}
+.meter .cell:nth-child(2) .num{color:var(--green)}
+.meter .cell:nth-child(3) .num{color:var(--blue)}
+.meter .cell:nth-child(4) .num{color:var(--red)}
+.meter .lbl{font-size:12px;font-weight:800;color:var(--gray);margin-top:4px}
+.road{position:relative;height:96px;background:#26262C;border-top:4px solid #3A3A42;border-bottom:4px solid #3A3A42;overflow:hidden}
+.road .dash{position:absolute;top:50%;left:0;right:0;height:6px;transform:translateY(-50%);background:repeating-linear-gradient(90deg,var(--yellow) 0 46px,transparent 46px 92px);animation:roadmove 1.2s linear infinite}
+@keyframes roadmove{to{background-position:-92px 0}}
+.taxi{position:absolute;top:12px;font-size:46px;filter:drop-shadow(0 8px 8px rgba(0,0,0,.5));animation:drive 9s linear infinite}
+.taxi.t2{top:auto;bottom:8px;font-size:38px;animation-duration:13s;animation-delay:-5s;transform:scaleX(-1)}
+@keyframes drive{from{right:-90px}to{right:calc(100% + 90px)}}
+.ticker{background:var(--black);color:var(--yellow);overflow:hidden;border-bottom:4px solid var(--yellow)}
+.ticker-in{display:flex;gap:36px;white-space:nowrap;padding:10px 0;font-weight:800;font-size:14px;animation:tick 26s linear infinite;width:max-content}
+@keyframes tick{to{transform:translateX(50%)}}
+.section{padding:54px 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.sec-head h2{font-size:clamp(28px,4.5vw,46px);position:relative;padding-bottom:8px}
+.sec-head h2::after{content:"";position:absolute;bottom:0;right:0;width:74px;height:9px;background:repeating-conic-gradient(var(--black) 0 25%,var(--yellow) 0 50%) 0 0/9px 9px;border-radius:2px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:20px 0 26px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px}
+.toolbar input[type=search]{flex:2;min-width:160px}
+.toolbar select{flex:1;min-width:140px;width:auto}
+.chip{border:2px solid var(--black);border-radius:99px;padding:9px 16px;font-weight:800;font-size:13px;background:#fff;transition:.2s;display:inline-flex;align-items:center;gap:6px;min-height:40px}
+.chip.on{background:var(--black);color:var(--yellow)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;width:100%;padding-top:8px;border-top:2px dashed var(--line);margin-top:6px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(315px,1fr));gap:20px}
+.card{background:#fff;border-radius:16px;box-shadow:var(--shadow);overflow:hidden;transition:.25s;position:relative;display:flex;flex-direction:column;border:2px solid transparent;opacity:0;transform:translateY(20px)}
+.card.in{opacity:1;transform:none}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(21,21,26,.18);border-color:var(--yellow)}
+.card-top{display:flex;justify-content:space-between;align-items:center;padding:10px 16px 8px}
+.plate{font-family:'Lalezar';background:#fff;border:3px solid var(--black);border-radius:8px;padding:1px 12px;font-size:17px;letter-spacing:2px;box-shadow:0 3px 0 var(--black)}
+.status{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:800;padding:5px 12px;border-radius:99px}
+.status i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.status.on{background:#E5F7EC;color:var(--green)}.status.on i{background:var(--green);animation:blink 1.4s infinite}
+.status.off{background:#FDE8E6;color:var(--red)}.status.off i{background:var(--red)}
+.card-body{padding:6px 18px 14px;flex:1}
+.card-body h3{font-size:26px;line-height:1.15;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.vbadge{display:inline-flex;align-items:center;gap:4px;background:#E8F0FB;color:var(--blue);font-size:11px;font-weight:800;padding:3px 9px;border-radius:99px}
+.vbadge svg{width:12px;height:12px}
+.type-line{font-weight:800;color:var(--blue);font-size:14px;margin:2px 0 10px}
+.info-row{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:#444;margin:7px 0;line-height:1.7}
+.info-row svg{width:16px;height:16px;flex:none;margin-top:3px;color:var(--yellow);stroke:var(--black)}
+.maplink{color:var(--blue);font-weight:800;text-decoration:underline;font-size:12.5px}
+.days{display:flex;gap:5px;flex-wrap:wrap;margin:10px 0 4px}
+.day{width:34px;height:30px;border-radius:8px;background:var(--yellow);color:var(--black);font-weight:800;font-size:11px;display:flex;align-items:center;justify-content:center}
+.day.offd{background:#EFEDE2;color:#B9B6A8;text-decoration:line-through}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 4px}
+.tag{font-size:11.5px;font-weight:800;padding:4px 11px;border-radius:99px;border:1.5px solid}
+.tag.b{color:var(--blue);border-color:var(--blue);background:#F0F5FC}
+.tag.k{color:var(--black);border-color:var(--black);background:#FFF7DC}
+.rate{display:flex;align-items:center;gap:6px;margin-top:8px;font-weight:800;font-size:14px}
+.stars{color:var(--yellow);letter-spacing:2px;font-size:15px;text-shadow:0 1px 0 rgba(0,0,0,.25)}
+.rate small{color:var(--gray);font-weight:500}
+.fav{position:absolute;top:12px;inset-inline-start:12px;z-index:2;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--line);display:flex;align-items:center;justify-content:center}
+.fav svg{width:18px;height:18px;fill:none;stroke:var(--red);stroke-width:2}
+.fav.on svg{fill:var(--red)}
+.card-actions{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid var(--line)}
+.card-actions .btn{border-radius:0;box-shadow:none;padding:14px 8px;font-size:15px;min-height:50px}
+.empty{text-align:center;padding:60px 20px;color:var(--gray)}
+.empty .big{font-size:60px}
+.empty h3{font-size:26px;color:var(--ink);margin:8px 0 4px}
+.how{background:var(--black);color:#fff;position:relative;overflow:hidden}
+.how::after{content:"";position:absolute;inset:0;background:radial-gradient(500px 240px at 15% 0,rgba(255,196,0,.13),transparent 65%)}
+.how h2{color:var(--yellow);font-size:clamp(26px,4vw,42px);margin-bottom:34px}
+.route{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;position:relative;z-index:1}
+.stop{background:#202027;border:2px solid #33333C;border-radius:16px;padding:24px 20px;position:relative;transition:.25s}
+.stop:hover{transform:translateY(-6px);border-color:var(--yellow)}
+.stop .n{width:46px;height:46px;border-radius:50%;background:var(--yellow);color:var(--black);font-family:'Lalezar';font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 6px rgba(255,196,0,.16);margin-bottom:12px}
+.stop h3{font-size:22px;color:var(--yellow2);margin-bottom:6px}
+.stop p{color:#B9B9C4;font-size:14px;line-height:1.9}
+.route::before{content:"";position:absolute;top:47px;right:8%;left:8%;border-top:3px dashed rgba(255,196,0,.5)}
+footer{background:var(--black);color:#CFCFD8;padding:40px 0 0}
+.f-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:30px;padding-bottom:30px}
+footer h4{color:var(--yellow);font-family:'Lalezar';font-size:20px;margin-bottom:10px}
+footer a{color:#CFCFD8;text-decoration:none;display:block;margin:8px 0;font-size:14px;padding:4px 0}
+footer a:hover{color:var(--yellow)}
+footer .brand p{font-size:13.5px;line-height:1.9;margin-top:8px}
+.copy{border-top:1px solid #333;text-align:center;padding:14px;font-size:12.5px;color:#8A8A94}
+.overlay{position:fixed;inset:0;background:rgba(15,15,18,.62);z-index:100;display:none;align-items:flex-end;justify-content:center}
+.overlay.show{display:flex;animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.sheet{background:#fff;width:100%;max-width:640px;max-height:94vh;overflow:auto;border-radius:22px 22px 0 0;position:relative;animation:up .3s cubic-bezier(.2,.9,.3,1)}
+@media(min-width:700px){.overlay{align-items:center;padding:20px}.sheet{border-radius:20px}}
+@keyframes up{from{transform:translateY(60px);opacity:0}}
+.sheet .checker.thin{border-radius:20px 20px 0 0}
+.sheet-in{padding:22px 24px calc(28px + env(safe-area-inset-bottom))}
+.x{position:absolute;top:20px;inset-inline-end:16px;width:40px;height:40px;border-radius:50%;background:var(--black);color:var(--yellow);font-size:20px;font-weight:800;z-index:3}
+.sheet h3.title{font-size:30px;margin:6px 0 4px}
+.d-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.d-cell{background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:12px}
+.d-cell .k{font-size:11.5px;font-weight:800;color:var(--gray);margin-bottom:3px}
+.d-cell .v{font-weight:800;font-size:14.5px;line-height:1.6}
+.d-full{grid-column:1/-1}
+.big-acts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.big-acts .btn{padding:16px;font-size:17px}
+.small-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.mini{border:2px solid var(--line);border-radius:10px;padding:10px 14px;font-weight:800;font-size:13px;display:inline-flex;gap:6px;align-items:center;background:#fff;min-height:42px}
+.rate-pick{display:flex;gap:6px;align-items:center;margin-top:14px;background:#FFF7DC;border:2px dashed var(--yellow);border-radius:12px;padding:12px;flex-wrap:wrap}
+.rate-pick b{font-size:13.5px}
+.rstar{font-size:28px;color:#D9D5C4;transition:.15s;padding:2px}
+.rstar.on,.rstar:hover{color:var(--yellow);transform:scale(1.15)}
+.lic-box{margin-top:12px;border:2px solid var(--line);border-radius:12px;overflow:hidden}
+.lic-box img{display:block;width:100%;max-height:240px;object-fit:cover}
+.steps{display:flex;align-items:center;margin:10px 0 20px}
+.step-dot{width:38px;height:38px;border-radius:50%;background:#EFEDE2;color:#9B988A;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+.step-dot.on{background:var(--black);color:var(--yellow)}
+.step-dot.done{background:var(--yellow);color:var(--black)}
+.step-line{flex:1;border-top:3px dashed #E4E1D2;margin:0 6px}
+.step-line.done{border-color:var(--yellow)}
+.f-row{margin-bottom:14px}
+.f-row label{display:block;font-weight:800;font-size:13.5px;margin-bottom:6px}
+.f-row small{color:var(--gray);font-size:11.5px;font-weight:500}
+.f-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seg button{border:2px solid var(--line);border-radius:12px;padding:13px;font-weight:800;font-size:14px;background:#fff;min-height:48px}
+.seg button.on{border-color:var(--black);background:var(--yellow)}
+.pick{display:flex;gap:8px;flex-wrap:wrap}
+.pick button{border:2px solid var(--line);border-radius:10px;padding:10px 14px;font-weight:800;font-size:13px;background:#fff;min-height:42px}
+.pick button.on{background:var(--yellow);border-color:var(--black)}
+.tgl{display:flex;justify-content:space-between;align-items:center;gap:10px;border:2px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:9px;background:#fff}
+.tgl span{font-weight:800;font-size:14px}
+.sw{width:52px;height:28px;border-radius:99px;background:#DDD9CB;position:relative;transition:.2s;flex:none;cursor:pointer}
+.sw::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 2px 4px rgba(0,0,0,.25)}
+.sw.on{background:var(--green)}
+.sw.on::after{inset-inline-start:27px}
+.upload{border:2.5px dashed var(--yellow);background:#FFFBEA;border-radius:14px;padding:22px;text-align:center;cursor:pointer}
+.upload svg{width:38px;height:38px;color:var(--black)}
+.upload p{font-weight:800;margin-top:6px;font-size:14px}
+.upload small{color:var(--gray)}
+#licPrev{margin-top:12px;border-radius:12px;max-height:210px;object-fit:cover;width:100%;display:none;border:3px solid var(--yellow)}
+.form-foot{display:flex;gap:10px;margin-top:20px}
+.form-foot .btn{flex:1}
+.err{background:#FDE8E6;color:var(--red);border-radius:10px;padding:10px 14px;font-size:13px;font-weight:800;margin-bottom:12px;display:none}
+.note-warn{background:#FFF3D6;color:#9C7200;border-radius:10px;padding:9px 12px;font-size:12px;font-weight:800;margin-top:8px;line-height:1.7}
+.dash-card{border:2px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.vstatus{font-weight:800;padding:5px 14px;border-radius:99px;font-size:13px;display:inline-block}
+.vstatus.pending{background:#FFF3D6;color:#9C7200}
+.vstatus.approved{background:#E5F7EC;color:var(--green)}
+.vstatus.rejected{background:#FDE8E6;color:var(--red)}
+.astats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 18px}
+.astat{background:var(--paper);border:2px solid var(--line);border-radius:12px;text-align:center;padding:10px 4px}
+.astat b{font-family:'Lalezar';font-size:26px;display:block;line-height:1.1}
+.astat span{font-size:10.5px;font-weight:800;color:var(--gray)}
+.asec{font-family:'Lalezar';font-size:20px;margin:18px 0 10px;padding-bottom:4px;border-bottom:2px dashed var(--line)}
+.arow{border:2px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px;background:#fff}
+.arow .hd{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.arow .hd b{font-size:15px}
+.arow small{color:var(--gray);display:block;margin:2px 0 8px;font-size:12px}
+.arow .acts{display:flex;gap:7px;flex-wrap:wrap}
+.abtn{border-radius:9px;padding:9px 13px;font-weight:800;font-size:12.5px;border:2px solid var(--line);background:#fff;min-height:40px}
+.abtn.ok{background:#E5F7EC;color:var(--green);border-color:transparent}
+.abtn.no{background:#FDE8E6;color:var(--red);border-color:transparent}
+.abtn.blue{background:#F0F5FC;color:var(--blue);border-color:transparent}
+.abtn.warn{background:#FFF3D6;color:#9C7200;border-color:transparent}
+#toast{position:fixed;bottom:22px;right:50%;transform:translateX(50%) translateY(90px);background:var(--black);color:#fff;padding:13px 22px;border-radius:12px;font-weight:800;z-index:300;transition:.3s;border-inline-start:6px solid var(--yellow);max-width:90vw;font-size:14px}
+#toast.show{transform:translateX(50%) translateY(0)}
+.loader{width:120px;height:14px;border-radius:99px;margin:34px auto;background:repeating-linear-gradient(45deg,var(--yellow) 0 12px,var(--black) 12px 24px);background-size:34px 100%;animation:load .6s linear infinite}
+@keyframes load{to{background-position:34px 0}}
+.reveal{opacity:0;transform:translateY(26px);transition:.7s cubic-bezier(.2,.8,.3,1)}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr;padding-top:38px;gap:22px}.meter{transform:none;max-width:440px}.route{grid-template-columns:1fr}.route::before{display:none}.f-grid{grid-template-columns:1fr}nav a.hidesm{display:none}.d-grid{grid-template-columns:1fr}.astats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.hrow{padding:8px 12px}.logo-h{font-size:17px}.logo-m{letter-spacing:2.5px;font-size:7.5px;text-indent:2.5px}.logo .sub{display:none}.btn{font-size:14px;padding:11px 14px}.hero p.lead{font-size:15px}.meter .num{font-size:28px}.cards{grid-template-columns:1fr}.big-acts{grid-template-columns:1fr}.f-2{grid-template-columns:1fr}.sheet-in{padding:18px 16px calc(24px + env(safe-area-inset-bottom))}.toolbar select{flex:1 1 45%}.card-body h3{font-size:23px}.ad-scroll b{font-size:13.5px}}
+</style>
+</head>
+<body>
+<header>
+<div class="hrow">
+<div class="logo" id="logoBadge" title="H-yber Management">
+<div class="logo-mark">
+<span class="logo-h">H<i>-</i>yber</span>
+<span class="logo-m">MANAGEMENT</span>
+</div>
+<span class="sub">تاكسي البلد<br>دليل الأجرة في سوريا</span>
+<span class="demo-chip" id="demoChip" style="display:none">وضع تجريبي</span>
+</div>
+<nav>
+<a href="#list" class="hidesm">السائقون</a>
+<a href="#how" class="hidesm">كيف يعمل؟</a>
+<button class="btn line" id="btnLogin" style="min-height:42px;padding:9px 14px;font-size:13.5px">دخول</button>
+<button class="btn dark" id="btnJoinTop" style="min-height:42px;padding:9px 14px;font-size:13.5px">انضم كسائق</button>
+</nav>
+</div>
+<div class="checker thin"></div>
+</header>
+<div id="adStrip" class="adstrip" style="display:none">
+<div class="ad-inner">
+<span class="ad-badge">📢 إعلان</span>
+<div class="ad-scroll"><b id="adTxt"></b></div>
+</div>
+<div class="checker thin"></div>
+</div>
+<section class="hero">
+<div class="wrap hero-grid">
+<div>
+<div class="rooflight"><div><div class="lamp">أجرة · متوفر الآن</div><div class="base"></div></div></div>
+<h1>تاكسيك وين ما كنت…<br><em>بضغطة زر</em> عندك</h1>
+<p class="lead">دليل سائقي الأجرة في كل المحافظات السورية: اعرف نوع التاكسي وموقفه وأيام دوامه وموقعه على الخريطة، ثم تواصل مباشرة عبر <b style="color:var(--yellow)">الاتصال</b> أو <b style="color:#4BE387">الواتساب</b> — بدون وسيط.</p>
+<div class="hero-actions">
+<a href="#list" class="btn dark">🔍 تصفّح السائقين</a>
+<button class="btn line" id="btnJoinHero">سجل التاكسي</button>
+</div>
+<div class="searchbar">
+<input type="search" id="heroSearch" placeholder="ابحث بالاسم أو المحافظة أو الموقف…">
+<button class="btn dark" id="heroGo">بحث</button>
+</div>
+</div>
+<div class="meter reveal">
+<div class="top"><span>عدّاد سوريا</span><span class="dot"></span></div>
+<div class="grid">
+<div class="cell"><div class="num" id="stTotal">0</div><div class="lbl">سائق مسجّل</div></div>
+<div class="cell"><div class="num" id="stAvail">0</div><div class="lbl">متاح الآن</div></div>
+<div class="cell"><div class="num" id="stCities">0</div><div class="lbl">محافظة</div></div>
+<div class="cell"><div class="num" id="stRate">0</div><div class="lbl">متوسط التقييم</div></div>
+</div>
+</div>
+</div>
+<div class="road"><div class="dash"></div><span class="taxi">🚕</span><span class="taxi t2">🚖</span></div>
+</section>
+<div class="ticker"><div class="ticker-in" id="tickerIn"><span>★ تكسي داخل المدينة ★ طلبات خارجية بين المحافظات ★ توصيل مطار ★ عداد نظامي ★ دفع نقدي وبطاقة ★ عرض موقع السائق على الخريطة ★ جميع المحافظات السورية ★</span></div></div>
+<section class="section wrap" id="list">
+<div class="sec-head reveal">
+<h2>قائمة سائقي التاكسي</h2>
+<span class="hint" id="resultCount"></span>
+</div>
+<div class="toolbar reveal">
+<input type="search" id="fQ" placeholder="🔍 ابحث بالاسم أو المنطقة أو الموقف…">
+<select id="fCity"></select>
+<select id="fType"><option value="all">كل الأنواع</option><option>عمومي (عداد)</option><option>تاكسي مطار</option><option>فان عائلي</option><option>سيدان فاخر</option><option>توصيل وطلبات</option></select>
+<select id="fSort"><option value="new">الأحدث تسجيلًا</option><option value="rate">الأعلى تقييمًا</option><option value="near">الأقرب إليّ 📍</option></select>
+<div class="chips">
+<button class="chip on" data-svc="all">الكل</button>
+<button class="chip" data-svc="available"><i style="width:9px;height:9px;border-radius:50%;background:var(--green)"></i> متاح الآن</button>
+<button class="chip" data-svc="inner">داخل البلد</button>
+<button class="chip" data-svc="outer">طلبات خارجية</button>
+<button class="chip" data-svc="airport">مطار</button>
+<button class="chip" data-svc="fav">⭐ المفضلة</button>
+</div>
+</div>
+<div class="cards" id="cards"></div>
+<div class="empty" id="emptyBox" style="display:none"><div class="big">🚕</div><h3>ما لقينا تاكسي يطابق بحثك</h3><p>جرّب تغيير الفلاتر، أو كن أول سائق يسجّل في محافظتك!</p></div>
+</section>
+<section class="how section" id="how">
+<div class="wrap">
+<h2 class="reveal">الطريق إلى تاكسيك… ثلاث محطات</h2>
+<div class="route">
+<div class="stop reveal"><div class="n">١</div><h3>تصفّح القائمة</h3><p>اختر محافظتك وفلتر حسب نوع التاكسي أو الخدمة: داخل البلد، طلبات خارجية، مطار… وشوف المتاح الآن.</p></div>
+<div class="stop reveal"><div class="n">٢</div><h3>اعرف سائقك</h3><p>الاسم ونوع السيارة وموقف الانتظار وأيام الدوام والموقع على الخريطة وتقييم الزبائن — كلها ظاهرة قبل التواصل.</p></div>
+<div class="stop reveal"><div class="n">٣</div><h3>اتصل أو واتساب</h3><p>بضغطة زر واحدة تفتح الاتصال المباشر أو محادثة واتساب مع السائق — بدون وسيط وبدون عمولة.</p></div>
+</div>
+</div>
+</section>
+<footer>
+<div class="checker"></div>
+<div class="wrap f-grid" style="padding-top:34px">
+<div class="brand"><h4>H-yber Management</h4><p>منصة «تاكسي البلد» تربط الركاب بسائقي الأجرة مباشرة في كل المحافظات السورية.</p></div>
+<div><h4>روابط سريعة</h4><a href="#list">قائمة السائقين</a><a href="#how">كيف يعمل الموقع</a><a href="#" onclick="openReg();return false">سجل التاكسي</a></div>
+<div><h4>للسائقين</h4><a href="#" onclick="openReg();return false">سجل التاكسي بالقائمة</a><a href="#" onclick="openLogin();return false">لوحة السائق</a></div>
+</div>
+<div class="copy">© 2026 H-yber Management — جميع الحقوق محفوظة 🚖</div>
+</footer>
+<div class="overlay" id="ovDetail"><div class="sheet"><div class="checker thin"></div><button class="x" onclick="closeOv('ovDetail')">✕</button><div class="sheet-in" id="detailBox"></div></div></div>
+<div class="overlay" id="ovReg"><div class="sheet"><div class="checker thin"></div><button class="x" onclick="closeOv('ovReg')">✕</button><div class="sheet-in">
+<h3 class="title">سجل التاكسي 🚖</h3>
+<p style="color:var(--gray);font-size:13.5px;font-weight:500">النشر فوري ومجاني — ورفع شهادة القيادة اختياري ويمنحك شارة «موثّق».</p>
+<div class="steps" id="regSteps"></div>
+<div class="err" id="regErr"></div>
+<div id="rs1">
+<div class="f-row"><label>طريقة التسجيل</label><div class="seg"><button type="button" id="mEmail" class="on" onclick="setMode('email')">📧 بريد إلكتروني</button><button type="button" id="mPhone" onclick="setMode('phone')">📱 رقم هاتف</button></div></div>
+<div id="emailFields"><div class="f-row"><label>البريد الإلكتروني</label><input type="email" id="rEmail" dir="ltr"></div><div class="f-row"><label>كلمة المرور</label><input type="password" id="rPass" dir="ltr"></div></div>
+<div id="phoneFields" style="display:none">
+<div class="f-row"><label>رقم الهاتف مع رمز الدولة</label><input type="tel" id="rPhone" dir="ltr" placeholder="9639XXXXXXXX"></div>
+<div class="note-warn" id="phoneNote" style="display:none">⚠️ التحقق برسالة SMS يعمل فقط عند فتح الموقع عبر رابط https (استضافة مثل Netlify). عند الفتح من ملف محلي استخدم «بريد إلكتروني».</div>
+<div id="otpRow" style="display:none"><div class="f-row"><label>أدخل رمز التحقق</label><input type="tel" id="rOtp" dir="ltr"></div><button class="btn line" style="width:100%" id="btnVerifyOtp">تأكيد الرمز</button></div>
+<button class="btn dark" style="width:100%;margin-top:8px" id="btnSendOtp">أرسل رمز التحقق</button>
+<div id="recaptcha-box"></div>
+</div>
+</div>
+<div id="rs2" style="display:none">
+<div class="f-row"><label>الاسم الكامل *</label><input id="rName"></div>
+<div class="f-2"><div class="f-row"><label>المحافظة *</label><select id="rCity"></select></div><div class="f-row"><label>المنطقة / البلدة</label><input id="rDistrict"></div></div>
+<div class="f-row"><label>موقف الانتظار *</label><input id="rSpot"></div>
+<div class="f-row"><label>📍 الموقع على الخريطة (اختياري)</label><button class="mini" type="button" id="geoBtn" onclick="geoLocate()">تحديد موقعي تلقائيًا</button><small id="geoInfo" style="display:block;margin-top:6px;color:var(--green);font-weight:800"></small></div>
+</div>
+<div id="rs3" style="display:none">
+<div class="f-row"><label>نوع التاكسي *</label><div class="pick" id="pType"><button type="button" class="on">عمومي (عداد)</button><button type="button">تاكسي مطار</button><button type="button">فان عائلي</button><button type="button">سيدان فاخر</button><button type="button">توصيل وطلبات</button></div></div>
+<div class="f-2"><div class="f-row"><label>نوع السيارة *</label><input id="rCar"></div><div class="f-row"><label>لون السيارة</label><input id="rColor"></div></div>
+<div class="f-row"><label>رقم اللوحة</label><input id="rPlate" dir="ltr"></div>
+<div class="f-row"><label>أيام الدوام *</label><div class="pick" id="pDays" data-multi="1"></div></div>
+<div class="f-2"><div class="f-row"><label>من الساعة</label><input type="time" id="rFrom" value="08:00"></div><div class="f-row"><label>حتى الساعة</label><input type="time" id="rTo" value="22:00"></div></div>
+<div class="f-row"><label>الخدمات المتوفرة</label>
+<div class="tgl"><span>🏙️ تكسي داخل البلد</span><div class="sw on" id="sInner" onclick="tglSw(this)"></div></div>
+<div class="tgl"><span>🛣️ طلبات خارجية</span><div class="sw" id="sOuter" onclick="tglSw(this)"></div></div>
+<div class="tgl"><span>✈️ توصيل مطار</span><div class="sw" id="sAirport" onclick="tglSw(this)"></div></div>
+<div class="tgl"><span>📦 توصيل طلبات</span><div class="sw" id="sDelivery" onclick="tglSw(this)"></div></div>
+<div class="tgl"><span>💳 الدفع بالبطاقة</span><div class="sw" id="sCard" onclick="tglSw(this)"></div></div>
+<div class="tgl"><span>🧾 عداد نظامي</span><div class="sw on" id="sMeter" onclick="tglSw(this)"></div></div>
+</div>
+<div class="f-row"><label>رقم الواتساب (إن كان مختلفًا)</label><input id="rWa" dir="ltr"></div>
+<div class="f-row"><label>نبذة قصيرة</label><textarea id="rBio" rows="2"></textarea></div>
+</div>
+<div id="rs4" style="display:none">
+<div class="f-row"><label>صورة شهادة القيادة — <span style="color:var(--green)">اختياري</span></label>
+<div class="upload" onclick="document.getElementById('rLic').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg><p>اضغط لرفع صورة الشهادة</p><small>تُضغط تلقائيًا وتُحفظ مجانًا</small></div>
+<input type="file" id="rLic" accept="image/*" hidden>
+<img id="licPrev" alt="معاينة">
+</div>
+<div class="tgl"><span>أقرّ بصحة المعلومات</span><div class="sw" id="sAgree" onclick="tglSw(this)"></div></div>
+</div>
+<div class="form-foot"><button class="btn line" id="btnBack" onclick="regBack()" style="display:none">رجوع</button><button class="btn dark" id="btnNext" onclick="regNext()">متابعة</button></div>
+</div></div></div>
+<div class="overlay" id="ovLogin"><div class="sheet" style="max-width:470px"><div class="checker thin"></div><button class="x" onclick="closeOv('ovLogin')">✕</button><div class="sheet-in">
+<h3 class="title">تسجيل الدخول</h3>
+<div class="err" id="loginErr"></div>
+<div class="f-row"><div class="seg"><button type="button" id="lmEmail" class="on" onclick="setLoginMode('email')">📧 بريد</button><button type="button" id="lmPhone" onclick="setLoginMode('phone')">📱 هاتف</button></div></div>
+<div id="lEmail"><div class="f-row"><label>البريد الإلكتروني</label><input type="email" id="lMail" dir="ltr"></div><div class="f-row"><label>كلمة المرور</label><input type="password" id="lPass" dir="ltr"></div><button class="btn dark" style="width:100%" onclick="doEmailLogin()">دخول</button></div>
+<div id="lPhone" style="display:none"><div class="f-row"><label>رقم الهاتف</label><input type="tel" id="lPhoneNum" dir="ltr"></div><button class="btn dark" style="width:100%" id="btnLoginOtp">أرسل رمز التحقق</button><div id="lOtpRow" style="display:none;margin-top:12px"><div class="f-row"><label>رمز التحقق</label><input type="tel" id="lOtp" dir="ltr"></div><button class="btn dark" style="width:100%" onclick="verifyLoginOtp()">تأكيد</button></div><div id="recaptcha-box2"></div></div>
+</div></div></div>
+<div class="overlay" id="ovDash"><div class="sheet"><div class="checker thin"></div><button class="x" onclick="closeOv('ovDash')">✕</button><div class="sheet-in" id="dashBox"></div></div></div>
+<div class="overlay" id="ovAdminLogin"><div class="sheet" style="max-width:440px"><div class="checker thin"></div><button class="x" onclick="closeOv('ovAdminLogin')">✕</button><div class="sheet-in">
+<h3 class="title">🛡️ دخول الإدارة</h3>
+<p style="color:var(--gray);font-size:13px;margin-bottom:14px">منطقة محمية — تظهر فقط لحساب مسجّل في مجموعة <b>admins</b>.</p>
+<div class="f-row"><label>بريد المدير</label><input type="email" id="aMail" dir="ltr"></div>
+<div class="f-row"><label>كلمة المرور</label><input type="password" id="aPass" dir="ltr"></div>
+<button class="btn dark" style="width:100%" onclick="adminLogin()">دخول لوحة التحكم</button>
+</div></div></div>
+<div class="overlay" id="ovAdmin"><div class="sheet" style="max-width:720px"><div class="checker thin"></div><button class="x" onclick="closeOv('ovAdmin')">✕</button><div class="sheet-in" id="adminBox"></div></div></div>
+<div class="overlay" id="ovEdit"><div class="sheet"><div class="checker thin"></div><button class="x" onclick="closeOv('ovEdit')">✕</button><div class="sheet-in" id="editBox"></div></div></div>
+<div class="overlay" id="ovReport"><div class="sheet" style="max-width:470px"><div class="checker thin"></div><button class="x" onclick="closeOv('ovReport')">✕</button><div class="sheet-in">
+<h3 class="title">🚩 إبلاغ عن سائق</h3>
+<div class="f-row"><label>سبب البلاغ</label><select id="repReason"><option>عدم الالتزام بالتسعيرة</option><option>سلوك غير لائق</option><option>معلومات غير صحيحة</option><option>حساب وهمي</option><option>سبب آخر</option></select></div>
+<div class="f-row"><label>تفاصيل إضافية</label><textarea id="repNote" rows="3"></textarea></div>
+<button class="btn dark" style="width:100%" onclick="sendReport()">إرسال البلاغ</button>
+</div></div></div>
+<div id="toast"></div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* ══════════ إعدادات مشروعك ══════════ */
+const CFG = {
+apiKey:            "AIzaSyCx3ldruj8upOe-zWD0-W-7P3nGDsfpdks",
+authDomain:        "h-yber-taxi.firebaseapp.com",
+projectId:         "h-yber-taxi",
+messagingSenderId: "669250423768",
+appId:             "1:669250423768:web:ac3876342c22b8ebb380ad"
+};
+const GOVS=['دمشق','ريف دمشق','حلب','حمص','حماة','اللاذقية','طرطوس','إدلب','دير الزور','الرقة','الحسكة','القنيطرة','درعا','السويداء'];
+const DAYS=['السبت','الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة'];
+const DAYS_SHORT=['سبت','أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة'];
+const DEMO=[
+{id:'d1',name:'أبو خالد الحمصي',taxiType:'عمومي (عداد)',car:'كيا ريو 2019',color:'أبيض',plate:'412 875',city:'دمشق',district:'المزة',spot:'موقف ساحة الأمويين',days:[0,1,2,3,4,5],from:'07:00',to:'23:00',inner:true,outer:true,airport:true,delivery:false,meter:true,card:false,available:true,verified:'approved',hasLicense:true,ratingSum:94,ratingCount:20,phone:'+963931112233',wa:'963931112233',lat:33.510,lng:36.278,bio:'خبرة 15 سنة.',createdAt:10},
+{id:'d2',name:'محمد العلي',taxiType:'تاكسي مطار',car:'هيونداي إلنترا 2021',color:'أصفر',plate:'758 120',city:'ريف دمشق',district:'جرمانا',spot:'كراج المطار',days:[0,1,2,3,4,5,6],from:'00:00',to:'23:59',inner:true,outer:true,airport:true,delivery:true,meter:true,card:true,available:true,verified:'approved',hasLicense:true,ratingSum:141,ratingCount:30,phone:'+963944556677',wa:'963944556677',lat:33.411,lng:36.506,createdAt:9},
+{id:'d3',name:'أبو سمير',taxiType:'فان عائلي',car:'هوندا أوديسي 2017',color:'فضي',plate:'903 411',city:'حلب',district:'الفرقان',spot:'دوار الكرة الأرضية',days:[0,1,2,3,4],from:'08:00',to:'20:00',inner:true,outer:true,airport:false,delivery:false,meter:false,card:false,available:false,verified:'approved',hasLicense:false,ratingSum:58,ratingCount:13,phone:'+963933221100',wa:'963933221100',lat:36.205,lng:37.135,createdAt:8}
+];
+let LIVE=false,db=null,auth=null;
+let drivers=[],user=null,myDoc=null,isAdmin=false;
+let filters={q:'',city:'all',type:'all',svc:'all',sort:'new'};
+let userLoc=null,reportTarget=null,confResult=null,loginConf=null,regStep=1,regMode='email',licFile=null,geo={lat:null,lng:null},editingId=null;
+let AD={adText:'',adOn:false};
+let favs=new Set(JSON.parse(localStorage.getItem('taxi_favs')||'[]'));
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const avg=d=>d.ratingCount?(d.ratingSum/d.ratingCount):0;
+const digits=p=>String(p||'').replace(/\D/g,'');
+let toastT;
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),3200);}
+function loadAdSettings(){
+if(LIVE){db.collection('settings').doc('public').onSnapshot(s=>{AD=s.exists?(s.data()||AD):AD;renderAdStrip();},()=>{});}
+else{try{AD=JSON.parse(localStorage.getItem('taxi_ad')||'{"adText":"","adOn":false}')}catch(e){}renderAdStrip();}
+}
+function renderAdStrip(){
+if(AD.adOn&&AD.adText){$('adTxt').textContent=AD.adText;$('adStrip').style.display='block';}
+else $('adStrip').style.display='none';
+}
+async function saveAd(){
+const t=$('admAdText').value.trim(),on=$('admAdSw').classList.contains('on');
+if(!t&&on)return toast('اكتب نص الإعلان أولًا');
+if(LIVE)await db.collection('settings').doc('public').set({adText:t,adOn:on,updatedAt:Date.now()});
+else{AD={adText:t,adOn:on};localStorage.setItem('taxi_ad',JSON.stringify(AD));renderAdStrip();}
+toast(on&&t?'📢 تم نشر الإعلان':'تم إيقاف الإعلان');
+}
+(function initFB(){
+$('fCity').innerHTML='<option value="all">كل المحافظات</option>'+GOVS.map(g=>`<option>${g}</option>`).join('');
+$('rCity').innerHTML=GOVS.map(g=>`<option>${g}</option>`).join('');
+$('pDays').innerHTML=DAYS.map((d,i)=>`<button type="button" class="${[0,1,2,3,4,5].includes(i)?'on':''}" data-i="${i}">${d}</button>`).join('');
+$('tickerIn').innerHTML+=$('tickerIn').innerHTML;
+if(location.protocol==='file:')$('phoneNote').style.display='block';
+try{
+if(typeof firebase==='undefined')throw new Error('تعذر تحميل مكتبات Firebase — تحقق من الإنترنت');
+firebase.initializeApp(CFG); LIVE=true; db=firebase.firestore(); auth=firebase.auth();
+$('demoChip').style.display='none';
+auth.onAuthStateChanged(async u=>{
+user=u;
+if(u){const s=await db.collection('drivers').doc(u.uid).get();myDoc=s.exists?s.data():null;
+const a=await db.collection('admins').doc(u.uid).get().catch(()=>null);isAdmin=!!(a&&a.exists);}
+else{myDoc=null;isAdmin=false;}
+refreshHeader();
+});
+let firstSnap=false;
+db.collection('drivers').where('verified','==','approved').onSnapshot(s=>{
+drivers=s.docs.map(x=>({id:x.id,...x.data()}));renderAll();
+if(!firstSnap){firstSnap=true;toast('🟢 متصل بقاعدة البيانات');}
+},e=>{console.error(e);toast('⚠️ خطأ القائمة: '+(e.message||''));});
+loadAdSettings();
+}catch(e){
+console.error(e);
+$('demoChip').style.display='inline-block';
+toast('⚠️ وضع تجريبي — '+(e.message||''));
+drivers=DEMO.slice();loadAdSettings();renderAll();
+}
+})();
+/* زر خروج واضح لأي مسجّل */
+function refreshHeader(){
+if(user){$('btnLogin').textContent='🚪 خروج';$('btnLogin').onclick=doLogout;}
+else{$('btnLogin').textContent='دخول';$('btnLogin').onclick=openLogin;}
+if(isAdmin){$('btnJoinTop').textContent='🛡️ لوحة التحكم';$('btnJoinTop').onclick=openAdmin;}
+else if(user&&myDoc){$('btnJoinTop').textContent='🚕 لوحتي';$('btnJoinTop').onclick=openDash;}
+else{$('btnJoinTop').textContent='انضم كسائق';$('btnJoinTop').onclick=()=>openReg();}
+}
+function renderAll(){renderCards();renderStats();}
+function filtered(){
+let L=drivers.slice();
+if(filters.q){const q=filters.q;L=L.filter(d=>[d.name,d.city,d.district,d.spot,d.taxiType].join(' ').includes(q));}
+if(filters.city!=='all')L=L.filter(d=>d.city===filters.city);
+if(filters.type!=='all')L=L.filter(d=>d.taxiType===filters.type);
+if(filters.svc==='available')L=L.filter(d=>d.available);
+if(filters.svc==='inner')L=L.filter(d=>d.inner);
+if(filters.svc==='outer')L=L.filter(d=>d.outer);
+if(filters.svc==='airport')L=L.filter(d=>d.airport);
+if(filters.svc==='fav')L=L.filter(d=>favs.has(d.id));
+if(filters.sort==='rate')L.sort((a,b)=>avg(b)-avg(a));
+else if(filters.sort==='near'&&userLoc)L.sort((a,b)=>dist(userLoc,a)-dist(userLoc,b));
+else L.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+return L;
+}
+function dist(loc,d){if(d.lat==null)return 99999;const R=6371,x=(d.lat-loc.lat)*Math.PI/180,y=(d.lng-loc.lng)*Math.PI/180,a=Math.sin(x/2)**2+Math.cos(loc.lat*Math.PI/180)*Math.cos(d.lat*Math.PI/180)*Math.sin(y/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
+function stars(v){const f=Math.round(v);return '★'.repeat(f)+'☆'.repeat(5-f);}
+function fmtTime(t){if(!t)return '—';const[h,m]=t.split(':');const x=(+h)%12||12;return `${x}:${m} ${+h>=12?'م':'ص'}`;}
+function daysHTML(d){return DAYS.map((n,i)=>`<span class="day ${d.days&&d.days.includes(i)?'':'offd'}" title="${n}">${DAYS_SHORT[i]}</span>`).join('');}
+function svcTags(d){let t='';if(d.inner)t+='<span class="tag k">داخل البلد</span>';if(d.outer)t+='<span class="tag b">طلبات خارجية</span>';if(d.airport)t+='<span class="tag b">مطار ✈</span>';if(d.delivery)t+='<span class="tag b">توصيل طلبات</span>';if(d.meter)t+='<span class="tag k">عداد</span>';if(d.card)t+='<span class="tag b">بطاقة 💳</span>';return t;}
+function openMapId(id){const d=drivers.find(x=>x.id===id);if(d&&d.lat!=null)window.open('https://www.google.com/maps?q='+d.lat+','+d.lng,'_blank');}
+function renderCards(){const L=filtered(),box=$('cards');$('resultCount').textContent=L.length?`${L.length} سائقًا`:'';$('emptyBox').style.display=L.length?'none':'block';box.innerHTML=L.map(cardHTML).join('');requestAnimationFrame(()=>{[...box.children].forEach((c,i)=>setTimeout(()=>c.classList.add('in'),i*70));});}
+function cardHTML(d){const a=avg(d),km=(userLoc&&d.lat!=null)?` · <b style="color:var(--blue)">${dist(userLoc,d).toFixed(1)} كم</b>`:'';
+return `<article class="card" onclick="openDetail('${d.id}')"><button class="fav ${favs.has(d.id)?'on':''}" onclick="event.stopPropagation();toggleFav('${d.id}',this)"><svg viewBox="0 0 24 24"><path d="M12 21C7 16.5 2 13 2 8.6 2 5.5 4.4 3.5 7 3.5c1.9 0 3.8 1.1 5 3 1.2-1.9 3.1-3 5-3 2.6 0 5 2 5 5.1C22 13 17 16.5 12 21z"/></svg></button><div class="card-top"><span class="plate">${esc(d.plate||'أجرة')}</span><span class="status ${d.available?'on':'off'}"><i></i>${d.available?'متاح':'غير متاح'}</span></div><div class="card-body"><h3>${esc(d.name)} ${d.hasLicense&&d.verified==='approved'?'<span class="vbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 2 4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>موثّق</span>':''}</h3><div class="type-line">🚕 ${esc(d.taxiType)} · ${esc(d.car||'—')}${km}</div><div class="info-row"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg><span><b>${esc(d.city)}</b>${d.district?' · '+esc(d.district):''} — ${esc(d.spot||'')}${d.lat!=null?`<br><a class="maplink" onclick="event.stopPropagation();openMapId('${d.id}')">🗺 عرض الموقع على الخريطة</a>`:''}</span></div><div class="info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>${fmtTime(d.from)} ← ${fmtTime(d.to)}</span></div><div class="days">${daysHTML(d)}</div><div class="tags">${svcTags(d)}</div><div class="rate"><span class="stars">${stars(a)}</span> ${a?a.toFixed(1):'جديد'} <small>(${d.ratingCount||0})</small></div></div><div class="card-actions"><a class="btn call" href="tel:${digits(d.phone)}" onclick="event.stopPropagation()">📞 اتصال</a><a class="btn wa" href="https://wa.me/${digits(d.wa||d.phone)}?text=${encodeURIComponent('السلام عليكم، شاهدت إعلانك في تاكسي البلد')}" target="_blank" onclick="event.stopPropagation()">💬 واتساب</a></div></article>`;}
+function renderStats(){const tot=drivers.length,av=drivers.filter(d=>d.available).length,ci=new Set(drivers.map(d=>d.city)).size,rt=drivers.length?(drivers.reduce((s,d)=>s+avg(d),0)/drivers.length).toFixed(1):'—';countUp($('stTotal'),tot);countUp($('stAvail'),av);countUp($('stCities'),ci);$('stRate').textContent=rt;}
+function countUp(el,to){let v=0;const step=Math.max(1,Math.ceil(to/30));const t=setInterval(()=>{v+=step;if(v>=to){v=to;clearInterval(t);}el.textContent=v;},28);}
+function openDetail(id){const d=drivers.find(x=>x.id===id);if(!d)return;const a=avg(d),mine=myDoc&&user&&id===user.uid;
+$('detailBox').innerHTML=`<span class="status ${d.available?'on':'off'}" style="margin-bottom:8px"><i></i>${d.available?'متاح الآن':'غير متاح'}</span><h3 class="title">${esc(d.name)} ${d.hasLicense&&d.verified==='approved'?'<span class="vbadge">✔ موثّق</span>':''}</h3><div class="type-line">🚕 ${esc(d.taxiType)} · ${esc(d.car||'—')}</div><div class="rate"><span class="stars">${stars(a)}</span> ${a?a.toFixed(1):'جديد'} <small>(${d.ratingCount||0})</small></div>${d.bio?`<p style="margin-top:10px;background:var(--paper);border-radius:12px;padding:12px;font-size:14px">${esc(d.bio)}</p>`:''}<div class="d-grid"><div class="d-cell"><div class="k">📍 المحافظة</div><div class="v">${esc(d.city)}${d.district?' — '+esc(d.district):''}</div></div><div class="d-cell"><div class="k">🅿️ الموقف</div><div class="v">${esc(d.spot||'—')}</div></div><div class="d-cell"><div class="k">🕐 الدوام</div><div class="v">${fmtTime(d.from)} ← ${fmtTime(d.to)}</div></div><div class="d-cell"><div class="k">🔢 اللوحة</div><div class="v">${esc(d.plate||'—')}</div></div><div class="d-cell d-full"><div class="k">🗺 الموقع على الخريطة</div><div class="v">${d.lat!=null?`<button class="mini" onclick="openMapId('${d.id}')">🗺 افتح موقع السائق في خرائط جوجل</button>`:'السائق لم يحدّد موقعه — أضف الإحداثيات من لوحة التحكم'}</div></div><div class="d-cell d-full"><div class="k">📅 الأيام</div><div class="days" style="margin-top:6px">${daysHTML(d)}</div></div><div class="d-cell d-full"><div class="k">🧾 الخدمات</div><div class="tags" style="margin-top:6px">${svcTags(d)}</div></div></div>${!mine?`<div class="rate-pick"><b>قيّم:</b>${[1,2,3,4,5].map(i=>`<button class="rstar" onclick="rateDriver('${d.id}',${i},this)">★</button>`).join('')}</div><div class="big-acts"><a class="btn call" href="tel:${digits(d.phone)}">📞 اتصال مباشر</a><a class="btn wa" target="_blank" href="https://wa.me/${digits(d.wa||d.phone)}?text=${encodeURIComponent('السلام عليكم')}">💬 واتساب</a></div><div class="small-acts"><button class="mini" onclick="toggleFav('${d.id}');openDetail('${d.id}')">${favs.has(d.id)?'💔 إزالة':'❤️ حفظ'}</button><button class="mini" onclick="shareDriver('${d.id}')">↗ مشاركة</button><button class="mini" onclick="reportTarget='${d.id}';closeOv('ovDetail');openOv('ovReport')">🚩 إبلاغ</button></div>`:`<button class="btn dark" style="width:100%" onclick="closeOv('ovDetail');openDash()">⚙️ فتح لوحة السائق</button>`}`;openOv('ovDetail');}
+async function rateDriver(id,n,el){
+if(localStorage.getItem('rated_'+id))return toast('سبق أن قيّمت');
+[...el.parentElement.querySelectorAll('.rstar')].forEach((s,i)=>s.classList.toggle('on',i<n));
+const d=drivers.find(x=>x.id===id);
+if(LIVE&&user){
+try{await db.collection('drivers').doc(id).update({ratingSum:firebase.firestore.FieldValue.increment(n),ratingCount:firebase.firestore.FieldValue.increment(1)});}
+catch(err){console.error(err);toast('تعذر حفظ التقييم');return;}
+}else{d.ratingSum=(d.ratingSum||0)+n;d.ratingCount=(d.ratingCount||0)+1;renderCards();renderStats();}
+localStorage.setItem('rated_'+id,1);toast('شكرًا ⭐');
+}
+function shareDriver(id){const d=drivers.find(x=>x.id===id);const txt=`🚕 ${d.name} — ${d.taxiType} في ${d.city}\n📞 ${d.phone}`;if(navigator.share)navigator.share({title:'تاكسي البلد',text:txt}).catch(()=>{});else navigator.clipboard.writeText(txt).then(()=>toast('تم النسخ'));}
+async function sendReport(){if(LIVE&&user)await db.collection('reports').add({driverId:reportTarget,reason:$('repReason').value,note:$('repNote').value,by:user.uid,at:Date.now()}).catch(()=>{});closeOv('ovReport');$('repNote').value='';toast('وصل بلاغك 🚩');}
+function toggleFav(id,btn){favs.has(id)?favs.delete(id):favs.add(id);localStorage.setItem('taxi_favs',JSON.stringify([...favs]));if(btn)btn.classList.toggle('on');if(filters.svc==='fav')renderCards();}
+function openOv(id){$(id).classList.add('show');document.body.style.overflow='hidden';}
+function closeOv(id){$(id).classList.remove('show');document.body.style.overflow='';}
+document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)closeOv(o.id);}));
+function tglSw(el){el.classList.toggle('on');}
+function getSw(id){return $(id).classList.contains('on');}
+function selDays(c){return [...c.querySelectorAll('.on')].map(b=>+b.dataset.i);}
+document.addEventListener('click',e=>{const b=e.target.closest('.pick[data-multi] button');if(b)b.classList.toggle('on');});
+document.addEventListener('click',e=>{const b=e.target.closest('.pick:not([data-multi]) button');if(!b)return;[...b.parentElement.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');});
+function geoLocate(){if(!navigator.geolocation)return toast('المتصفح لا يدعم');$('geoBtn').textContent='⏳ جارٍ…';navigator.geolocation.getCurrentPosition(p=>{geo={lat:+p.coords.latitude.toFixed(5),lng:+p.coords.longitude.toFixed(5)};$('geoBtn').textContent='✔ تم';$('geoInfo').textContent=`📍 ${geo.lat} , ${geo.lng}`;},()=>{$('geoBtn').textContent='تعذّر التحديد';});}
+function compressImage(file){return new Promise((res,rej)=>{const img=new Image(),url=URL.createObjectURL(file);img.onload=()=>{const max=1100;let w=img.width,h=img.height;if(Math.max(w,h)>max){const r=max/Math.max(w,h);w=Math.round(w*r);h=Math.round(h*r);}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);let q=.78,out=c.toDataURL('image/jpeg',q);while(out.length*0.75>700*1024&&q>.3){q-=.12;out=c.toDataURL('image/jpeg',q);}URL.revokeObjectURL(url);res(out);};img.onerror=rej;img.src=url;});}
+$('btnJoinTop').onclick=$('btnJoinHero').onclick=()=>openReg();
+function openReg(){regStep=myDoc?2:1;licFile=null;showStep();openOv('ovReg');}
+function openLogin(){openOv('ovLogin');}
+function renderSteps(){const labels=['الحساب','معلوماتك','التاكسي','التوثيق'];$('regSteps').innerHTML=labels.map((l,i)=>{const n=i+1,cls=n<regStep?'done':n===regStep?'on':'';return `${i?'<div class="step-line '+(n<=regStep?'done':'')+'"></div>':''}<div class="step-dot ${cls}">${n}</div>`;}).join('');}
+function showStep(){[1,2,3,4].forEach(i=>$('rs'+i).style.display=i===regStep?'block':'none');$('btnBack').style.display=regStep>1?'inline-flex':'none';$('btnNext').textContent=regStep===4?'نشر التاكسي 🚀':'متابعة';renderSteps();regErr('');}
+function regErr(m){const e=$('regErr');e.style.display=m?'block':'none';e.textContent=m;}
+function regBack(){if(regStep>1){regStep--;showStep();}}
+function setMode(m){regMode=m;$('mEmail').classList.toggle('on',m==='email');$('mPhone').classList.toggle('on',m==='phone');$('emailFields').style.display=m==='email'?'block':'none';$('phoneFields').style.display=m==='phone'?'block':'none';}
+$('rLic').onchange=e=>{const f=e.target.files[0];if(!f)return;licFile=f;const r=new FileReader();r.onload=x=>{const img=$('licPrev');img.src=x.target.result;img.style.display='block';};r.readAsDataURL(f);};
+async function regNext(){regErr('');if(regStep===1){if(regMode==='email'){const e=$('rEmail').value.trim(),p=$('rPass').value;if(!LIVE){regStep=2;showStep();return;}if(!e||!p)return regErr('أدخل البريد وكلمة المرور');if(p.length<6)return regErr('كلمة المرور ضعيفة');regStep=2;showStep();}else{if(confResult){regStep=2;showStep();}else if($('otpRow').style.display==='block')return;else sendRegOtp();}}else if(regStep===2){if(!$('rName').value.trim()||!$('rSpot').value.trim())return regErr('الاسم والموقف مطلوبان');regStep=3;showStep();}else if(regStep===3){if(!selDays($('pDays')).length)return regErr('اختر يومًا واحدًا على الأقل');if(!$('rCar').value.trim())return regErr('أدخل نوع السيارة');regStep=4;showStep();}else submitReg();}
+async function sendRegOtp(){const p=$('rPhone').value.trim();if(digits(p).length<8)return regErr('رقم غير صالح');if(!LIVE){regStep=2;showStep();return toast('تجريبي: تم التخطي');}$('btnSendOtp').textContent='⏳ جارٍ…';try{window._rv=window._rv||new firebase.auth.RecaptchaVerifier('recaptcha-box',{size:'invisible'});confResult=await auth.signInWithPhoneNumber('+'+digits(p),window._rv);$('otpRow').style.display='block';$('btnSendOtp').style.display='none';toast('📩 تم الإرسال');}catch(e){regErr(arErr(e));if(window._rv){window._rv.clear();window._rv=null;}}$('btnSendOtp').textContent='أرسل رمز التحقق';}
+$('btnVerifyOtp').onclick=async()=>{try{await confResult.confirm($('rOtp').value.trim());user=auth.currentUser;regStep=2;showStep();toast('✔ تم التحقق');}catch(e){regErr('الرمز غير صحيح');}};
+async function submitReg(){if(!getSw('sAgree'))return regErr('يجب الإقرار أولًا');$('btnNext').textContent='⏳ جارٍ…';try{let u=user;if(LIVE&&regMode==='email'){const c=await auth.createUserWithEmailAndPassword($('rEmail').value.trim(),$('rPass').value);u=c.user;}if(!LIVE&&!u)u={uid:'demo_'+Date.now(),phoneNumber:''};let licImg='',verified='approved',hasLic=false;if(licFile){licImg=await compressImage(licFile);if(licImg.length>950000){regErr('الصورة كبيرة — اختر أصغر');$('btnNext').textContent='نشر التاكسي 🚀';return;}verified='pending';hasLic=true;}const ph=(u.phoneNumber||('+'+digits($('rPhone').value)))||'';const wa=$('rWa').value.trim();const doc={name:$('rName').value.trim(),email:$('rEmail').value.trim()||'',phone:ph,wa:digits(wa)||digits(ph),city:$('rCity').value,district:$('rDistrict').value.trim(),spot:$('rSpot').value.trim(),lat:geo.lat,lng:geo.lng,taxiType:$('pType').querySelector('.on').textContent,car:$('rCar').value.trim(),color:$('rColor').value.trim(),plate:$('rPlate').value.trim(),days:selDays($('pDays')).sort(),from:$('rFrom').value,to:$('rTo').value,inner:getSw('sInner'),outer:getSw('sOuter'),airport:getSw('sAirport'),delivery:getSw('sDelivery'),card:getSw('sCard'),meter:getSw('sMeter'),bio:$('rBio').value.trim(),licenseImg:licImg,hasLicense:hasLic,verified:verified,available:true,ratingSum:0,ratingCount:0,createdAt:Date.now()};if(LIVE)await db.collection('drivers').doc(u.uid).set(doc);else{doc.id=u.uid;drivers.push(doc);renderAll();}user=u;myDoc=doc;closeOv('ovReg');refreshHeader();toast(verified==='pending'?'🚀 بانتظار التوثيق':'🎉 تم النشر');openDash();}catch(e){regErr(arErr(e));}$('btnNext').textContent='نشر التاكسي 🚀';}
+function arErr(e){const c=e.code||'';return({'auth/email-already-in-use':'هذا البريد مسجّل','auth/invalid-email':'بريد غير صالح','auth/weak-password':'كلمة مرور ضعيفة','auth/invalid-credential':'بيانات غير صحيحة','auth/user-not-found':'لا يوجد حساب','auth/too-many-requests':'محاولات كثيرة','auth/internal-error':'تعذر إرسال الرمز — افتح الموقع عبر رابط استضافة https (انظر الشرح) وليس من ملف محلي','permission-denied':'ليست لديك صلاحية'}[c])||('خطأ: '+(e.message||c));}
+function setLoginMode(m){$('lmEmail').classList.toggle('on',m==='email');$('lmPhone').classList.toggle('on',m==='phone');$('lEmail').style.display=m==='email'?'block':'none';$('lPhone').style.display=m==='phone'?'block':'none';$('loginErr').style.display='none';}
+async function doEmailLogin(){if(!LIVE){user={uid:'demo'};myDoc=null;closeOv('ovLogin');refreshHeader();openReg();return;}try{await auth.signInWithEmailAndPassword($('lMail').value.trim(),$('lPass').value);closeOv('ovLogin');toast('🚕 أهلًا');setTimeout(openDash,400);}catch(e){$('loginErr').style.display='block';$('loginErr').textContent=arErr(e);}}
+$('btnLoginOtp').onclick=async()=>{const p=digits($('lPhoneNum').value);if(p.length<8){$('loginErr').style.display='block';$('loginErr').textContent='رقم غير صالح';return;}if(!LIVE){toast('وضع تجريبي: أدخل أي رمز');$('lOtpRow').style.display='block';return;}try{window._rv2=window._rv2||new firebase.auth.RecaptchaVerifier('recaptcha-box2',{size:'invisible'});loginConf=await auth.signInWithPhoneNumber('+'+p,window._rv2);$('lOtpRow').style.display='block';toast('📩 تم الإرسال');}catch(e){$('loginErr').textContent=arErr(e);$('loginErr').style.display='block';if(window._rv2){window._rv2.clear();window._rv2=null;}}};
+async function verifyLoginOtp(){if(!LIVE){toast('وضع تجريبي');return;}try{if(loginConf)await loginConf.confirm($('lOtp').value.trim());closeOv('ovLogin');const s=await db.collection('drivers').doc(auth.currentUser.uid).get();if(s.exists){myDoc=s.data();setTimeout(openDash,300);}else openReg();}catch(e){$('loginErr').textContent='الرمز غير صحيح';$('loginErr').style.display='block';}}
+function openDash(){const d=myDoc;if(!d){openReg();return;}const a=avg(d);$('dashBox').innerHTML=`<h3 class="title">لوحة السائق 🚕</h3><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><div><b style="font-size:17px">${esc(d.name)}</b><br><small style="color:var(--gray)">${esc(d.taxiType)} · ${esc(d.city)}</small></div><span class="vstatus ${d.verified}">${d.hasLicense?{pending:'⏳ قيد المراجعة',approved:'✔ موثّق',rejected:'✖ مرفوض'}[d.verified]:'بدون شهادة'}</span></div><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800">🟢 حالتي:</span><div style="display:flex;align-items:center;gap:10px"><b id="avTxt">${d.available?'متاح':'غير متاح'}</b><div class="sw ${d.available?'on':''}" onclick="toggleAvail(this)"></div></div></div><div class="d-grid"><div class="d-cell"><div class="k">⭐ التقييم</div><div class="v"><span class="stars">${stars(a)}</span> ${a?a.toFixed(1):'—'} (${d.ratingCount||0})</div></div><div class="d-cell"><div class="k">📍 الموقع</div><div class="v">${d.lat!=null?`<button class="mini" onclick="window.open('https://www.google.com/maps?q=${d.lat},${d.lng}','_blank')">🗺 عرض</button>`:'غير محدد'}</div></div><div class="d-cell"><div class="k">🕐 الدوام</div><div class="v">${fmtTime(d.from)} ← ${fmtTime(d.to)}</div></div><div class="d-cell"><div class="k">📅 الأيام</div><div class="v">${(d.days||[]).map(i=>DAYS[i]).join('، ')}</div></div></div><div class="small-acts"><button class="mini" onclick="editProfile()">✏️ تعديل</button><button class="mini" onclick="doLogout()">🚪 تسجيل الخروج</button></div>`;openOv('ovDash');}
+async function toggleAvail(el){el.classList.toggle('on');const v=el.classList.contains('on');$('avTxt').textContent=v?'متاح':'غير متاح';if(LIVE)await db.collection('drivers').doc(user.uid).update({available:v,lastSeen:Date.now()});else myDoc.available=v;toast(v?'🟢 متاح الآن':'غير متاح');}
+function editProfile(){const d=myDoc;closeOv('ovDash');openOv('ovReg');regStep=2;showStep();$('rName').value=d.name||'';$('rCity').value=d.city||GOVS[0];$('rDistrict').value=d.district||'';$('rSpot').value=d.spot||'';$('rCar').value=d.car||'';$('rColor').value=d.color||'';$('rPlate').value=d.plate||'';$('rFrom').value=d.from||'08:00';$('rTo').value=d.to||'22:00';$('rBio').value=d.bio||'';$('rWa').value=d.wa||'';geo={lat:d.lat,lng:d.lng};[...$('pDays').children].forEach(b=>b.classList.toggle('on',(d.days||[]).includes(+b.dataset.i)));[...$('pType').children].forEach(b=>b.classList.toggle('on',b.textContent===d.taxiType));const map={sInner:'inner',sOuter:'outer',sAirport:'airport',sDelivery:'delivery',sCard:'card',sMeter:'meter'};Object.entries(map).forEach(([id,k])=>$(id).classList.toggle('on',!!d[k]));$('btnNext').onclick=async()=>{if(regStep<4){regNext();return;}const upd={name:$('rName').value,city:$('rCity').value,district:$('rDistrict').value,spot:$('rSpot').value,car:$('rCar').value,color:$('rColor').value,plate:$('rPlate').value,days:selDays($('pDays')).sort(),from:$('rFrom').value,to:$('rTo').value,lat:geo.lat,lng:geo.lng,taxiType:$('pType').querySelector('.on').textContent,bio:$('rBio').value,inner:getSw('sInner'),outer:getSw('sOuter'),airport:getSw('sAirport'),delivery:getSw('sDelivery'),card:getSw('sCard'),meter:getSw('sMeter')};if(licFile){upd.licenseImg=await compressImage(licFile);upd.hasLicense=true;upd.verified='pending';}if(LIVE)await db.collection('drivers').doc(user.uid).update(upd);myDoc={...myDoc,...upd};closeOv('ovReg');toast('✔ تم الحفظ');$('btnNext').onclick=regNext;openDash();};}
+function doLogout(){if(LIVE)auth.signOut();user=null;myDoc=null;isAdmin=false;closeOv('ovDash');closeOv('ovAdmin');refreshHeader();toast('تم تسجيل الخروج 👋');}
+let taps=0,tapT;$('logoBadge').addEventListener('click',()=>{taps++;clearTimeout(tapT);tapT=setTimeout(()=>taps=0,1600);if(taps>=5){taps=0;openOv('ovAdminLogin');}});
+async function adminLogin(){const e=$('aMail').value.trim(),p=$('aPass').value;if(!LIVE){if(p==='123456'){isAdmin=true;closeOv('ovAdminLogin');openAdmin();}else toast('كلمة المرور غير صحيحة');return;}try{const c=await auth.signInWithEmailAndPassword(e,p);const a=await db.collection('admins').doc(c.user.uid).get();if(a.exists){isAdmin=true;closeOv('ovAdminLogin');toast('🛡️ أهلًا بك');openAdmin();}else{await auth.signOut();toast('ليست لديك صلاحية إدارة');}}catch(err){toast(arErr(err));}}
+async function openAdmin(){if(!isAdmin){toast('صلاحية مطلوبة');return;}$('adminBox').innerHTML='<h3 class="title">🛡️ لوحة التحكم</h3><div class="loader"></div>';openOv('ovAdmin');let all=drivers,reports=[];if(LIVE){const s=await db.collection('drivers').get();all=s.docs.map(x=>({id:x.id,...x.data()}));const r=await db.collection('reports').get().catch(()=>({docs:[]}));reports=r.docs.map(x=>({id:x.id,...x.data()}));}all.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));const pend=all.filter(d=>d.verified==='pending');$('adminBox').innerHTML=`<h3 class="title">🛡️ لوحة التحكم</h3><div class="astats"><div class="astat"><b>${all.length}</b><span>إجمالي</span></div><div class="astat"><b style="color:#9C7200">${pend.length}</b><span>بانتظار</span></div><div class="astat"><b style="color:var(--green)">${all.filter(d=>d.available).length}</b><span>متاح</span></div><div class="astat"><b style="color:var(--red)">${reports.length}</b><span>بلاغات</span></div></div><div class="asec">📢 الشريط الإعلاني المتحرك</div><div class="f-row"><textarea id="admAdText" rows="2" placeholder="اكتب نص الإعلان…">${esc(AD.adText)}</textarea></div><div class="tgl"><span>إظهار الإعلان في الموقع</span><div class="sw ${AD.adOn?'on':''}" id="admAdSw" onclick="tglSw(this)"></div></div><button class="btn dark" style="width:100%" onclick="saveAd()">حفظ ونشر الإعلان</button><div style="height:14px"></div><button class="btn dark" style="width:100%" onclick="openEdit(null)">🚕 أضف سائقًا</button><div class="asec">⏳ بانتظار التوثيق (${pend.length})</div>${pend.length?pend.map(d=>`<div class="arow"><div class="hd"><b>${esc(d.name)}</b><span class="vstatus pending">${esc(d.city)}</span></div><small>📞 ${esc(d.phone)} · 🅿️ ${esc(d.spot||'—')}</small>${d.licenseImg?`<div class="lic-box"><img src="${d.licenseImg}"></div>`:''}<div class="acts" style="margin-top:10px"><button class="abtn ok" onclick="setVerify('${d.id}','approved')">✔ موافقة</button><button class="abtn no" onclick="setVerify('${d.id}','rejected')">✖ رفض</button><button class="abtn blue" onclick="openEdit('${d.id}')">✏️ تعديل</button></div></div>`).join(''):'<p style="color:var(--gray)">لا توجد طلبات</p>'}<div class="asec">🚕 كل السائقين (${all.length})</div><input type="search" id="admSearch" placeholder="🔍 ابحث…" oninput="admFilter(this.value)" style="margin-bottom:12px"><div id="admList">${all.map(adminRow).join('')}</div><div class="asec">🚩 البلاغات (${reports.length})</div>${reports.length?reports.map(r=>`<div class="arow"><small>${esc(r.reason)} — ${esc(r.note||'')}<br>السائق: ${esc(r.driverId)}</small><button class="abtn no" onclick="delReport('${r.id}')">🗑 حذف</button></div>`).join(''):'<p style="color:var(--gray)">لا توجد بلاغات</p>'}<div class="small-acts"><button class="mini" onclick="doLogout()">🚪 خروج</button></div>`;}
+function adminRow(d){return `<div class="arow" data-name="${esc(d.name)} ${esc(d.city)}"><div class="hd"><b>${esc(d.name)}</b><span class="vstatus ${d.verified}">${{pending:'بانتظار',approved:'منشور',rejected:'مرفوض'}[d.verified]}</span></div><small>${esc(d.taxiType)} · ${esc(d.city)} · 📞 ${esc(d.phone)} · ${d.lat!=null?'📍 محدد الموقع':'📍 بدون موقع'}</small><div class="acts"><button class="abtn blue" onclick="openEdit('${d.id}')">✏️ تعديل</button><button class="abtn ${d.available?'warn':'ok'}" onclick="admToggleAvail('${d.id}',${!d.available})">${d.available?'⏸ إيقاف':'▶ إتاحة'}</button><button class="abtn warn" onclick="resetRate('${d.id}')">⭐ تصفير</button><button class="abtn no" onclick="admDelete('${d.id}','${esc(d.name)}')">🗑 حذف</button></div></div>`;}
+function admFilter(q){[...document.querySelectorAll('#admList .arow')].forEach(r=>{r.style.display=r.dataset.name.includes(q)?'':'none';});}
+async function setVerify(id,v){if(LIVE)await db.collection('drivers').doc(id).update({verified:v});else{const d=drivers.find(x=>x.id===id);if(d)d.verified=v;}toast(v==='approved'?'✔ تم التوثيق':'تم الرفض');openAdmin();}
+async function admToggleAvail(id,v){if(LIVE)await db.collection('drivers').doc(id).update({available:v});else{const d=drivers.find(x=>x.id===id);if(d)d.available=v;}toast('تم التغيير');openAdmin();}
+async function resetRate(id){if(!confirm('تصفير التقييم؟'))return;if(LIVE)await db.collection('drivers').doc(id).update({ratingSum:0,ratingCount:0});else{const d=drivers.find(x=>x.id===id);if(d){d.ratingSum=0;d.ratingCount=0;}}toast('✔ تم');openAdmin();}
+async function admDelete(id,name){if(!confirm('حذف «'+name+'»؟'))return;if(LIVE)await db.collection('drivers').doc(id).delete();else drivers=drivers.filter(x=>x.id!==id);toast('🗑 تم الحذف');openAdmin();}
+async function delReport(id){if(LIVE)await db.collection('reports').doc(id).delete();toast('حُذف');openAdmin();}
+function openEdit(id){editingId=id;const d=id?drivers.find(x=>x.id===id):{};const dd=d||{};const sv=(k,v)=>dd[k]!==undefined?dd[k]:v;$('editBox').innerHTML=`<h3 class="title">${id?'✏️ تعديل':'🚕 إضافة سائق'}</h3><div class="err" id="edErr"></div><div class="f-row"><label>الاسم *</label><input id="eName" value="${esc(sv('name',''))}"></div><div class="f-2"><div class="f-row"><label>الهاتف *</label><input id="ePhone" dir="ltr" value="${esc(sv('phone',''))}"></div><div class="f-row"><label>الواتساب</label><input id="eWa" dir="ltr" value="${esc(sv('wa',''))}"></div></div><div class="f-2"><div class="f-row"><label>المحافظة</label><select id="eCity">${GOVS.map(g=>`<option ${g===dd.city?'selected':''}>${g}</option>`).join('')}</select></div><div class="f-row"><label>المنطقة</label><input id="eDistrict" value="${esc(sv('district',''))}"></div></div><div class="f-row"><label>الموقف</label><input id="eSpot" value="${esc(sv('spot',''))}"></div><div class="f-2"><div class="f-row"><label>خط العرض</label><input id="eLat" dir="ltr" placeholder="33.510" value="${sv('lat','')||''}"></div><div class="f-row"><label>خط الطول</label><input id="eLng" dir="ltr" placeholder="36.278" value="${sv('lng','')||''}"></div></div><small style="display:block;color:var(--gray);margin:-6px 0 12px">💡 لجلب الإحداثيات: افتح خرائط جوجل، اضغط مطولًا على موقع السائق، وانسخ الرقمين الظاهرين.</small><div class="f-row"><label>نوع التاكسي</label><div class="pick" id="eType">${['عمومي (عداد)','تاكسي مطار','فان عائلي','سيدان فاخر','توصيل وطلبات'].map(t=>`<button type="button" class="${t===(dd.taxiType||'عمومي (عداد)')?'on':''}">${t}</button>`).join('')}</div></div><div class="f-2"><div class="f-row"><label>السيارة</label><input id="eCar" value="${esc(sv('car',''))}"></div><div class="f-row"><label>اللوحة</label><input id="ePlate" dir="ltr" value="${esc(sv('plate',''))}"></div></div><div class="f-row"><label>أيام الدوام</label><div class="pick" id="eDays" data-multi="1">${DAYS.map((n,i)=>`<button type="button" class="${(dd.days||[0,1,2,3,4,5]).includes(i)?'on':''}" data-i="${i}">${DAYS_SHORT[i]}</button>`).join('')}</div></div><div class="f-2"><div class="f-row"><label>من</label><input type="time" id="eFrom" value="${sv('from','08:00')}"></div><div class="f-row"><label>حتى</label><input type="time" id="eTo" value="${sv('to','22:00')}"></div></div><div class="tgl"><span>داخل البلد</span><div class="sw ${sv('inner',true)?'on':''}" id="esInner" onclick="tglSw(this)"></div></div><div class="tgl"><span>طلبات خارجية</span><div class="sw ${sv('outer',false)?'on':''}" id="esOuter" onclick="tglSw(this)"></div></div><div class="tgl"><span>مطار</span><div class="sw ${sv('airport',false)?'on':''}" id="esAirport" onclick="tglSw(this)"></div></div><div class="tgl"><span>توصيل</span><div class="sw ${sv('delivery',false)?'on':''}" id="esDelivery" onclick="tglSw(this)"></div></div><div class="tgl"><span>عداد</span><div class="sw ${sv('meter',true)?'on':''}" id="esMeter" onclick="tglSw(this)"></div></div><div class="tgl"><span>متاح الآن</span><div class="sw ${sv('available',true)?'on':''}" id="esAvail" onclick="tglSw(this)"></div></div><div class="f-row"><label>حالة النشر</label><select id="eVerified"><option value="approved" ${dd.verified==='approved'?'selected':''}>منشور</option><option value="pending" ${dd.verified==='pending'?'selected':''}>بانتظار</option><option value="rejected" ${dd.verified==='rejected'?'selected':''}>مرفوض</option></select></div><div class="form-foot"><button class="btn line" onclick="closeOv('ovEdit')">إلغاء</button><button class="btn dark" onclick="saveEdit()">${id?'حفظ':'إضافة'}</button></div>`;openOv('ovEdit');}
+async function saveEdit(){const err=m=>{const e=$('edErr');e.style.display=m?'block':'none';e.textContent=m;};const name=$('eName').value.trim(),phone=$('ePhone').value.trim();if(!name||!phone)return err('الاسم والهاتف مطلوبان');const upd={name,phone,wa:digits($('eWa').value)||digits(phone),city:$('eCity').value,district:$('eDistrict').value.trim(),spot:$('eSpot').value.trim(),lat:parseFloat($('eLat').value)||null,lng:parseFloat($('eLng').value)||null,taxiType:$('eType').querySelector('.on').textContent,car:$('eCar').value.trim(),plate:$('ePlate').value.trim(),days:selDays($('eDays')).sort(),from:$('eFrom').value,to:$('eTo').value,inner:$('esInner').classList.contains('on'),outer:$('esOuter').classList.contains('on'),airport:$('esAirport').classList.contains('on'),delivery:$('esDelivery').classList.contains('on'),meter:$('esMeter').classList.contains('on'),available:$('esAvail').classList.contains('on'),verified:$('eVerified').value};if(editingId){if(LIVE)await db.collection('drivers').doc(editingId).update(upd);else{const d=drivers.find(x=>x.id===editingId);Object.assign(d,upd);}toast('✔ تم');}else{const doc={...upd,email:'',color:'',bio:'',licenseImg:'',hasLicense:false,ratingSum:0,ratingCount:0,createdAt:Date.now()};if(LIVE)await db.collection('drivers').add(doc);else{doc.id='m'+Date.now();drivers.push(doc);renderAll();}toast('🚕 تمت الإضافة');}closeOv('ovEdit');openAdmin();}
+$('fQ').oninput=e=>{filters.q=e.target.value.trim();renderCards();};
+$('fCity').onchange=e=>{filters.city=e.target.value;renderCards();};
+$('fType').onchange=e=>{filters.type=e.target.value;renderCards();};
+$('fSort').onchange=e=>{filters.sort=e.target.value;if(filters.sort==='near'&&!userLoc){if(!navigator.geolocation)return toast('المتصفح لا يدعم');navigator.geolocation.getCurrentPosition(p=>{userLoc={lat:p.coords.latitude,lng:p.coords.longitude};renderCards();},()=>{toast('تعذّر التحديد');$('fSort').value='new';filters.sort='new';});return;}renderCards();};
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');filters.svc=c.dataset.svc;renderCards();});
+$('heroGo').onclick=()=>{$('fQ').value=$('heroSearch').value;filters.q=$('heroSearch').value.trim();renderCards();location.hash='#list';};
+$('heroSearch').onkeydown=e=>{if(e.key==='Enter')$('heroGo').click();};
+const io=new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&x.target.classList.add('in')),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
