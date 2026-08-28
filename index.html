@@ -1,11 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#FFC400">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>H-yber Management | تاكسي البلد</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
@@ -111,7 +115,7 @@ nav a:hover{background:rgba(21,21,26,.12)}
 .type-line{font-weight:800;color:var(--blue);font-size:14px;margin:2px 0 10px}
 .info-row{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:#444;margin:7px 0;line-height:1.7}
 .info-row svg{width:16px;height:16px;flex:none;margin-top:3px;color:var(--yellow);stroke:var(--black)}
-.maplink{color:var(--blue);font-weight:800;text-decoration:underline;font-size:12.5px}
+.maplink{background:none;border:none;color:var(--blue);font-weight:800;text-decoration:underline;font-size:12.5px;cursor:pointer;padding:0;font-family:inherit}
 .days{display:flex;gap:5px;flex-wrap:wrap;margin:10px 0 4px}
 .day{width:34px;height:30px;border-radius:8px;background:var(--yellow);color:var(--black);font-weight:800;font-size:11px;display:flex;align-items:center;justify-content:center}
 .day.offd{background:#EFEDE2;color:#B9B6A8;text-decoration:line-through}
@@ -298,8 +302,18 @@ footer .brand p{font-size:13.5px;line-height:1.9;margin-top:8px}
 <select id="fCity"></select>
 <select id="fType"><option value="all">كل الأنواع</option><option>عمومي (عداد)</option><option>تاكسي مطار</option><option>فان عائلي</option><option>سيدان فاخر</option><option>توصيل وطلبات</option></select>
 <select id="fSort"><option value="new">الأحدث تسجيلًا</option><option value="rate">الأعلى تقييمًا</option><option value="near">الأقرب إليّ 📍</option></select>
+<select id="fRange" style="display:none" title="نطاق القرب">
+<option value="200">ضمن 200 م</option>
+<option value="500">ضمن 500 م</option>
+<option value="1000">ضمن 1 كم</option>
+<option value="2000">ضمن 2 كم</option>
+<option value="5000">ضمن 5 كم</option>
+<option value="10000">ضمن 10 كم</option>
+<option value="20000">ضمن 20 كم</option>
+</select>
 <div class="chips">
 <button class="chip on" data-svc="all">الكل</button>
+<button class="chip" data-svc="near">📍 القريبة مني</button>
 <button class="chip" data-svc="available"><i style="width:9px;height:9px;border-radius:50%;background:var(--green)"></i> متاح الآن</button>
 <button class="chip" data-svc="inner">داخل البلد</button>
 <button class="chip" data-svc="outer">طلبات خارجية</button>
@@ -308,14 +322,14 @@ footer .brand p{font-size:13.5px;line-height:1.9;margin-top:8px}
 </div>
 </div>
 <div class="cards" id="cards"></div>
-<div class="empty" id="emptyBox" style="display:none"><div class="big">🚕</div><h3>ما لقينا تاكسي يطابق بحثك</h3><p>جرّب تغيير الفلاتر، أو كن أول سائق يسجّل في محافظتك!</p></div>
+<div class="empty" id="emptyBox" style="display:none"><div class="big">🚕</div><h3>ما لقينا تاكسي يطابق بحثك</h3><p>جرّب تغيير الفلاتر أو وسّع نطاق القرب، أو كن أول سائق يسجّل في محافظتك!</p></div>
 </section>
 <section class="how section" id="how">
 <div class="wrap">
 <h2 class="reveal">الطريق إلى تاكسيك… ثلاث محطات</h2>
 <div class="route">
-<div class="stop reveal"><div class="n">١</div><h3>تصفّح القائمة</h3><p>اختر محافظتك وفلتر حسب نوع التاكسي أو الخدمة: داخل البلد، طلبات خارجية، مطار… وشوف المتاح الآن.</p></div>
-<div class="stop reveal"><div class="n">٢</div><h3>اعرف سائقك</h3><p>الاسم ونوع السيارة وموقف الانتظار وأيام الدوام والموقع على الخريطة وتقييم الزبائن — كلها ظاهرة قبل التواصل.</p></div>
+<div class="stop reveal"><div class="n">١</div><h3>تصفّح القائمة</h3><p>اختر محافظتك وفلتر حسب نوع التاكسي أو الخدمة أو «القريبة مني» ضمن النطاق الذي تحدده.</p></div>
+<div class="stop reveal"><div class="n">٢</div><h3>اعرف سائقك</h3><p>الاسم ونوع السيارة وموقف الانتظار وأيام الدوام والموقع الحي على الخريطة وتقييم الزبائن.</p></div>
 <div class="stop reveal"><div class="n">٣</div><h3>اتصل أو واتساب</h3><p>بضغطة زر واحدة تفتح الاتصال المباشر أو محادثة واتساب مع السائق — بدون وسيط وبدون عمولة.</p></div>
 </div>
 </div>
@@ -349,7 +363,7 @@ footer .brand p{font-size:13.5px;line-height:1.9;margin-top:8px}
 <div class="f-2"><div class="f-row"><label>المحافظة *</label><select id="rCity"></select></div><div class="f-row"><label>المنطقة / البلدة</label><input id="rDistrict"></div></div>
 <div class="f-row"><label>موقف الانتظار *</label><input id="rSpot"></div>
 <div class="f-row"><label>📞 رقم التواصل الظاهر للزبائن *</label><input type="tel" id="rContact" dir="ltr" placeholder="9639XXXXXXXX" autocomplete="tel"><small>يظهر في زرّي الاتصال والواتساب.</small></div>
-<div class="f-row"><label>📍 موقعي على الخريطة (تلقائي)</label><button class="mini" type="button" id="geoBtn" onclick="geoLocate()">تحديد موقعي الآن</button><small id="geoInfo" style="display:block;margin-top:6px;color:var(--green);font-weight:800"></small><small style="display:block;color:var(--gray)">يُلتقط موقعك تلقائيًا عند دخول هذه الخطوة ويظهر للزبائن زر «عرض الموقع».</small></div>
+<div class="f-row"><label>📍 موقعي على الخريطة (تلقائي)</label><button class="mini" type="button" id="geoBtn" onclick="geoLocate()">تحديد موقعي الآن</button><small id="geoInfo" style="display:block;margin-top:6px;color:var(--green);font-weight:800"></small><small style="display:block;color:var(--gray)">يُلتقط موقعك تلقائيًا عند دخول هذه الخطوة، ويظهر للزبائن زر «عرض الموقع»، ويمكن بثه مباشرًا من لوحتك.</small></div>
 </div>
 <div id="rs3" style="display:none">
 <div class="f-row"><label>نوع التاكسي *</label><div class="pick" id="pType"><button type="button" class="on">عمومي (عداد)</button><button type="button">تاكسي مطار</button><button type="button">فان عائلي</button><button type="button">سيدان فاخر</button><button type="button">توصيل وطلبات</button></div></div>
@@ -424,18 +438,21 @@ const DEMO=[
 ];
 let LIVE=false,db=null,auth=null;
 let drivers=[],user=null,myDoc=null,isAdmin=false;
-let filters={q:'',city:'all',type:'all',svc:'all',sort:'new'};
+let filters={q:'',city:'all',type:'all',svc:'all',sort:'new',near:false,range:200};
 let userLoc=null,reportTarget=null,regStep=1,regMode='email',licFile=null,geo={lat:null,lng:null},editingId=null,geoTried=false;
+let liveWatch=null,lastSent=0;
 let AD={adText:'',adOn:false};
 let favs=new Set(JSON.parse(localStorage.getItem('taxi_favs')||'[]'));
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const avg=d=>d.ratingCount?(d.ratingSum/d.ratingCount):0;
 const digits=p=>String(p||'').replace(/\D/g,'');
-/* معرف دخول داخلي للتسجيل بالهاتف (بدون SMS) */
 const phoneToEmail=p=>'ph'+digits(p)+'@hyber-taxi.app';
 let toastT;
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),3200);}
+/* المسافة بالكيلومتر (هافرساين) */
+function dist(loc,d){if(d.lat==null)return 99999;const R=6371,x=(d.lat-loc.lat)*Math.PI/180,y=(d.lng-loc.lng)*Math.PI/180,a=Math.sin(x/2)**2+Math.cos(loc.lat*Math.PI/180)*Math.cos(d.lat*Math.PI/180)*Math.sin(y/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
+function fmtDist(m){return m<1000?Math.round(m)+' م':(m/1000).toFixed(1)+' كم';}
 function loadAdSettings(){
 if(LIVE){db.collection('settings').doc('public').onSnapshot(s=>{AD=s.exists?(s.data()||AD):AD;renderAdStrip();},()=>{});}
 else{try{AD=JSON.parse(localStorage.getItem('taxi_ad')||'{"adText":"","adOn":false}')}catch(e){}renderAdStrip();}
@@ -480,6 +497,8 @@ toast('⚠️ وضع تجريبي — '+(e.message||''));
 drivers=DEMO.slice();loadAdSettings();renderAll();
 }
 })();
+/* تسجيل Service Worker لتطبيق أندرويد/PWA */
+if('serviceWorker' in navigator&&location.protocol!=='file:'){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});}
 function refreshHeader(){
 if(user){$('btnLogin').textContent='🚪 خروج';$('btnLogin').onclick=doLogout;}
 else{$('btnLogin').textContent='دخول';$('btnLogin').onclick=openLogin;}
@@ -498,27 +517,30 @@ if(filters.svc==='inner')L=L.filter(d=>d.inner);
 if(filters.svc==='outer')L=L.filter(d=>d.outer);
 if(filters.svc==='airport')L=L.filter(d=>d.airport);
 if(filters.svc==='fav')L=L.filter(d=>favs.has(d.id));
-if(filters.sort==='rate')L.sort((a,b)=>avg(b)-avg(a));
+if(filters.near&&userLoc){L=L.filter(d=>d.lat!=null&&(dist(userLoc,d)*1000)<=filters.range);L.sort((a,b)=>dist(userLoc,a)-dist(userLoc,b));}
+else if(filters.sort==='rate')L.sort((a,b)=>avg(b)-avg(a));
 else if(filters.sort==='near'&&userLoc)L.sort((a,b)=>dist(userLoc,a)-dist(userLoc,b));
 else L.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
 return L;
 }
-function dist(loc,d){if(d.lat==null)return 99999;const R=6371,x=(d.lat-loc.lat)*Math.PI/180,y=(d.lng-loc.lng)*Math.PI/180,a=Math.sin(x/2)**2+Math.cos(loc.lat*Math.PI/180)*Math.cos(d.lat*Math.PI/180)*Math.sin(y/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
 function stars(v){const f=Math.round(v);return '★'.repeat(f)+'☆'.repeat(5-f);}
 function fmtTime(t){if(!t)return '—';const[h,m]=t.split(':');const x=(+h)%12||12;return `${x}:${m} ${+h>=12?'م':'ص'}`;}
 function daysHTML(d){return DAYS.map((n,i)=>`<span class="day ${d.days&&d.days.includes(i)?'':'offd'}" title="${n}">${DAYS_SHORT[i]}</span>`).join('');}
 function svcTags(d){let t='';if(d.inner)t+='<span class="tag k">داخل البلد</span>';if(d.outer)t+='<span class="tag b">طلبات خارجية</span>';if(d.airport)t+='<span class="tag b">مطار ✈</span>';if(d.delivery)t+='<span class="tag b">توصيل طلبات</span>';if(d.meter)t+='<span class="tag k">عداد</span>';if(d.card)t+='<span class="tag b">بطاقة 💳</span>';return t;}
-/* الخريطة: بالإحداثيات إن وُجدت وإلا بعنوان نصي */
+/* الخريطة: إحداثيات إن وُجدت وإلا عنوان نصي — زر حقيقي بمؤشر يد */
 function openMapId(id){const d=drivers.find(x=>x.id===id);if(!d)return;
 if(d.lat!=null&&d.lng!=null)window.open('https://www.google.com/maps?q='+d.lat+','+d.lng,'_blank');
 else window.open('https://www.google.com/maps?q='+encodeURIComponent([d.spot,d.district,d.city,'سوريا'].filter(Boolean).join('، ')),'_blank');}
 function renderCards(){const L=filtered(),box=$('cards');$('resultCount').textContent=L.length?`${L.length} سائقًا`:'';$('emptyBox').style.display=L.length?'none':'block';box.innerHTML=L.map(cardHTML).join('');requestAnimationFrame(()=>{[...box.children].forEach((c,i)=>setTimeout(()=>c.classList.add('in'),i*70));});}
-function cardHTML(d){const a=avg(d),km=(userLoc&&d.lat!=null)?` · <b style="color:var(--blue)">${dist(userLoc,d).toFixed(1)} كم</b>`:'';
-return `<article class="card" onclick="openDetail('${d.id}')"><button class="fav ${favs.has(d.id)?'on':''}" onclick="event.stopPropagation();toggleFav('${d.id}',this)"><svg viewBox="0 0 24 24"><path d="M12 21C7 16.5 2 13 2 8.6 2 5.5 4.4 3.5 7 3.5c1.9 0 3.8 1.1 5 3 1.2-1.9 3.1-3 5-3 2.6 0 5 2 5 5.1C22 13 17 16.5 12 21z"/></svg></button><div class="card-top"><span class="plate">${esc(d.plate||'أجرة')}</span><span class="status ${d.available?'on':'off'}"><i></i>${d.available?'متاح':'غير متاح'}</span></div><div class="card-body"><h3>${esc(d.name)} ${d.hasLicense&&d.verified==='approved'?'<span class="vbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 2 4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>موثّق</span>':''}</h3><div class="type-line">🚕 ${esc(d.taxiType)} · ${esc(d.car||'—')}${km}</div><div class="info-row"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg><span><b>${esc(d.city)}</b>${d.district?' · '+esc(d.district):''} — ${esc(d.spot||'')}<br><a class="maplink" onclick="event.stopPropagation();openMapId('${d.id}')">🗺 عرض الموقع على الخريطة</a></span></div><div class="info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>${fmtTime(d.from)} ← ${fmtTime(d.to)}</span></div><div class="days">${daysHTML(d)}</div><div class="tags">${svcTags(d)}</div><div class="rate"><span class="stars">${stars(a)}</span> ${a?a.toFixed(1):'جديد'} <small>(${d.ratingCount||0})</small></div></div><div class="card-actions"><a class="btn call" href="tel:${digits(d.phone)}" onclick="event.stopPropagation()">📞 اتصال</a><a class="btn wa" href="https://wa.me/${digits(d.wa||d.phone)}?text=${encodeURIComponent('السلام عليكم، شاهدت إعلانك في تاكسي البلد')}" target="_blank" onclick="event.stopPropagation()">💬 واتساب</a></div></article>`;}
+function cardHTML(d){const a=avg(d);
+const dm=(userLoc&&d.lat!=null)?dist(userLoc,d)*1000:null;
+const badge=dm!=null?` · <b style="color:var(--blue)">يبعد ${fmtDist(dm)}</b>`:'';
+return `<article class="card" onclick="openDetail('${d.id}')"><button class="fav ${favs.has(d.id)?'on':''}" onclick="event.stopPropagation();toggleFav('${d.id}',this)"><svg viewBox="0 0 24 24"><path d="M12 21C7 16.5 2 13 2 8.6 2 5.5 4.4 3.5 7 3.5c1.9 0 3.8 1.1 5 3 1.2-1.9 3.1-3 5-3 2.6 0 5 2 5 5.1C22 13 17 16.5 12 21z"/></svg></button><div class="card-top"><span class="plate">${esc(d.plate||'أجرة')}</span><span class="status ${d.available?'on':'off'}"><i></i>${d.available?'متاح':'غير متاح'}</span></div><div class="card-body"><h3>${esc(d.name)} ${d.hasLicense&&d.verified==='approved'?'<span class="vbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 2 4 5v6c0 5 3.4 8.6 8 10 4.6-1.4 8-5 8-10V5l-8-3z"/><path d="m9 12 2 2 4-4"/></svg>موثّق</span>':''}</h3><div class="type-line">🚕 ${esc(d.taxiType)} · ${esc(d.car||'—')}${badge}</div><div class="info-row"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg><span><b>${esc(d.city)}</b>${d.district?' · '+esc(d.district):''} — ${esc(d.spot||'')}<br><button type="button" class="maplink" onclick="event.stopPropagation();openMapId('${d.id}')">🗺 عرض الموقع على الخريطة</button></span></div><div class="info-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>${fmtTime(d.from)} ← ${fmtTime(d.to)}</span></div><div class="days">${daysHTML(d)}</div><div class="tags">${svcTags(d)}</div><div class="rate"><span class="stars">${stars(a)}</span> ${a?a.toFixed(1):'جديد'} <small>(${d.ratingCount||0})</small></div></div><div class="card-actions"><a class="btn call" href="tel:${digits(d.phone)}" onclick="event.stopPropagation()">📞 اتصال</a><a class="btn wa" href="https://wa.me/${digits(d.wa||d.phone)}?text=${encodeURIComponent('السلام عليكم، شاهدت إعلانك في تاكسي البلد')}" target="_blank" onclick="event.stopPropagation()">💬 واتساب</a></div></article>`;}
 function renderStats(){const tot=drivers.length,av=drivers.filter(d=>d.available).length,ci=new Set(drivers.map(d=>d.city)).size,rt=drivers.length?(drivers.reduce((s,d)=>s+avg(d),0)/drivers.length).toFixed(1):'—';countUp($('stTotal'),tot);countUp($('stAvail'),av);countUp($('stCities'),ci);$('stRate').textContent=rt;}
 function countUp(el,to){let v=0;const step=Math.max(1,Math.ceil(to/30));const t=setInterval(()=>{v+=step;if(v>=to){v=to;clearInterval(t);}el.textContent=v;},28);}
 function openDetail(id){const d=drivers.find(x=>x.id===id);if(!d)return;const a=avg(d),mine=myDoc&&user&&id===user.uid;
-$('detailBox').innerHTML=`<span class="status ${d.available?'on':'off'}" style="margin-bottom:8px"><i></i>${d.available?'متاح الآن':'غير متاح'}</span><h3 class="title">${esc(d.name)} ${d.hasLicense&&d.verified==='approved'?'<span class="vbadge">✔ موثّق</span>':''}</h3><div class="type-line">🚕 ${esc(d.taxiType)} · ${esc(d.car||'—')}</div><div class="rate"><span class="stars">${stars(a)}</span> ${a?a.toFixed(1):'جديد'} <small>(${d.ratingCount||0})</small></div>${d.bio?`<p style="margin-top:10px;background:var(--paper);border-radius:12px;padding:12px;font-size:14px">${esc(d.bio)}</p>`:''}<div class="d-grid"><div class="d-cell"><div class="k">📍 المحافظة</div><div class="v">${esc(d.city)}${d.district?' — '+esc(d.district):''}</div></div><div class="d-cell"><div class="k">🅿️ الموقف</div><div class="v">${esc(d.spot||'—')}</div></div><div class="d-cell"><div class="k">🕐 الدوام</div><div class="v">${fmtTime(d.from)} ← ${fmtTime(d.to)}</div></div><div class="d-cell"><div class="k">🔢 اللوحة</div><div class="v">${esc(d.plate||'—')}</div></div><div class="d-cell d-full"><div class="k">🗺 الموقع على الخريطة</div><div class="v"><button class="mini" onclick="openMapId('${d.id}')">🗺 افتح موقع السائق في خرائط جوجل</button></div></div><div class="d-cell d-full"><div class="k">📅 الأيام</div><div class="days" style="margin-top:6px">${daysHTML(d)}</div></div><div class="d-cell d-full"><div class="k">🧾 الخدمات</div><div class="tags" style="margin-top:6px">${svcTags(d)}</div></div></div>${!mine?`<div class="rate-pick"><b>قيّم:</b>${[1,2,3,4,5].map(i=>`<button class="rstar" onclick="rateDriver('${d.id}',${i},this)">★</button>`).join('')}</div><div class="big-acts"><a class="btn call" href="tel:${digits(d.phone)}">📞 اتصال مباشر</a><a class="btn wa" target="_blank" href="https://wa.me/${digits(d.wa||d.phone)}?text=${encodeURIComponent('السلام عليكم')}">💬 واتساب</a></div><div class="small-acts"><button class="mini" onclick="toggleFav('${d.id}');openDetail('${d.id}')">${favs.has(d.id)?'💔 إزالة':'❤️ حفظ'}</button><button class="mini" onclick="shareDriver('${d.id}')">↗ مشاركة</button><button class="mini" onclick="reportTarget='${d.id}';closeOv('ovDetail');openOv('ovReport')">🚩 إبلاغ</button></div>`:`<button class="btn dark" style="width:100%" onclick="closeOv('ovDetail');openDash()">⚙️ فتح لوحة السائق</button>`}`;openOv('ovDetail');}
+const dm=(userLoc&&d.lat!=null)?dist(userLoc,d)*1000:null;
+$('detailBox').innerHTML=`<span class="status ${d.available?'on':'off'}" style="margin-bottom:8px"><i></i>${d.available?'متاح الآن':'غير متاح'}</span><h3 class="title">${esc(d.name)} ${d.hasLicense&&d.verified==='approved'?'<span class="vbadge">✔ موثّق</span>':''}</h3><div class="type-line">🚕 ${esc(d.taxiType)} · ${esc(d.car||'—')}${dm!=null?` · <b style="color:var(--blue)">يبعد ${fmtDist(dm)}</b>`:''}</div><div class="rate"><span class="stars">${stars(a)}</span> ${a?a.toFixed(1):'جديد'} <small>(${d.ratingCount||0})</small></div>${d.bio?`<p style="margin-top:10px;background:var(--paper);border-radius:12px;padding:12px;font-size:14px">${esc(d.bio)}</p>`:''}<div class="d-grid"><div class="d-cell"><div class="k">📍 المحافظة</div><div class="v">${esc(d.city)}${d.district?' — '+esc(d.district):''}</div></div><div class="d-cell"><div class="k">🅿️ الموقف</div><div class="v">${esc(d.spot||'—')}</div></div><div class="d-cell"><div class="k">🕐 الدوام</div><div class="v">${fmtTime(d.from)} ← ${fmtTime(d.to)}</div></div><div class="d-cell"><div class="k">🔢 اللوحة</div><div class="v">${esc(d.plate||'—')}</div></div><div class="d-cell d-full"><div class="k">🗺 الموقع على الخريطة</div><div class="v"><button class="mini" onclick="openMapId('${d.id}')">🗺 افتح موقع السائق في خرائط جوجل</button></div></div><div class="d-cell d-full"><div class="k">📅 الأيام</div><div class="days" style="margin-top:6px">${daysHTML(d)}</div></div><div class="d-cell d-full"><div class="k">🧾 الخدمات</div><div class="tags" style="margin-top:6px">${svcTags(d)}</div></div></div>${!mine?`<div class="rate-pick"><b>قيّم:</b>${[1,2,3,4,5].map(i=>`<button class="rstar" onclick="rateDriver('${d.id}',${i},this)">★</button>`).join('')}</div><div class="big-acts"><a class="btn call" href="tel:${digits(d.phone)}">📞 اتصال مباشر</a><a class="btn wa" target="_blank" href="https://wa.me/${digits(d.wa||d.phone)}?text=${encodeURIComponent('السلام عليكم')}">💬 واتساب</a></div><div class="small-acts"><button class="mini" onclick="toggleFav('${d.id}');openDetail('${d.id}')">${favs.has(d.id)?'💔 إزالة':'❤️ حفظ'}</button><button class="mini" onclick="shareDriver('${d.id}')">↗ مشاركة</button><button class="mini" onclick="reportTarget='${d.id}';closeOv('ovDetail');openOv('ovReport')">🚩 إبلاغ</button></div>`:`<button class="btn dark" style="width:100%" onclick="closeOv('ovDetail');openDash()">⚙️ فتح لوحة السائق</button>`}`;openOv('ovDetail');}
 async function rateDriver(id,n,el){
 if(localStorage.getItem('rated_'+id))return toast('سبق أن قيّمت');
 [...el.parentElement.querySelectorAll('.rstar')].forEach((s,i)=>s.classList.toggle('on',i<n));
@@ -540,12 +562,45 @@ function getSw(id){return $(id).classList.contains('on');}
 function selDays(c){return [...c.querySelectorAll('.on')].map(b=>+b.dataset.i);}
 document.addEventListener('click',e=>{const b=e.target.closest('.pick[data-multi] button');if(b)b.classList.toggle('on');});
 document.addEventListener('click',e=>{const b=e.target.closest('.pick:not([data-multi]) button');if(!b)return;[...b.parentElement.children].forEach(x=>x.classList.remove('on'));b.classList.add('on');});
+/* ═══ فلتر القريبة مني ═══ */
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
+document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');
+filters.svc=c.dataset.svc;
+if(filters.svc==='near'){enableNear();}
+else{filters.near=false;$('fRange').style.display='none';renderCards();}
+});
+$('fRange').onchange=e=>{filters.range=+e.target.value;if(filters.near)renderCards();};
+function enableNear(){
+if(!navigator.geolocation)return toast('المتصفح لا يدعم تحديد الموقع');
+$('fRange').style.display='inline-block';
+if(userLoc){filters.near=true;renderCards();return;}
+toast('📍 جارٍ تحديد موقعك…');
+navigator.geolocation.getCurrentPosition(p=>{userLoc={lat:p.coords.latitude,lng:p.coords.longitude};filters.near=true;renderCards();toast('تُعرض التكاسي ضمن النطاق المحدد الآن');},()=>{toast('اسمح بالوصول إلى موقعك من إعدادات المتصفح ثم أعد الضغط');});
+}
 function geoLocate(){if(!navigator.geolocation)return toast('المتصفح لا يدعم');$('geoBtn').textContent='⏳ جارٍ…';navigator.geolocation.getCurrentPosition(p=>{geo={lat:+p.coords.latitude.toFixed(5),lng:+p.coords.longitude.toFixed(5)};$('geoBtn').textContent='✔ تم تحديد موقعي';$('geoInfo').textContent=`📍 سيُحفظ موقعك ويظهر للزبائن: ${geo.lat} , ${geo.lng}`;},()=>{$('geoBtn').textContent='تعذّر — أعد المحاولة';});}
+/* ═══ البث المباشر لموقع السائق ═══ */
+function toggleLive(el){if(el.classList.contains('on')){stopLive();el.classList.remove('on');}else{startLive();el.classList.add('on');}}
+function startLive(){
+if(!navigator.geolocation)return toast('المتصفح لا يدعم تحديد الموقع');
+if(liveWatch!=null)return;
+liveWatch=navigator.geolocation.watchPosition(pos=>{
+const lat=+pos.coords.latitude.toFixed(5),lng=+pos.coords.longitude.toFixed(5);
+const now=Date.now();
+const moved=!myDoc||myDoc.lat==null||(dist({lat,lng},myDoc)*1000)>30;
+if(now-lastSent>45000||moved){
+lastSent=now;
+if(myDoc){myDoc.lat=lat;myDoc.lng=lng;}
+if(LIVE&&user)db.collection('drivers').doc(user.uid).update({lat,lng,lastSeen:now}).catch(()=>{});
+}
+},()=>{},{enableHighAccuracy:true,maximumAge:20000,timeout:30000});
+if(user)localStorage.setItem('live_'+user.uid,'1');
+toast('📡 بدأ بث موقعك المباشر — يراه الزبائن أثناء تنقلك');
+}
+function stopLive(){if(liveWatch!=null&&navigator.geolocation)navigator.geolocation.clearWatch(liveWatch);liveWatch=null;if(user)localStorage.setItem('live_'+user.uid,'0');toast('توقف بث الموقع');}
 function compressImage(file){return new Promise((res,rej)=>{const img=new Image(),url=URL.createObjectURL(file);img.onload=()=>{const max=1100;let w=img.width,h=img.height;if(Math.max(w,h)>max){const r=max/Math.max(w,h);w=Math.round(w*r);h=Math.round(h*r);}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);let q=.78,out=c.toDataURL('image/jpeg',q);while(out.length*0.75>700*1024&&q>.3){q-=.12;out=c.toDataURL('image/jpeg',q);}URL.revokeObjectURL(url);res(out);};img.onerror=rej;img.src=url;});}
 $('btnJoinTop').onclick=$('btnJoinHero').onclick=()=>openReg();
 function openReg(){regStep=myDoc?2:1;licFile=null;showStep();openOv('ovReg');}
 function openLogin(){openOv('ovLogin');}
-/* جلب الحالة بعد الدخول ثم التوجيه الصحيح (بدون سباق) */
 async function loadSession(uid){
 const s=await db.collection('drivers').doc(uid).get();
 myDoc=s.exists?s.data():null;
@@ -603,7 +658,8 @@ await loadSession(auth.currentUser.uid);
 if(isAdmin)openAdmin();else if(myDoc)openDash();else openReg();
 }catch(e){$('loginErr').style.display='block';$('loginErr').textContent=arErr(e);}
 }
-function openDash(){const d=myDoc;if(!d){openReg();return;}const a=avg(d);$('dashBox').innerHTML=`<h3 class="title">لوحة السائق 🚕</h3><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><div><b style="font-size:17px">${esc(d.name)}</b><br><small style="color:var(--gray)">${esc(d.taxiType)} · ${esc(d.city)}</small></div><span class="vstatus ${d.verified}">${d.hasLicense?{pending:'⏳ قيد المراجعة',approved:'✔ موثّق',rejected:'✖ مرفوض'}[d.verified]:'بدون شهادة'}</span></div><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800">🟢 حالتي:</span><div style="display:flex;align-items:center;gap:10px"><b id="avTxt">${d.available?'متاح':'غير متاح'}</b><div class="sw ${d.available?'on':''}" onclick="toggleAvail(this)"></div></div></div><div class="d-grid"><div class="d-cell"><div class="k">⭐ التقييم</div><div class="v"><span class="stars">${stars(a)}</span> ${a?a.toFixed(1):'—'} (${d.ratingCount||0})</div></div><div class="d-cell"><div class="k">📍 موقعي</div><div class="v">${d.lat!=null?`<button class="mini" onclick="window.open('https://www.google.com/maps?q=${d.lat},${d.lng}','_blank')">🗺 عرض</button> <button class="mini" onclick="geoRefresh()">🔄 تحديث</button>`:'<button class="mini" onclick="geoRefresh()">📍 تحديد موقعي الآن</button>'}</div></div><div class="d-cell"><div class="k">🕐 الدوام</div><div class="v">${fmtTime(d.from)} ← ${fmtTime(d.to)}</div></div><div class="d-cell"><div class="k">📅 الأيام</div><div class="v">${(d.days||[]).map(i=>DAYS[i]).join('، ')}</div></div></div><div class="small-acts"><button class="mini" onclick="editProfile()">✏️ تعديل</button><button class="mini" onclick="doLogout()">🚪 تسجيل الخروج</button></div>`;openOv('ovDash');}
+function openDash(){const d=myDoc;if(!d){openReg();return;}const a=avg(d);$('dashBox').innerHTML=`<h3 class="title">لوحة السائق 🚕</h3><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><div><b style="font-size:17px">${esc(d.name)}</b><br><small style="color:var(--gray)">${esc(d.taxiType)} · ${esc(d.city)}</small></div><span class="vstatus ${d.verified}">${d.hasLicense?{pending:'⏳ قيد المراجعة',approved:'✔ موثّق',rejected:'✖ مرفوض'}[d.verified]:'بدون شهادة'}</span></div><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800">📡 بث موقعي المباشر<br><small style="color:var(--gray)">يحدّث موقعك تلقائيًا أثناء بقاء الصفحة مفتوحة — فيراك الزبائن في موقعك الجديد</small></span><div id="liveSw" class="sw ${liveWatch!=null?'on':''}" onclick="toggleLive(this)"></div></div><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800">🟢 حالتي:</span><div style="display:flex;align-items:center;gap:10px"><b id="avTxt">${d.available?'متاح':'غير متاح'}</b><div class="sw ${d.available?'on':''}" onclick="toggleAvail(this)"></div></div></div><div class="d-grid"><div class="d-cell"><div class="k">⭐ التقييم</div><div class="v"><span class="stars">${stars(a)}</span> ${a?a.toFixed(1):'—'} (${d.ratingCount||0})</div></div><div class="d-cell"><div class="k">📍 موقعي</div><div class="v">${d.lat!=null?`<button class="mini" onclick="window.open('https://www.google.com/maps?q=${d.lat},${d.lng}','_blank')">🗺 عرض</button> <button class="mini" onclick="geoRefresh()">🔄 تحديث</button>`:'<button class="mini" onclick="geoRefresh()">📍 تحديد موقعي الآن</button>'}</div></div><div class="d-cell"><div class="k">🕐 الدوام</div><div class="v">${fmtTime(d.from)} ← ${fmtTime(d.to)}</div></div><div class="d-cell"><div class="k">📅 الأيام</div><div class="v">${(d.days||[]).map(i=>DAYS[i]).join('، ')}</div></div></div><div class="small-acts"><button class="mini" onclick="editProfile()">✏️ تعديل</button><button class="mini" onclick="doLogout()">🚪 تسجيل الخروج</button></div>`;openOv('ovDash');
+if(user&&localStorage.getItem('live_'+user.uid)==='1'&&liveWatch==null){startLive();const el=$('liveSw');if(el)el.classList.add('on');}}
 async function geoRefresh(){
 if(!navigator.geolocation)return toast('المتصفح لا يدعم');
 navigator.geolocation.getCurrentPosition(async p=>{
@@ -615,7 +671,7 @@ toast('📍 تم تحديث موقعك — سيظهر للزبائن');openDash(
 }
 async function toggleAvail(el){el.classList.toggle('on');const v=el.classList.contains('on');$('avTxt').textContent=v?'متاح':'غير متاح';if(LIVE)await db.collection('drivers').doc(user.uid).update({available:v,lastSeen:Date.now()});else myDoc.available=v;toast(v?'🟢 متاح الآن':'غير متاح');}
 function editProfile(){const d=myDoc;closeOv('ovDash');openOv('ovReg');regStep=2;geoTried=true;showStep();$('rName').value=d.name||'';$('rCity').value=d.city||GOVS[0];$('rDistrict').value=d.district||'';$('rSpot').value=d.spot||'';$('rContact').value=(d.phone||'').replace('+','');$('rCar').value=d.car||'';$('rColor').value=d.color||'';$('rPlate').value=d.plate||'';$('rFrom').value=d.from||'08:00';$('rTo').value=d.to||'22:00';$('rBio').value=d.bio||'';$('rWa').value=d.wa||'';geo={lat:d.lat,lng:d.lng};if(d.lat!=null)$('geoInfo').textContent=`📍 موقعك الحالي: ${d.lat} , ${d.lng}`;[...$('pDays').children].forEach(b=>b.classList.toggle('on',(d.days||[]).includes(+b.dataset.i)));[...$('pType').children].forEach(b=>b.classList.toggle('on',b.textContent===d.taxiType));const map={sInner:'inner',sOuter:'outer',sAirport:'airport',sDelivery:'delivery',sCard:'card',sMeter:'meter'};Object.entries(map).forEach(([id,k])=>$(id).classList.toggle('on',!!d[k]));$('btnNext').onclick=async()=>{if(regStep<4){regNext();return;}const upd={name:$('rName').value,city:$('rCity').value,district:$('rDistrict').value,spot:$('rSpot').value,phone:'+'+digits($('rContact').value),wa:digits($('rWa').value)||digits($('rContact').value),car:$('rCar').value,color:$('rColor').value,plate:$('rPlate').value,days:selDays($('pDays')).sort(),from:$('rFrom').value,to:$('rTo').value,lat:geo.lat,lng:geo.lng,taxiType:$('pType').querySelector('.on').textContent,bio:$('rBio').value,inner:getSw('sInner'),outer:getSw('sOuter'),airport:getSw('sAirport'),delivery:getSw('sDelivery'),card:getSw('sCard'),meter:getSw('sMeter')};if(licFile){upd.licenseImg=await compressImage(licFile);upd.hasLicense=true;upd.verified='pending';}if(LIVE)await db.collection('drivers').doc(user.uid).update(upd);myDoc={...myDoc,...upd};closeOv('ovReg');toast('✔ تم الحفظ');$('btnNext').onclick=regNext;openDash();};}
-function doLogout(){if(LIVE)auth.signOut();user=null;myDoc=null;isAdmin=false;closeOv('ovDash');closeOv('ovAdmin');refreshHeader();toast('تم تسجيل الخروج 👋');}
+function doLogout(){if(liveWatch!=null&&navigator.geolocation)navigator.geolocation.clearWatch(liveWatch);liveWatch=null;if(LIVE)auth.signOut();user=null;myDoc=null;isAdmin=false;closeOv('ovDash');closeOv('ovAdmin');refreshHeader();toast('تم تسجيل الخروج 👋');}
 let taps=0,tapT;$('logoBadge').addEventListener('click',()=>{taps++;clearTimeout(tapT);tapT=setTimeout(()=>taps=0,1600);if(taps>=5){taps=0;openOv('ovAdminLogin');}});
 async function adminLogin(){const e=$('aMail').value.trim(),p=$('aPass').value;if(!LIVE){if(p==='123456'){isAdmin=true;closeOv('ovAdminLogin');openAdmin();}else toast('كلمة المرور غير صحيحة');return;}try{const c=await auth.signInWithEmailAndPassword(e,p);await loadSession(c.user.uid);if(isAdmin){closeOv('ovAdminLogin');toast('🛡️ أهلًا بك');openAdmin();}else{await auth.signOut();user=null;myDoc=null;refreshHeader();toast('ليست لديك صلاحية إدارة');}}catch(err){toast(arErr(err));}}
 async function openAdmin(){if(!isAdmin){toast('صلاحية مطلوبة');return;}$('adminBox').innerHTML='<h3 class="title">🛡️ لوحة التحكم</h3><div class="loader"></div>';openOv('ovAdmin');let all=drivers,reports=[];if(LIVE){const s=await db.collection('drivers').get();all=s.docs.map(x=>({id:x.id,...x.data()}));const r=await db.collection('reports').get().catch(()=>({docs:[]}));reports=r.docs.map(x=>({id:x.id,...x.data()}));}all.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));const pend=all.filter(d=>d.verified==='pending');$('adminBox').innerHTML=`<h3 class="title">🛡️ لوحة التحكم</h3><div class="astats"><div class="astat"><b>${all.length}</b><span>إجمالي</span></div><div class="astat"><b style="color:#9C7200">${pend.length}</b><span>بانتظار</span></div><div class="astat"><b style="color:var(--green)">${all.filter(d=>d.available).length}</b><span>متاح</span></div><div class="astat"><b style="color:var(--red)">${reports.length}</b><span>بلاغات</span></div></div><div class="asec">📢 الشريط الإعلاني المتحرك</div><div class="f-row"><textarea id="admAdText" rows="2" placeholder="اكتب نص الإعلان…">${esc(AD.adText)}</textarea></div><div class="tgl"><span>إظهار الإعلان في الموقع</span><div class="sw ${AD.adOn?'on':''}" id="admAdSw" onclick="tglSw(this)"></div></div><button class="btn dark" style="width:100%" onclick="saveAd()">حفظ ونشر الإعلان</button><div style="height:14px"></div><button class="btn dark" style="width:100%" onclick="openEdit(null)">🚕 أضف سائقًا</button><div class="asec">⏳ بانتظار التوثيق (${pend.length})</div>${pend.length?pend.map(d=>`<div class="arow"><div class="hd"><b>${esc(d.name)}</b><span class="vstatus pending">${esc(d.city)}</span></div><small>📞 ${esc(d.phone)} · 🅿️ ${esc(d.spot||'—')}</small>${d.licenseImg?`<div class="lic-box"><img src="${d.licenseImg}"></div>`:''}<div class="acts" style="margin-top:10px"><button class="abtn ok" onclick="setVerify('${d.id}','approved')">✔ موافقة</button><button class="abtn no" onclick="setVerify('${d.id}','rejected')">✖ رفض</button><button class="abtn blue" onclick="openEdit('${d.id}')">✏️ تعديل</button></div></div>`).join(''):'<p style="color:var(--gray)">لا توجد طلبات</p>'}<div class="asec">🚕 كل السائقين (${all.length})</div><input type="search" id="admSearch" placeholder="🔍 ابحث…" oninput="admFilter(this.value)" style="margin-bottom:12px" autocomplete="off"><div id="admList">${all.map(adminRow).join('')}</div><div class="asec">🚩 البلاغات (${reports.length})</div>${reports.length?reports.map(r=>`<div class="arow"><small>${esc(r.reason)} — ${esc(r.note||'')}<br>السائق: ${esc(r.driverId)}</small><button class="abtn no" onclick="delReport('${r.id}')">🗑 حذف</button></div>`).join(''):'<p style="color:var(--gray)">لا توجد بلاغات</p>'}<div class="small-acts"><button class="mini" onclick="doLogout()">🚪 خروج</button></div>`;}
@@ -632,7 +688,6 @@ $('fQ').oninput=e=>{filters.q=e.target.value.trim();renderCards();};
 $('fCity').onchange=e=>{filters.city=e.target.value;renderCards();};
 $('fType').onchange=e=>{filters.type=e.target.value;renderCards();};
 $('fSort').onchange=e=>{filters.sort=e.target.value;if(filters.sort==='near'&&!userLoc){if(!navigator.geolocation)return toast('المتصفح لا يدعم');navigator.geolocation.getCurrentPosition(p=>{userLoc={lat:p.coords.latitude,lng:p.coords.longitude};renderCards();},()=>{toast('تعذّر التحديد');$('fSort').value='new';filters.sort='new';});return;}renderCards();};
-document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');filters.svc=c.dataset.svc;renderCards();});
 $('heroGo').onclick=()=>{$('fQ').value=$('heroSearch').value;filters.q=$('heroSearch').value.trim();renderCards();location.hash='#list';};
 $('heroSearch').onkeydown=e=>{if(e.key==='Enter')$('heroGo').click();};
 const io=new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&x.target.classList.add('in')),{threshold:.12});
