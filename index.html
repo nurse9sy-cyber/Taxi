@@ -25,7 +25,7 @@ img{max-width:100%}
 .checker{height:12px;background:repeating-conic-gradient(var(--black) 0 25%,var(--white) 0 50%) 0 0/18px 18px}
 .checker.thin{height:7px}
 header{position:sticky;top:0;z-index:60;background:var(--yellow);box-shadow:0 4px 18px rgba(21,21,26,.18)}
-.hrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 18px;max-width:1180px;margin:0 auto}
+.hrow{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 18px;max-width:1180px;margin:0 auto}
 .logo{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
 .logo-mark{display:flex;flex-direction:column;align-items:center;background:var(--black);border:2px solid var(--yellow);border-radius:10px;padding:4px 13px 5px;box-shadow:0 4px 0 #000,inset 0 0 14px rgba(255,196,0,.18);transition:.2s}
 .logo-h{font-family:'Lalezar';color:var(--yellow);font-size:20px;line-height:1.1}
@@ -34,11 +34,12 @@ header{position:sticky;top:0;z-index:60;background:var(--yellow);box-shadow:0 4p
 .logo .sub{font-size:11px;font-weight:800;color:var(--black);line-height:1.3}
 nav{display:flex;align-items:center;gap:6px}
 nav a{color:var(--black);text-decoration:none;font-weight:800;font-size:14px;padding:9px 12px;border-radius:9px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:11px;font-weight:800;font-size:15px;padding:12px 20px;min-height:46px;transition:.2s;text-decoration:none;border:2px solid transparent}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:11px;font-weight:800;font-size:15px;padding:12px 20px;min-height:46px;transition:.2s;text-decoration:none;border:2px solid transparent;position:relative}
 .btn.dark{background:var(--black);color:var(--yellow);box-shadow:0 4px 0 #000}
 .btn.line{background:#fff;color:var(--black);border-color:var(--black)}
 .btn.call{background:var(--blue);color:#fff}
 .btn.wa{background:#22B358;color:#fff}
+.bdg{position:absolute;top:-8px;inset-inline-start:-8px;background:var(--red);color:#fff;border-radius:99px;font-size:10px;min-width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-weight:800;padding:0 4px;border:2px solid var(--yellow)}
 .demo-chip{background:var(--black);color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:99px;animation:blink 2s infinite}
 @keyframes blink{50%{opacity:.55}}
 .adstrip{background:linear-gradient(90deg,#FFE38A,var(--yellow) 35%,#FFE38A);animation:adIn .5s;overflow:hidden}
@@ -46,7 +47,7 @@ nav a{color:var(--black);text-decoration:none;font-weight:800;font-size:14px;pad
 .ad-inner{display:flex;align-items:center;gap:12px;padding:11px 18px;max-width:1180px;margin:0 auto}
 .ad-badge{background:var(--black);color:var(--yellow);font-family:'Lalezar';font-size:15px;padding:4px 14px;border-radius:8px;white-space:nowrap;animation:blink 2.2s infinite;flex:none}
 .ad-scroll{flex:1;overflow:hidden}
-.ad-scroll b{display:inline-block;white-space:nowrap;font-weight:800;font-size:15px;color:var(--black);padding-inline-start:100%;animation:admar 18s linear infinite}
+.ad-scroll b{display:inline-block;white-space:nowrap;font-weight:800;font-size:15px;color:var(--black);padding-inline-start:100%;animation:admar 22s linear infinite}
 @keyframes admar{to{transform:translateX(100%)}}
 .hero{background:linear-gradient(180deg,#1B1B20,#15151A 70%);color:#fff;position:relative;overflow:hidden}
 .hero-grid{position:relative;display:grid;grid-template-columns:1.25fr .85fr;gap:34px;padding:54px 0 26px;align-items:center}
@@ -84,7 +85,6 @@ nav a{color:var(--black);text-decoration:none;font-weight:800;font-size:14px;pad
 .chip{border:2px solid var(--black);border-radius:99px;padding:9px 16px;font-weight:800;font-size:13px;background:#fff;transition:.2s;display:inline-flex;align-items:center;gap:6px;min-height:40px}
 .chip.on{background:var(--black);color:var(--yellow)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;width:100%;padding-top:8px;border-top:2px dashed var(--line);margin-top:6px}
-/* بطاقات مدمجة */
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
 .card{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden;transition:.25s;position:relative;display:flex;flex-direction:column;border:2px solid transparent;opacity:0;transform:translateY(16px)}
 .card.in{opacity:1;transform:none}
@@ -154,7 +154,6 @@ footer a{color:#CFCFD8;text-decoration:none;display:block;margin:8px 0;font-size
 .rate-pick{display:flex;gap:6px;align-items:center;margin-top:14px;background:#FFF7DC;border:2px dashed var(--yellow);border-radius:12px;padding:12px;flex-wrap:wrap}
 .rstar{font-size:28px;color:#D9D5C4;padding:2px}
 .rstar.on{color:var(--yellow)}
-/* الدردشة */
 .msgs{max-height:44vh;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:12px;background:var(--paper);border-radius:12px;border:1.5px solid var(--line);margin-top:12px}
 .msg{max-width:82%;padding:9px 13px;border-radius:12px;font-size:14px;line-height:1.6;word-break:break-word}
 .msg.me{align-self:flex-end;background:var(--yellow);color:var(--black)}
@@ -241,6 +240,7 @@ footer a{color:#CFCFD8;text-decoration:none;display:block;margin:8px 0;font-size
 <nav>
 <a href="#list" class="hidesm">السائقون</a>
 <a href="#how" class="hidesm">كيف يعمل؟</a>
+<button class="btn line" id="btnChat" style="display:none;min-height:42px;padding:9px 16px" onclick="chatRole='driver';openDriverInbox()">💬<span id="chatBadge" class="bdg" style="display:none">0</span></button>
 <button class="btn line" id="btnLogin" style="min-height:42px;padding:9px 14px;font-size:13.5px">دخول</button>
 <button class="btn dark" id="btnJoinTop" style="min-height:42px;padding:9px 14px;font-size:13.5px">انضم كسائق</button>
 </nav>
@@ -267,7 +267,7 @@ footer a{color:#CFCFD8;text-decoration:none;display:block;margin:8px 0;font-size
 </div>
 </div>
 <div class="meter reveal">
-<div class="top"><span>عدّاد سوريا</span><span class="dot" style="width:10px;height:10px;border-radius:50%;background:var(--green);animation:blink 1.6s infinite"></span></div>
+<div class="top"><span>عدّاد سوريا</span><span style="width:10px;height:10px;border-radius:50%;background:var(--green);animation:blink 1.6s infinite"></span></div>
 <div class="grid">
 <div class="cell"><div class="num" id="stTotal">0</div><div class="lbl">سائق مسجّل</div></div>
 <div class="cell"><div class="num" id="stAvail" style="color:var(--green)">0</div><div class="lbl">متاح الآن</div></div>
@@ -305,8 +305,8 @@ footer a{color:#CFCFD8;text-decoration:none;display:block;margin:8px 0;font-size
 <h2 class="reveal">كيف تعمل المنصة؟</h2>
 <div class="route">
 <div class="stop reveal"><div class="n">١</div><h3>تصفّح واختر</h3><p>بطاقات مدمجة، فلاتر بالمحافظة والنوع والقرب منك ضمن النطاق الذي تحدده.</p></div>
-<div class="stop reveal"><div class="n">٢</div><h3>تواصل بالطريقة التي تناسبك</h3><p>اتصال مباشر، واتساب، أو دردشة داخل البرنامج باسمك ورقمك — والسائق يقبل المهمة أو يعتذر.</p></div>
-<div class="stop reveal"><div class="n">٣</div><h3>تابع طلبك</h3><p>حالة طلبك تظهر لحظيًا، والإدارة تطّلع على قناة التواصل كاملة لضمان حقك.</p></div>
+<div class="stop reveal"><div class="n">٢</div><h3>تواصل بالطريقة التي تناسبك</h3><p>اتصال مباشر، واتساب، أو دردشة داخل البرنامج — الدردشة فورية والقبول يخص المهمة بعد الاتفاق.</p></div>
+<div class="stop reveal"><div class="n">٣</div><h3>تابع طلبك</h3><p>حالة المهمة تظهر لحظيًا للطرفين، والإدارة تطّلع على قناة التواصل لضمان حقك.</p></div>
 </div>
 </div>
 </section>
@@ -415,8 +415,8 @@ let drivers=[],user=null,myDoc=null,isAdmin=false;
 let filters={q:'',city:'all',type:'all',svc:'all',sort:'new',near:false,range:200};
 let userLoc=null,reportTarget=null,regStep=1,regMode='email',licFile=null,geo={lat:null,lng:null},editingId=null,geoTried=false;
 let liveWatch=null,lastSent=0;
-let AD={adText:'',adOn:false};
-let chatRole='user',chatThread=null,chatDriver=null,unsubMsgs=null,unsubThr=null,notifySince=0,chatKnownAt=0,cancelMode=false;
+let ADALL=[];
+let chatRole='user',chatThread=null,chatDriver=null,unsubMsgs=null,unsubThr=null,unsubThrDoc=null,notifySince=0,chatKnownAt=0,chatMsgs=[],cancelMode=false;
 let favs=new Set(JSON.parse(localStorage.getItem('taxi_favs')||'[]'));
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -428,12 +428,15 @@ function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show')
 function chatNotify(title,body){toast(title+' — '+body);if('Notification' in window&&Notification.permission==='granted'){try{new Notification(title,{body:body});}catch(e){}}}
 function dist(loc,d){if(d.lat==null)return 99999;const R=6371,x=(d.lat-loc.lat)*Math.PI/180,y=(d.lng-loc.lng)*Math.PI/180,a=Math.sin(x/2)**2+Math.cos(loc.lat*Math.PI/180)*Math.cos(d.lat*Math.PI/180)*Math.sin(y/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
 function fmtDist(m){return m<1000?Math.round(m)+' م':(m/1000).toFixed(1)+' كم';}
+/* ═══ إعلانات متعددة ═══ */
 function loadAdSettings(){
-if(LIVE){db.collection('settings').doc('public').onSnapshot(s=>{AD=s.exists?(s.data()||AD):AD;renderAdStrip();},()=>{});}
-else{try{AD=JSON.parse(localStorage.getItem('taxi_ad')||'{"adText":"","adOn":false}')}catch(e){}renderAdStrip();}
+if(LIVE){db.collection('ads').onSnapshot(s=>{ADALL=s.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));renderAdStrip();},()=>{});}
+else{try{ADALL=JSON.parse(localStorage.getItem('taxi_ads')||'[]');}catch(e){}renderAdStrip();}
 }
-function renderAdStrip(){if(AD.adOn&&AD.adText){$('adTxt').textContent=AD.adText;$('adStrip').style.display='block';}else $('adStrip').style.display='none';}
-async function saveAd(){const t=$('admAdText').value.trim(),on=$('admAdSw').classList.contains('on');if(!t&&on)return toast('اكتب نص الإعلان أولًا');if(LIVE)await db.collection('settings').doc('public').set({adText:t,adOn:on,updatedAt:Date.now()});else{AD={adText:t,adOn:on};localStorage.setItem('taxi_ad',JSON.stringify(AD));renderAdStrip();}toast(on&&t?'📢 تم نشر الإعلان':'تم إيقاف الإعلان');}
+function renderAdStrip(){const txt=ADALL.filter(a=>a.on).map(a=>a.text).join('  ★  ');if(txt){$('adTxt').textContent=txt;$('adStrip').style.display='block';}else $('adStrip').style.display='none';}
+async function addAd(){const t=$('admAdText').value.trim();if(!t)return toast('اكتب نص الإعلان');if(LIVE)await db.collection('ads').add({text:t,on:true,createdAt:Date.now()});else{ADALL.push({id:'x'+Date.now(),text:t,on:true,createdAt:Date.now()});localStorage.setItem('taxi_ads',JSON.stringify(ADALL));renderAdStrip();}$('admAdText').value='';toast('📢 تمت إضافة الإعلان');}
+async function toggleAd(id,on){if(LIVE)await db.collection('ads').doc(id).update({on:on});else{const a=ADALL.find(x=>x.id===id);if(a)a.on=on;localStorage.setItem('taxi_ads',JSON.stringify(ADALL));renderAdStrip();}openAdmin();}
+async function delAd(id){if(!confirm('حذف هذا الإعلان؟'))return;if(LIVE)await db.collection('ads').doc(id).delete();else{ADALL=ADALL.filter(x=>x.id!==id);localStorage.setItem('taxi_ads',JSON.stringify(ADALL));renderAdStrip();}openAdmin();}
 (function initFB(){
 $('fCity').innerHTML='<option value="all">كل المحافظات</option>'+GOVS.map(g=>`<option>${g}</option>`).join('');
 $('rCity').innerHTML=GOVS.map(g=>`<option>${g}</option>`).join('');
@@ -448,7 +451,7 @@ user=u;
 if(u){const s=await db.collection('drivers').doc(u.uid).get();myDoc=s.exists?s.data():null;
 const a=await db.collection('admins').doc(u.uid).get().catch(()=>null);isAdmin=!!(a&&a.exists);
 if(myDoc)setupDriverNotify(u.uid);}
-else{myDoc=null;isAdmin=false;if(unsubThr){unsubThr();unsubThr=null;}}
+else{myDoc=null;isAdmin=false;if(unsubThr){unsubThr();unsubThr=null;}const b=$('chatBadge');if(b)b.style.display='none';}
 refreshHeader();
 });
 let firstSnap=false;
@@ -460,20 +463,26 @@ loadAdSettings();
 }catch(e){console.error(e);$('demoChip').style.display='inline-block';toast('⚠️ وضع تجريبي — '+(e.message||''));drivers=DEMO.slice();loadAdSettings();renderAll();}
 })();
 if('serviceWorker' in navigator&&location.protocol!=='file:'){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});});}
-/* إشعارات السائق اللحظية */
+/* ═══ عدّاد الدردشات + إشعارات السائق ═══ */
+function updateBadgeFromThreads(threads){
+let c=0;
+threads.forEach(t=>{const lr=+localStorage.getItem('read_'+t.id)||0;if(t.lastMsgFrom==='user'&&(t.lastMsgAt||0)>lr)c++;});
+const b=$('chatBadge');if(b){b.textContent=c;b.style.display=c>0?'flex':'none';}
+}
 function setupDriverNotify(uid){
 if(unsubThr)unsubThr();
 notifySince=Date.now();
 unsubThr=db.collection('threads').where('driverUid','==',uid).onSnapshot(s=>{
-s.docChanges().forEach(ch=>{const t=ch.doc.data();
-if(t.lastMsgFrom==='user'&&t.lastMsgAt>notifySince){chatNotify('🚕 طلب/رسالة من '+t.userName,t.lastText||'يرغب بالتواصل معك');}
-});
+const threads=s.docs.map(x=>({id:x.id,...x.data()}));
+updateBadgeFromThreads(threads);
+s.docChanges().forEach(ch=>{const t=ch.doc.data();if(t.lastMsgFrom==='user'&&(t.lastMsgAt||0)>notifySince){chatNotify('🚕 طلب/رسالة من '+t.userName,t.lastText||'يرغب بالتواصل معك');}});
 },()=>{});
 }
 function enableNotifPerm(){if(!('Notification' in window))return toast('المتصفح لا يدعم الإشعارات');Notification.requestPermission().then(p=>toast(p==='granted'?'🔔 تم تفعيل الإشعارات':'لم يُمنح الإذن'));}
 function refreshHeader(){
 if(user){$('btnLogin').textContent='🚪 خروج';$('btnLogin').onclick=doLogout;}
 else{$('btnLogin').textContent='دخول';$('btnLogin').onclick=openLogin;}
+$('btnChat').style.display=myDoc?'inline-flex':'none';
 if(isAdmin){$('btnJoinTop').textContent='🛡️ لوحة التحكم';$('btnJoinTop').onclick=openAdmin;}
 else if(user&&myDoc){$('btnJoinTop').textContent='🚕 لوحتي';$('btnJoinTop').onclick=openDash;}
 else{$('btnJoinTop').textContent='انضم كسائق';$('btnJoinTop').onclick=()=>openReg();}
@@ -539,7 +548,7 @@ const saved=JSON.parse(localStorage.getItem('taxi_visitor')||'null');
 if(!saved){renderChatSetup();openOv('ovChat');return;}
 await startUserChat(saved);
 }
-function renderChatSetup(){$('chatBox').innerHTML=`<h3 class="title">🗨️ التواصل مع ${esc(chatDriver.name)}</h3><p style="color:var(--gray);font-size:13px">أدخل اسمك ورقمك لفتح قناة تواصل خاصة بينك وبين السائق (تطّلع عليها الإدارة لضمان حقك).</p><div class="f-row" style="margin-top:12px"><label>اسمك *</label><input id="cuName" autocomplete="name"></div><div class="f-row"><label>رقم هاتفك *</label><input type="tel" id="cuPhone" dir="ltr" autocomplete="tel"></div><button class="btn dark" style="width:100%" onclick="submitChatSetup()">فتح الدردشة 🚀</button>`;}
+function renderChatSetup(){$('chatBox').innerHTML=`<h3 class="title">🗨️ التواصل مع ${esc(chatDriver.name)}</h3><div class="note-warn">⚠️ انتبه: الإدارة تطّلع على الدردشة لضمان الحقوق.</div><p style="color:var(--gray);font-size:13px;margin-top:8px">أدخل اسمك ورقمك لفتح قناة تواصل خاصة بينك وبين السائق.</p><div class="f-row" style="margin-top:12px"><label>اسمك *</label><input id="cuName" autocomplete="name"></div><div class="f-row"><label>رقم هاتفك *</label><input type="tel" id="cuPhone" dir="ltr" autocomplete="tel"></div><button class="btn dark" style="width:100%" onclick="submitChatSetup()">فتح الدردشة 🚀</button>`;}
 async function submitChatSetup(){const n=$('cuName').value.trim(),p=digits($('cuPhone').value);if(n.length<2||p.length<8)return toast('أدخل اسمك ورقمك الصحيح');const v={name:n,phone:p};localStorage.setItem('taxi_visitor',JSON.stringify(v));await startUserChat(v);}
 async function startUserChat(saved){
 try{
@@ -554,39 +563,45 @@ await ref.collection('messages').add({from:'sys',text:`🚖 طلب تواصل ج
 chatThread=t;openChatView();
 }catch(e){console.error(e);toast('تعذر فتح الدردشة: '+(e.message||''));}
 }
-function statusPill(s){return {open:'<span class="pill open">⏳ بانتظار قبول السائق</span>',accepted:'<span class="pill accepted">✔ قبل السائق المهمة</span>',declined:'<span class="pill declined">✖ اعتذر السائق</span>',cancelled:'<span class="pill cancelled">🚫 أُلغي الطلب</span>'}[s]||'';}
-function openChatView(){
-cancelMode=false;
+function statusPill(s){return {open:'<span class="pill open">💬 قناة مفتوحة — بانتظار الاتفاق على المهمة</span>',accepted:'<span class="pill accepted">✔ قبل السائق المهمة</span>',declined:'<span class="pill declined">✖ اعتذر السائق عن المهمة</span>',cancelled:'<span class="pill cancelled">🚫 أُلغي الطلب</span>'}[s]||'';}
+function renderChatFrame(){
 const t=chatThread;
-const other=chatRole==='user'?t.driverName:(chatRole==='driver'?t.userName:'قناة تواصل');
-$('chatBox').innerHTML=`<h3 class="title">🗨️ ${esc(other)}</h3><div style="margin-top:6px">${statusPill(t.status)} ${chatRole==='admin'?`<span class="pill open">👁 اطلاع الإدارة</span>`:''}</div>${t.status==='cancelled'&&t.cancelReason?`<div class="note-warn">سبب الإلغاء: ${esc(t.cancelReason)}${t.cancelNote?' — '+esc(t.cancelNote):''}</div>`:''}<div id="cancelZone"></div><div class="msgs" id="msgsBox"></div>${(chatRole!=='admin'&&t.status!=='cancelled')?`<div class="chat-in"><input id="chatText" placeholder="اكتب رسالتك…" autocomplete="off"><button class="btn dark" onclick="sendChat()">إرسال</button></div>`:''}<div class="small-acts">${chatRole==='user'&&t.status!=='cancelled'?`<button class="mini" style="border-color:var(--red);color:var(--red)" onclick="showCancelPanel()">🚫 إلغاء الطلب</button>`:''}${chatRole==='driver'&&t.status==='open'?`<button class="mini" style="border-color:var(--green);color:var(--green)" onclick="jobAccept()">✔ قبول المهمة</button><button class="mini" style="border-color:var(--red);color:var(--red)" onclick="jobDecline()">✖ اعتذار</button>`:''}</div>`;
+const other=chatRole==='user'?t.driverName:(chatRole==='driver'?t.userName:(t.userName+' ↔ '+t.driverName));
+$('chatBox').innerHTML=`<h3 class="title">🗨️ ${esc(other)}</h3><div class="note-warn">⚠️ انتبه: الإدارة تطّلع على الدردشة لضمان الحقوق.</div><div style="margin-top:8px">${statusPill(t.status)} ${chatRole==='admin'?'<span class="pill open">👁 اطلاع الإدارة</span>':''}</div>${t.status==='cancelled'&&t.cancelReason?`<div class="note-warn">سبب الإلغاء: ${esc(t.cancelReason)}${t.cancelNote?' — '+esc(t.cancelNote):''}</div>`:''}<div id="cancelZone"></div><div class="msgs" id="msgsBox"></div>${(chatRole!=='admin'&&t.status!=='cancelled')?`<div class="chat-in"><input id="chatText" placeholder="اكتب رسالتك…" autocomplete="off" onkeydown="if(event.key==='Enter')sendChat()"><button class="btn dark" onclick="sendChat()">إرسال</button></div>`:''}<div class="small-acts">${chatRole==='user'&&t.status!=='cancelled'?`<button class="mini" style="border-color:var(--red);color:var(--red)" onclick="showCancelPanel()">🚫 إلغاء الطلب</button>`:''}${chatRole==='driver'&&t.status==='open'?`<button class="mini" style="border-color:var(--green);color:var(--green)" onclick="jobAccept()">✔ قبول المهمة</button><button class="mini" style="border-color:var(--red);color:var(--red)" onclick="jobDecline()">✖ اعتذار عن المهمة</button>`:''}</div>`;
+renderMsgs(chatMsgs);
+}
+function openChatView(){
+cancelMode=false;chatMsgs=[];
+renderChatFrame();
+if(unsubThrDoc)unsubThrDoc();
+unsubThrDoc=db.collection('threads').doc(chatThread.id).onSnapshot(s=>{if(s.exists){chatThread={id:chatThread.id,...s.data()};renderChatFrame();}},()=>{});
 if(unsubMsgs)unsubMsgs();
 chatKnownAt=Date.now();
-unsubMsgs=db.collection('threads').doc(t.id).collection('messages').orderBy('at','asc').onSnapshot(s=>{
-const msgs=s.docs.map(x=>x.data());
-renderMsgs(msgs);
-msgs.forEach(m=>{const mine=(chatRole==='user'&&m.from==='user')||(chatRole==='driver'&&m.from==='driver');if(!mine&&m.from!=='sys'&&m.at>chatKnownAt){chatNotify('💬 رسالة من '+(chatRole==='user'?t.driverName:t.userName),m.text);} });
-if(msgs.length)chatKnownAt=msgs[msgs.length-1].at;
+unsubMsgs=db.collection('threads').doc(chatThread.id).collection('messages').orderBy('at','asc').onSnapshot(s=>{
+chatMsgs=s.docs.map(x=>x.data());
+renderMsgs(chatMsgs);
+chatMsgs.forEach(m=>{const mine=(chatRole==='user'&&m.from==='user')||(chatRole==='driver'&&m.from==='driver');if(!mine&&m.from!=='sys'&&m.at>chatKnownAt){chatNotify('💬 رسالة من '+(chatRole==='user'?chatThread.driverName:chatThread.userName),m.text);}});
+if(chatMsgs.length)chatKnownAt=chatMsgs[chatMsgs.length-1].at;
 },()=>{});
 openOv('ovChat');
 }
 function renderMsgs(msgs){const box=$('msgsBox');if(!box)return;box.innerHTML=msgs.map(m=>{const mine=(chatRole==='user'&&m.from==='user')||(chatRole==='driver'&&m.from==='driver');return `<div class="msg ${m.from==='sys'?'sys':(mine?'me':'them')}">${esc(m.text)}</div>`;}).join('');box.scrollTop=box.scrollHeight;}
 async function addMsg(tid,from,text){await db.collection('threads').doc(tid).collection('messages').add({from,text,at:Date.now()});if(from!=='sys')await db.collection('threads').doc(tid).update({lastMsgAt:Date.now(),lastMsgFrom:from,lastText:text});}
-async function sendChat(){const txt=$('chatText').value.trim();if(!txt)return;$('chatText').value='';await addMsg(chatThread.id,chatRole==='user'?'user':'driver',txt);}
-function showCancelPanel(){cancelMode=true;$('cancelZone').innerHTML=`<div class="cxo"><b style="font-size:14px">لماذا تريد إلغاء الطلب؟ (إلزامي)</b>${CANCEL_REASONS.map((r,i)=>`<label><input type="radio" name="cxr" value="${esc(r)}"> ${esc(r)}</label>`).join('')}<textarea id="cxNote" rows="2" placeholder="تفاصيل إضافية (مطلوبة عند اختيار «سبب آخر»)"></textarea><div style="display:flex;gap:8px"><button class="btn dark" style="flex:1;min-height:42px" onclick="confirmCancel()">تأكيد الإلغاء</button><button class="btn line" style="flex:1;min-height:42px" onclick="hideCancel()">تراجع</button></div></div>`;}
-function hideCancel(){cancelMode=false;$('cancelZone').innerHTML='';}
-async function confirmCancel(){const r=document.querySelector('input[name=cxr]:checked');if(!r)return toast('اختر سبب الإلغاء أولًا');const note=$('cxNote').value.trim();if(r.value==='سبب آخر'&&note.length<5)return toast('اكتب السبب بالتفصيل');await db.collection('threads').doc(chatThread.id).update({status:'cancelled',cancelReason:r.value,cancelNote:note});await addMsg(chatThread.id,'sys',`🚫 أُلغي الطلب — السبب: ${r.value}${note?' — '+note:''}`);chatThread.status='cancelled';chatThread.cancelReason=r.value;openChatView();}
-async function jobAccept(){await db.collection('threads').doc(chatThread.id).update({status:'accepted'});await addMsg(chatThread.id,'sys','✔ قبل السائق المهمة');chatThread.status='accepted';openChatView();toast('✔ قبلت المهمة');}
-async function jobDecline(){await db.collection('threads').doc(chatThread.id).update({status:'declined'});await addMsg(chatThread.id,'sys','✖ اعتذر السائق عن المهمة');chatThread.status='declined';openChatView();}
-function closeChat(){if(unsubMsgs){unsubMsgs();unsubMsgs=null;}closeOv('ovChat');}
+async function sendChat(){const el=$('chatText');if(!el)return;const txt=el.value.trim();if(!txt)return;el.value='';await addMsg(chatThread.id,chatRole==='user'?'user':'driver',txt);}
+function showCancelPanel(){$('cancelZone').innerHTML=`<div class="cxo"><b style="font-size:14px">لماذا تريد إلغاء الطلب؟ (إلزامي)</b>${CANCEL_REASONS.map(r=>`<label><input type="radio" name="cxr" value="${esc(r)}"> ${esc(r)}</label>`).join('')}<textarea id="cxNote" rows="2" placeholder="تفاصيل إضافية (مطلوبة عند اختيار «سبب آخر»)"></textarea><div style="display:flex;gap:8px"><button class="btn dark" style="flex:1;min-height:42px" onclick="confirmCancel()">تأكيد الإلغاء</button><button class="btn line" style="flex:1;min-height:42px" onclick="hideCancel()">تراجع</button></div></div>`;}
+function hideCancel(){$('cancelZone').innerHTML='';}
+async function confirmCancel(){const r=document.querySelector('input[name=cxr]:checked');if(!r)return toast('اختر سبب الإلغاء أولًا');const note=$('cxNote').value.trim();if(r.value==='سبب آخر'&&note.length<5)return toast('اكتب السبب بالتفصيل');await db.collection('threads').doc(chatThread.id).update({status:'cancelled',cancelReason:r.value,cancelNote:note});await addMsg(chatThread.id,'sys',`🚫 أُلغي الطلب — السبب: ${r.value}${note?' — '+note:''}`);}
+async function jobAccept(){await db.collection('threads').doc(chatThread.id).update({status:'accepted'});await addMsg(chatThread.id,'sys','✔ قبل السائق المهمة');toast('✔ قبلت المهمة');}
+async function jobDecline(){await db.collection('threads').doc(chatThread.id).update({status:'declined'});await addMsg(chatThread.id,'sys','✖ اعتذر السائق عن المهمة');}
+function closeChat(){if(unsubMsgs){unsubMsgs();unsubMsgs=null;}if(unsubThrDoc){unsubThrDoc();unsubThrDoc=null;}closeOv('ovChat');}
 async function openDriverInbox(){
 if(!LIVE||!user)return toast('سجّل دخولك أولًا');
 $('chatBox').innerHTML='<h3 class="title">📥 الطلبات والرسائل</h3><div class="loader"></div>';openOv('ovChat');
 const s=await db.collection('threads').where('driverUid','==',user.uid).get();
 const list=s.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>(b.lastMsgAt||0)-(a.lastMsgAt||0));
-$('chatBox').innerHTML=`<h3 class="title">📥 الطلبات والرسائل</h3>`+(list.length?list.map(t=>`<div class="arow"><div class="hd"><b>${esc(t.userName)}</b>${statusPill(t.status)}</div><small>📞 ${esc(t.userPhone)} · آخر رسالة: ${t.lastText?esc(t.lastText):'—'}</small><div class="acts"><button class="abtn blue" onclick="openDriverThread('${t.id}')">💬 فتح المحادثة</button></div></div>`).join(''):'<p style="color:var(--gray)">لا توجد طلبات بعد — فعّل الإشعارات ليصلك كل جديد 🔔</p>');
+$('chatBox').innerHTML=`<h3 class="title">📥 الطلبات والرسائل</h3>`+(list.length?list.map(t=>`<div class="arow"><div class="hd"><b>${esc(t.userName)}</b>${statusPill(t.status)}</div><small>📞 ${esc(t.userPhone)} · آخر رسالة: ${t.lastText?esc(t.lastText):'—'}</small><div class="acts"><button class="abtn blue" onclick="openDriverThread('${t.id}')">💬 فتح المحادثة</button></div></div>`).join(''):'<p style="color:var(--gray)">لا توجد طلبات بعد.</p>');
 }
-async function openDriverThread(tid){const s=await db.collection('threads').doc(tid).get();if(!s.exists)return;chatThread={id:tid,...s.data()};chatRole='driver';openChatView();}
+async function openDriverThread(tid){const s=await db.collection('threads').doc(tid).get();if(!s.exists)return;chatThread={id:tid,...s.data()};chatRole='driver';localStorage.setItem('read_'+tid,String(Date.now()));openChatView();if(user)setupDriverNotify(user.uid);}
 async function openAdminThread(tid){const s=await db.collection('threads').doc(tid).get();if(!s.exists)return;chatThread={id:tid,...s.data()};chatRole='admin';openChatView();}
 /* ═══════════ نهاية الدردشة ═══════════ */
 $('btnJoinTop').onclick=$('btnJoinHero').onclick=()=>openReg();
@@ -623,7 +638,7 @@ function arErr(e){const c=e.code||'';return({'auth/email-already-in-use':'هذا
 function setLoginMode(m){$('lmEmail').classList.toggle('on',m==='email');$('lmPhone').classList.toggle('on',m==='phone');$('lEmail').style.display=m==='email'?'block':'none';$('lPhone').style.display=m==='phone'?'block':'none';$('loginErr').style.display='none';}
 async function doEmailLogin(){if(!LIVE){user={uid:'demo'};myDoc=null;closeOv('ovLogin');refreshHeader();openReg();return;}try{await auth.signInWithEmailAndPassword($('lMail').value.trim(),$('lPass').value);closeOv('ovLogin');toast('🚕 أهلًا');await loadSession(auth.currentUser.uid);if(isAdmin)openAdmin();else if(myDoc)openDash();else openReg();}catch(e){$('loginErr').style.display='block';$('loginErr').textContent=arErr(e);}}
 async function doPhoneLogin(){if(!LIVE){user={uid:'demo'};myDoc=null;closeOv('ovLogin');refreshHeader();openReg();return;}try{await auth.signInWithEmailAndPassword(phoneToEmail($('lPhoneNum').value),$('lPassP').value);closeOv('ovLogin');toast('🚕 أهلًا');await loadSession(auth.currentUser.uid);if(isAdmin)openAdmin();else if(myDoc)openDash();else openReg();}catch(e){$('loginErr').style.display='block';$('loginErr').textContent=arErr(e);}}
-function openDash(){const d=myDoc;if(!d){openReg();return;}const a=avg(d);$('dashBox').innerHTML=`<h3 class="title">لوحة السائق 🚕</h3><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><div><b style="font-size:17px">${esc(d.name)}</b><br><small style="color:var(--gray)">${esc(d.taxiType)} · ${esc(d.city)}</small></div><span class="vstatus ${d.verified}">${d.hasLicense?{pending:'⏳ قيد المراجعة',approved:'✔ موثّق',rejected:'✖ مرفوض'}[d.verified]:'بدون شهادة'}</span></div><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><span style="font-weight:800">📥 طلبات ورسائل الزبائن<br><small style="color:var(--gray)">اقبل المهمة أو اعتذر — والإدارة تطّلع</small></span><button class="btn dark" style="min-height:42px;padding:10px 16px" onclick="chatRole='driver';openDriverInbox()">فتح 📥</button></div><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800">🔔 إشعارات الرسائل<br><small style="color:var(--gray)">تصلك فور تواصل أي زبون</small></span><button class="mini" onclick="enableNotifPerm()">تفعيل</button></div><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800">📡 بث موقعي المباشر<br><small style="color:var(--gray)">يحدّث موقعك أثناء بقاء الصفحة مفتوحة</small></span><div id="liveSw" class="sw ${liveWatch!=null?'on':''}" onclick="toggleLive(this)"></div></div><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800">🟢 حالتي:</span><div style="display:flex;align-items:center;gap:10px"><b id="avTxt">${d.available?'متاح':'غير متاح'}</b><div class="sw ${d.available?'on':''}" onclick="toggleAvail(this)"></div></div></div><div class="d-grid"><div class="d-cell"><div class="k">⭐ التقييم</div><div class="v"><span class="stars">${stars(a)}</span> ${a?a.toFixed(1):'—'} (${d.ratingCount||0})</div></div><div class="d-cell"><div class="k">📍 موقعي</div><div class="v">${d.lat!=null?`<button class="mini" onclick="geoRefresh()">🔄 تحديث</button>`:'<button class="mini" onclick="geoRefresh()">📍 تحديد</button>'}</div></div></div><div class="small-acts"><button class="mini" onclick="editProfile()">✏️ تعديل</button><button class="mini" onclick="doLogout()">🚪 خروج</button></div>`;openOv('ovDash');
+function openDash(){const d=myDoc;if(!d){openReg();return;}const a=avg(d);$('dashBox').innerHTML=`<h3 class="title">لوحة السائق 🚕</h3><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px"><div><b style="font-size:17px">${esc(d.name)}</b><br><small style="color:var(--gray)">${esc(d.taxiType)} · ${esc(d.city)}</small></div><span class="vstatus ${d.verified}">${d.hasLicense?{pending:'⏳ قيد المراجعة',approved:'✔ موثّق',rejected:'✖ مرفوض'}[d.verified]:'بدون شهادة'}</span></div><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800">🔔 إشعارات الرسائل<br><small style="color:var(--gray)">تصلك فور تواصل أي زبون — وعداد الدردشات أعلى الصفحة 💬</small></span><button class="mini" onclick="enableNotifPerm()">تفعيل</button></div><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800">📡 بث موقعي المباشر<br><small style="color:var(--gray)">يحدّث موقعك أثناء بقاء الصفحة مفتوحة</small></span><div id="liveSw" class="sw ${liveWatch!=null?'on':''}" onclick="toggleLive(this)"></div></div><div class="dash-card" style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:800">🟢 حالتي:</span><div style="display:flex;align-items:center;gap:10px"><b id="avTxt">${d.available?'متاح':'غير متاح'}</b><div class="sw ${d.available?'on':''}" onclick="toggleAvail(this)"></div></div></div><div class="d-grid"><div class="d-cell"><div class="k">⭐ التقييم</div><div class="v"><span class="stars">${stars(a)}</span> ${a?a.toFixed(1):'—'} (${d.ratingCount||0})</div></div><div class="d-cell"><div class="k">📍 موقعي</div><div class="v">${d.lat!=null?`<button class="mini" onclick="geoRefresh()">🔄 تحديث</button>`:'<button class="mini" onclick="geoRefresh()">📍 تحديد</button>'}</div></div></div><div class="small-acts"><button class="mini" onclick="editProfile()">✏️ تعديل</button><button class="mini" onclick="doLogout()">🚪 خروج</button></div>`;openOv('ovDash');
 if(user&&localStorage.getItem('live_'+user.uid)==='1'&&liveWatch==null){startLive();const el=$('liveSw');if(el)el.classList.add('on');}}
 async function geoRefresh(){if(!navigator.geolocation)return toast('المتصفح لا يدعم');navigator.geolocation.getCurrentPosition(async p=>{const lat=+p.coords.latitude.toFixed(5),lng=+p.coords.longitude.toFixed(5);if(LIVE&&user)await db.collection('drivers').doc(user.uid).update({lat,lng});if(myDoc){myDoc.lat=lat;myDoc.lng=lng;}toast('📍 تم تحديث موقعك');openDash();},()=>toast('اسمح بالوصول إلى الموقع'));}
 async function toggleAvail(el){el.classList.toggle('on');const v=el.classList.contains('on');$('avTxt').textContent=v?'متاح':'غير متاح';if(LIVE)await db.collection('drivers').doc(user.uid).update({available:v,lastSeen:Date.now()});else myDoc.available=v;toast(v?'🟢 متاح الآن':'غير متاح');}
@@ -632,12 +647,14 @@ function doLogout(){if(liveWatch!=null&&navigator.geolocation)navigator.geolocat
 let taps=0,tapT;$('logoBadge').addEventListener('click',()=>{taps++;clearTimeout(tapT);tapT=setTimeout(()=>taps=0,1600);if(taps>=5){taps=0;openOv('ovAdminLogin');}});
 async function adminLogin(){const e=$('aMail').value.trim(),p=$('aPass').value;if(!LIVE){if(p==='123456'){isAdmin=true;closeOv('ovAdminLogin');openAdmin();}else toast('كلمة المرور غير صحيحة');return;}try{const c=await auth.signInWithEmailAndPassword(e,p);await loadSession(c.user.uid);if(isAdmin){closeOv('ovAdminLogin');toast('🛡️ أهلًا بك');openAdmin();}else{await auth.signOut();user=null;myDoc=null;refreshHeader();toast('ليست لديك صلاحية إدارة');}}catch(err){toast(arErr(err));}}
 async function openAdmin(){if(!isAdmin){toast('صلاحية مطلوبة');return;}$('adminBox').innerHTML='<h3 class="title">🛡️ لوحة التحكم</h3><div class="loader"></div>';openOv('ovAdmin');
-let all=drivers,reports=[],threads=[];
+let all=drivers,reports=[],threads=[],ads=[];
 if(LIVE){const s=await db.collection('drivers').get();all=s.docs.map(x=>({id:x.id,...x.data()}));
 const r=await db.collection('reports').get().catch(()=>({docs:[]}));reports=r.docs.map(x=>({id:x.id,...x.data()}));
-const th=await db.collection('threads').get().catch(()=>({docs:[]}));threads=th.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>(b.lastMsgAt||0)-(a.lastMsgAt||0));}
+const th=await db.collection('threads').get().catch(()=>({docs:[]}));threads=th.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>(b.lastMsgAt||0)-(a.lastMsgAt||0));
+const ad=await db.collection('ads').get().catch(()=>({docs:[]}));ads=ad.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));}
+else ads=ADALL;
 all.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));const pend=all.filter(d=>d.verified==='pending');
-$('adminBox').innerHTML=`<h3 class="title">🛡️ لوحة التحكم</h3><div class="astats"><div class="astat"><b>${all.length}</b><span>سائقون</span></div><div class="astat"><b style="color:#9C7200">${pend.length}</b><span>بانتظار</span></div><div class="astat"><b style="color:var(--blue)">${threads.length}</b><span>قنوات تواصل</span></div><div class="astat"><b style="color:var(--red)">${reports.length}</b><span>بلاغات</span></div></div><div class="asec">📢 الشريط الإعلاني المتحرك</div><div class="f-row"><textarea id="admAdText" rows="2" placeholder="اكتب نص الإعلان…">${esc(AD.adText)}</textarea></div><div class="tgl"><span>إظهار الإعلان</span><div class="sw ${AD.adOn?'on':''}" id="admAdSw" onclick="tglSw(this)"></div></div><button class="btn dark" style="width:100%" onclick="saveAd()">حفظ ونشر الإعلان</button><div style="height:14px"></div><button class="btn dark" style="width:100%" onclick="openEdit(null)">🚕 أضف سائقًا</button><div class="asec">💬 قنوات التواصل بين الزبائن والسائقين (${threads.length})</div>${threads.length?threads.map(t=>`<div class="arow"><div class="hd"><b>${esc(t.userName)} ↔ ${esc(t.driverName)}</b>${statusPill(t.status)}</div><small>📞 ${esc(t.userPhone)}${t.cancelReason?' · سبب الإلغاء: '+esc(t.cancelReason):''}</small><div class="acts"><button class="abtn blue" onclick="openAdminThread('${t.id}')">👁 عرض كامل المحادثة</button></div></div>`).join(''):'<p style="color:var(--gray)">لا توجد قنوات بعد</p>'}<div class="asec">⏳ بانتظار التوثيق (${pend.length})</div>${pend.length?pend.map(d=>`<div class="arow"><div class="hd"><b>${esc(d.name)}</b><span class="vstatus pending">${esc(d.city)}</span></div><small>📞 ${esc(d.phone)} · 🅿️ ${esc(d.spot||'—')}</small>${d.licenseImg?`<div class="lic-box"><img src="${d.licenseImg}"></div>`:''}<div class="acts" style="margin-top:10px"><button class="abtn ok" onclick="setVerify('${d.id}','approved')">✔ موافقة</button><button class="abtn no" onclick="setVerify('${d.id}','rejected')">✖ رفض</button><button class="abtn blue" onclick="openEdit('${d.id}')">✏️ تعديل</button></div></div>`).join(''):'<p style="color:var(--gray)">لا توجد طلبات</p>'}<div class="asec">🚕 كل السائقين (${all.length})</div><input type="search" id="admSearch" placeholder="🔍 ابحث…" oninput="admFilter(this.value)" style="margin-bottom:12px" autocomplete="off"><div id="admList">${all.map(adminRow).join('')}</div><div class="asec">🚩 البلاغات (${reports.length})</div>${reports.length?reports.map(r=>`<div class="arow"><small>${esc(r.reason)} — ${esc(r.note||'')}<br>السائق: ${esc(r.driverId)}</small><button class="abtn no" onclick="delReport('${r.id}')">🗑 حذف</button></div>`).join(''):'<p style="color:var(--gray)">لا توجد بلاغات</p>'}<div class="small-acts"><button class="mini" onclick="doLogout()">🚪 خروج</button></div>`;}
+$('adminBox').innerHTML=`<h3 class="title">🛡️ لوحة التحكم</h3><div class="astats"><div class="astat"><b>${all.length}</b><span>سائقون</span></div><div class="astat"><b style="color:#9C7200">${pend.length}</b><span>بانتظار</span></div><div class="astat"><b style="color:var(--blue)">${threads.length}</b><span>قنوات تواصل</span></div><div class="astat"><b style="color:var(--red)">${reports.length}</b><span>بلاغات</span></div></div><div class="asec">📢 الإعلانات (${ads.length})</div><div class="f-row"><textarea id="admAdText" rows="2" placeholder="اكتب نص إعلان جديد…"></textarea></div><button class="btn dark" style="width:100%" onclick="addAd()">➕ إضافة إعلان للشريط</button><div style="height:10px"></div>${ads.map(a=>`<div class="arow"><div class="hd"><b style="font-size:13px">${esc(a.text)}</b><div class="sw ${a.on?'on':''}" onclick="toggleAd('${a.id}',${!a.on})"></div></div><div class="acts"><button class="abtn no" onclick="delAd('${a.id}')">🗑 حذف</button></div></div>`).join('')}<div style="height:14px"></div><button class="btn dark" style="width:100%" onclick="openEdit(null)">🚕 أضف سائقًا</button><div class="asec">💬 قنوات التواصل (${threads.length})</div>${threads.length?threads.map(t=>`<div class="arow"><div class="hd"><b>${esc(t.userName)} ↔ ${esc(t.driverName)}</b>${statusPill(t.status)}</div><small>📞 ${esc(t.userPhone)}${t.cancelReason?' · سبب الإلغاء: '+esc(t.cancelReason):''}</small><div class="acts"><button class="abtn blue" onclick="openAdminThread('${t.id}')">👁 عرض كامل المحادثة</button></div></div>`).join(''):'<p style="color:var(--gray)">لا توجد قنوات بعد</p>'}<div class="asec">⏳ بانتظار التوثيق (${pend.length})</div>${pend.length?pend.map(d=>`<div class="arow"><div class="hd"><b>${esc(d.name)}</b><span class="vstatus pending">${esc(d.city)}</span></div><small>📞 ${esc(d.phone)} · 🅿️ ${esc(d.spot||'—')}</small>${d.licenseImg?`<div class="lic-box"><img src="${d.licenseImg}"></div>`:''}<div class="acts" style="margin-top:10px"><button class="abtn ok" onclick="setVerify('${d.id}','approved')">✔ موافقة</button><button class="abtn no" onclick="setVerify('${d.id}','rejected')">✖ رفض</button><button class="abtn blue" onclick="openEdit('${d.id}')">✏️ تعديل</button></div></div>`).join(''):'<p style="color:var(--gray)">لا توجد طلبات</p>'}<div class="asec">🚕 كل السائقين (${all.length})</div><input type="search" id="admSearch" placeholder="🔍 ابحث…" oninput="admFilter(this.value)" style="margin-bottom:12px" autocomplete="off"><div id="admList">${all.map(adminRow).join('')}</div><div class="asec">🚩 البلاغات (${reports.length})</div>${reports.length?reports.map(r=>`<div class="arow"><small>${esc(r.reason)} — ${esc(r.note||'')}<br>السائق: ${esc(r.driverId)}</small><button class="abtn no" onclick="delReport('${r.id}')">🗑 حذف</button></div>`).join(''):'<p style="color:var(--gray)">لا توجد بلاغات</p>'}<div class="small-acts"><button class="mini" onclick="doLogout()">🚪 خروج</button></div>`;}
 function adminRow(d){return `<div class="arow" data-name="${esc(d.name)} ${esc(d.city)}"><div class="hd"><b>${esc(d.name)}</b><span class="vstatus ${d.verified}">${{pending:'بانتظار',approved:'منشور',rejected:'مرفوض'}[d.verified]}</span></div><small>${esc(d.taxiType)} · ${esc(d.city)} · 📞 ${esc(d.phone)}</small><div class="acts"><button class="abtn blue" onclick="openEdit('${d.id}')">✏️ تعديل</button><button class="abtn ${d.available?'warn':'ok'}" onclick="admToggleAvail('${d.id}',${!d.available})">${d.available?'⏸ إيقاف':'▶ إتاحة'}</button><button class="abtn warn" onclick="resetRate('${d.id}')">⭐ تصفير</button><button class="abtn no" onclick="admDelete('${d.id}','${esc(d.name)}')">🗑 حذف</button></div></div>`;}
 function admFilter(q){[...document.querySelectorAll('#admList .arow')].forEach(r=>{r.style.display=r.dataset.name.includes(q)?'':'none';});}
 async function setVerify(id,v){if(LIVE)await db.collection('drivers').doc(id).update({verified:v});else{const d=drivers.find(x=>x.id===id);if(d)d.verified=v;}toast(v==='approved'?'✔ تم التوثيق':'تم الرفض');openAdmin();}
