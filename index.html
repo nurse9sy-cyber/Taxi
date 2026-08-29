@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -6,9 +7,14 @@
 <meta name="theme-color" content="#FFC400">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="تاكسي البلد">
+<meta name="format-detection" content="telephone=no">
+<meta name="description" content="دليل سائقي الأجرة (التاكسي) في كل المحافظات السورية — تصفّح، قارن، وتواصل مباشرة عبر الاتصال أو الواتساب أو الدردشة داخل التطبيق.">
 <title>H-yber Management | تاكسي البلد</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
@@ -24,8 +30,14 @@ img{max-width:100%}
 .wrap{max-width:1180px;margin:0 auto;padding:0 18px}
 .checker{height:12px;background:repeating-conic-gradient(var(--black) 0 25%,var(--white) 0 50%) 0 0/18px 18px}
 .checker.thin{height:7px}
-header{position:sticky;top:0;z-index:60;background:var(--yellow);box-shadow:0 4px 18px rgba(21,21,26,.18)}
+header{position:sticky;top:0;z-index:60;background:var(--yellow);box-shadow:0 4px 18px rgba(21,21,26,.18);padding-top:env(safe-area-inset-top)}
 .hrow{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 18px;max-width:1180px;margin:0 auto}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.offline-bar{display:none;background:var(--red);color:#fff;text-align:center;font-weight:800;font-size:13px;padding:8px 10px}
+.offline-bar.show{display:block}
+.skel{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden;height:210px;position:relative}
+.skel::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#eee 25%,#f6f6f6 37%,#eee 63%);background-size:400% 100%;animation:skel 1.4s ease infinite}
+@keyframes skel{0%{background-position:100% 50%}100%{background-position:0 50%}}
 .logo{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
 .logo-mark{display:flex;flex-direction:column;align-items:center;background:var(--black);border:2px solid var(--yellow);border-radius:10px;padding:4px 13px 5px;box-shadow:0 4px 0 #000,inset 0 0 14px rgba(255,196,0,.18);transition:.2s}
 .logo-h{font-family:'Lalezar';color:var(--yellow);font-size:20px;line-height:1.1}
@@ -219,7 +231,7 @@ footer a{color:#CFCFD8;text-decoration:none;display:block;margin:8px 0;font-size
 .abtn.no{background:#FDE8E6;color:var(--red);border-color:transparent}
 .abtn.blue{background:#F0F5FC;color:var(--blue);border-color:transparent}
 .abtn.warn{background:#FFF3D6;color:#9C7200;border-color:transparent}
-#toast{position:fixed;bottom:22px;right:50%;transform:translateX(50%) translateY(90px);background:var(--black);color:#fff;padding:13px 22px;border-radius:12px;font-weight:800;z-index:300;transition:.3s;border-inline-start:6px solid var(--yellow);max-width:90vw;font-size:14px}
+#toast{position:fixed;bottom:calc(22px + env(safe-area-inset-bottom));right:50%;transform:translateX(50%) translateY(90px);background:var(--black);color:#fff;padding:13px 22px;border-radius:12px;font-weight:800;z-index:300;transition:.3s;border-inline-start:6px solid var(--yellow);max-width:90vw;font-size:14px}
 #toast.show{transform:translateX(50%) translateY(0)}
 .loader{width:120px;height:14px;border-radius:99px;margin:34px auto;background:repeating-linear-gradient(45deg,var(--yellow) 0 12px,var(--black) 12px 24px);background-size:34px 100%;animation:load .6s linear infinite}
 @keyframes load{to{background-position:34px 0}}
@@ -230,6 +242,7 @@ footer a{color:#CFCFD8;text-decoration:none;display:block;margin:8px 0;font-size
 </style>
 </head>
 <body>
+<div class="offline-bar" id="offlineBar">📡 لا يوجد اتصال بالإنترنت — بعض الميزات قد لا تعمل</div>
 <header>
 <div class="hrow">
 <div class="logo" id="logoBadge" title="H-yber Management">
@@ -240,7 +253,7 @@ footer a{color:#CFCFD8;text-decoration:none;display:block;margin:8px 0;font-size
 <nav>
 <a href="#list" class="hidesm">السائقون</a>
 <a href="#how" class="hidesm">كيف يعمل؟</a>
-<button class="btn line" id="btnChat" style="display:none;min-height:42px;padding:9px 16px" onclick="chatRole='driver';openDriverInbox()">💬<span id="chatBadge" class="bdg" style="display:none">0</span></button>
+<button class="btn line" id="btnChat" aria-label="الرسائل" style="display:none;min-height:42px;padding:9px 16px" onclick="chatRole='driver';openDriverInbox()">💬<span id="chatBadge" class="bdg" style="display:none">0</span></button>
 <button class="btn line" id="btnLogin" style="min-height:42px;padding:9px 14px;font-size:13.5px">دخول</button>
 <button class="btn dark" id="btnJoinTop" style="min-height:42px;padding:9px 14px;font-size:13.5px">انضم كسائق</button>
 </nav>
@@ -319,9 +332,9 @@ footer a{color:#CFCFD8;text-decoration:none;display:block;margin:8px 0;font-size
 </div>
 <div class="copy">© 2026 H-yber Management — جميع الحقوق محفوظة 🚖</div>
 </footer>
-<div class="overlay" id="ovDetail"><div class="sheet"><div class="checker thin"></div><button class="x" onclick="closeOv('ovDetail')">✕</button><div class="sheet-in" id="detailBox"></div></div></div>
-<div class="overlay" id="ovChat"><div class="sheet" style="max-width:560px"><div class="checker thin"></div><button class="x" onclick="closeChat()">✕</button><div class="sheet-in" id="chatBox"></div></div></div>
-<div class="overlay" id="ovReg"><div class="sheet"><div class="checker thin"></div><button class="x" onclick="closeOv('ovReg')">✕</button><div class="sheet-in">
+<div class="overlay" id="ovDetail"><div class="sheet"><div class="checker thin"></div><button class="x" aria-label="إغلاق" onclick="closeOv('ovDetail')">✕</button><div class="sheet-in" id="detailBox"></div></div></div>
+<div class="overlay" id="ovChat"><div class="sheet" style="max-width:560px"><div class="checker thin"></div><button class="x" aria-label="إغلاق" onclick="closeChat()">✕</button><div class="sheet-in" id="chatBox"></div></div></div>
+<div class="overlay" id="ovReg"><div class="sheet"><div class="checker thin"></div><button class="x" aria-label="إغلاق" onclick="closeOv('ovReg')">✕</button><div class="sheet-in">
 <h3 class="title">سجل التاكسي 🚖</h3>
 <p style="color:var(--gray);font-size:13.5px">النشر فوري ومجاني — بدون رسائل تحقق — وشهادة القيادة اختيارية وتمنحك شارة «موثّق».</p>
 <div class="steps" id="regSteps"></div>
@@ -362,29 +375,29 @@ footer a{color:#CFCFD8;text-decoration:none;display:block;margin:8px 0;font-size
 <div id="rs4" style="display:none">
 <div class="f-row"><label>صورة شهادة القيادة — <span style="color:var(--green)">اختياري</span></label>
 <div class="upload" onclick="document.getElementById('rLic').click()"><p>اضغط لرفع صورة الشهادة</p><small>تُضغط تلقائيًا وتُحفظ مجانًا</small></div>
-<input type="file" id="rLic" accept="image/*" hidden><img id="licPrev" alt="معاينة">
+<input type="file" id="rLic" accept="image/*" capture="environment" hidden><img id="licPrev" alt="معاينة">
 </div>
 <div class="tgl"><span>أقرّ بصحة المعلومات</span><div class="sw" id="sAgree" onclick="tglSw(this)"></div></div>
 </div>
 <div class="form-foot"><button class="btn line" id="btnBack" onclick="regBack()" style="display:none">رجوع</button><button class="btn dark" id="btnNext" onclick="regNext()">متابعة</button></div>
 </div></div></div>
-<div class="overlay" id="ovLogin"><div class="sheet" style="max-width:470px"><div class="checker thin"></div><button class="x" onclick="closeOv('ovLogin')">✕</button><div class="sheet-in">
+<div class="overlay" id="ovLogin"><div class="sheet" style="max-width:470px"><div class="checker thin"></div><button class="x" aria-label="إغلاق" onclick="closeOv('ovLogin')">✕</button><div class="sheet-in">
 <h3 class="title">تسجيل الدخول</h3>
 <div class="err" id="loginErr"></div>
 <div class="f-row"><div class="seg"><button type="button" id="lmEmail" class="on" onclick="setLoginMode('email')">📧 بريد</button><button type="button" id="lmPhone" onclick="setLoginMode('phone')">📱 هاتف</button></div></div>
 <div id="lEmail"><div class="f-row"><label>البريد الإلكتروني</label><input type="email" id="lMail" dir="ltr" autocomplete="email" name="login_email"></div><div class="f-row"><label>كلمة المرور</label><input type="password" id="lPass" dir="ltr" autocomplete="current-password" name="login_pass"></div><button class="btn dark" style="width:100%" onclick="doEmailLogin()">دخول</button></div>
 <div id="lPhone" style="display:none"><div class="f-row"><label>رقم الهاتف</label><input type="tel" id="lPhoneNum" dir="ltr" autocomplete="tel" name="login_phone"></div><div class="f-row"><label>كلمة المرور</label><input type="password" id="lPassP" dir="ltr" autocomplete="current-password" name="login_phone_pass"></div><button class="btn dark" style="width:100%" onclick="doPhoneLogin()">دخول</button></div>
 </div></div></div>
-<div class="overlay" id="ovDash"><div class="sheet"><div class="checker thin"></div><button class="x" onclick="closeOv('ovDash')">✕</button><div class="sheet-in" id="dashBox"></div></div></div>
-<div class="overlay" id="ovAdminLogin"><div class="sheet" style="max-width:440px"><div class="checker thin"></div><button class="x" onclick="closeOv('ovAdminLogin')">✕</button><div class="sheet-in">
+<div class="overlay" id="ovDash"><div class="sheet"><div class="checker thin"></div><button class="x" aria-label="إغلاق" onclick="closeOv('ovDash')">✕</button><div class="sheet-in" id="dashBox"></div></div></div>
+<div class="overlay" id="ovAdminLogin"><div class="sheet" style="max-width:440px"><div class="checker thin"></div><button class="x" aria-label="إغلاق" onclick="closeOv('ovAdminLogin')">✕</button><div class="sheet-in">
 <h3 class="title">🛡️ دخول الإدارة</h3>
 <div class="f-row"><label>بريد المدير</label><input type="email" id="aMail" dir="ltr" autocomplete="off"></div>
 <div class="f-row"><label>كلمة المرور</label><input type="password" id="aPass" dir="ltr" autocomplete="off"></div>
 <button class="btn dark" style="width:100%" onclick="adminLogin()">دخول لوحة التحكم</button>
 </div></div></div>
-<div class="overlay" id="ovAdmin"><div class="sheet" style="max-width:720px"><div class="checker thin"></div><button class="x" onclick="closeOv('ovAdmin')">✕</button><div class="sheet-in" id="adminBox"></div></div></div>
-<div class="overlay" id="ovEdit"><div class="sheet"><div class="checker thin"></div><button class="x" onclick="closeOv('ovEdit')">✕</button><div class="sheet-in" id="editBox"></div></div></div>
-<div class="overlay" id="ovReport"><div class="sheet" style="max-width:470px"><div class="checker thin"></div><button class="x" onclick="closeOv('ovReport')">✕</button><div class="sheet-in">
+<div class="overlay" id="ovAdmin"><div class="sheet" style="max-width:720px"><div class="checker thin"></div><button class="x" aria-label="إغلاق" onclick="closeOv('ovAdmin')">✕</button><div class="sheet-in" id="adminBox"></div></div></div>
+<div class="overlay" id="ovEdit"><div class="sheet"><div class="checker thin"></div><button class="x" aria-label="إغلاق" onclick="closeOv('ovEdit')">✕</button><div class="sheet-in" id="editBox"></div></div></div>
+<div class="overlay" id="ovReport"><div class="sheet" style="max-width:470px"><div class="checker thin"></div><button class="x" aria-label="إغلاق" onclick="closeOv('ovReport')">✕</button><div class="sheet-in">
 <h3 class="title">🚩 إبلاغ عن سائق</h3>
 <div class="f-row"><label>سبب البلاغ</label><select id="repReason"><option>عدم الالتزام بالتسعيرة</option><option>سلوك غير لائق</option><option>معلومات غير صحيحة</option><option>حساب وهمي</option><option>سبب آخر</option></select></div>
 <div class="f-row"><label>تفاصيل إضافية</label><textarea id="repNote" rows="3"></textarea></div>
@@ -425,6 +438,9 @@ const digits=p=>String(p||'').replace(/\D/g,'');
 const phoneToEmail=p=>'ph'+digits(p)+'@hyber-taxi.app';
 let toastT;
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),3200);}
+function updateOnlineState(){const b=$('offlineBar');if(!navigator.onLine){b.classList.add('show');}else{if(b.classList.contains('show'))toast('🟢 عاد الاتصال بالإنترنت');b.classList.remove('show');}}
+window.addEventListener('online',updateOnlineState);window.addEventListener('offline',updateOnlineState);
+document.addEventListener('DOMContentLoaded',updateOnlineState);updateOnlineState();
 function chatNotify(title,body){toast(title+' — '+body);if('Notification' in window&&Notification.permission==='granted'){try{new Notification(title,{body:body});}catch(e){}}}
 function dist(loc,d){if(d.lat==null)return 99999;const R=6371,x=(d.lat-loc.lat)*Math.PI/180,y=(d.lng-loc.lng)*Math.PI/180,a=Math.sin(x/2)**2+Math.cos(loc.lat*Math.PI/180)*Math.cos(d.lat*Math.PI/180)*Math.sin(y/2)**2;return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
 function fmtDist(m){return m<1000?Math.round(m)+' م':(m/1000).toFixed(1)+' كم';}
@@ -438,6 +454,7 @@ async function addAd(){const t=$('admAdText').value.trim();if(!t)return toast('�
 async function toggleAd(id,on){if(LIVE)await db.collection('ads').doc(id).update({on:on});else{const a=ADALL.find(x=>x.id===id);if(a)a.on=on;localStorage.setItem('taxi_ads',JSON.stringify(ADALL));renderAdStrip();}openAdmin();}
 async function delAd(id){if(!confirm('حذف هذا الإعلان؟'))return;if(LIVE)await db.collection('ads').doc(id).delete();else{ADALL=ADALL.filter(x=>x.id!==id);localStorage.setItem('taxi_ads',JSON.stringify(ADALL));renderAdStrip();}openAdmin();}
 (function initFB(){
+renderSkeletons();
 $('fCity').innerHTML='<option value="all">كل المحافظات</option>'+GOVS.map(g=>`<option>${g}</option>`).join('');
 $('rCity').innerHTML=GOVS.map(g=>`<option>${g}</option>`).join('');
 $('pDays').innerHTML=DAYS.map((d,i)=>`<button type="button" class="${[0,1,2,3,4,5].includes(i)?'on':''}" data-i="${i}">${d}</button>`).join('');
@@ -511,20 +528,24 @@ function svcTags(d){let t='';if(d.inner)t+='<span class="tag k">داخل الب�
 function openMapId(id){const d=drivers.find(x=>x.id===id);if(!d)return;
 if(d.lat!=null&&d.lng!=null)window.open('https://www.google.com/maps?q='+d.lat+','+d.lng,'_blank');
 else window.open('https://www.google.com/maps?q='+encodeURIComponent([d.spot,d.district,d.city,'سوريا'].filter(Boolean).join('، ')),'_blank');}
+function renderSkeletons(n){$('emptyBox').style.display='none';$('cards').innerHTML=Array.from({length:n||6}).map(()=>'<div class="skel"></div>').join('');}
 function renderCards(){const L=filtered(),box=$('cards');$('resultCount').textContent=L.length?`${L.length} سائقًا`:'';$('emptyBox').style.display=L.length?'none':'block';box.innerHTML=L.map(cardHTML).join('');requestAnimationFrame(()=>{[...box.children].forEach((c,i)=>setTimeout(()=>c.classList.add('in'),i*60));});}
 function cardHTML(d){const a=avg(d);
 const dm=(userLoc&&d.lat!=null)?dist(userLoc,d)*1000:null;
-return `<article class="card"><button class="fav ${favs.has(d.id)?'on':''}" onclick="event.stopPropagation();toggleFav('${d.id}',this)"><svg viewBox="0 0 24 24"><path d="M12 21C7 16.5 2 13 2 8.6 2 5.5 4.4 3.5 7 3.5c1.9 0 3.8 1.1 5 3 1.2-1.9 3.1-3 5-3 2.6 0 5 2 5 5.1C22 13 17 16.5 12 21z"/></svg></button><div class="c-main" onclick="openDetail('${d.id}')"><div class="c-top"><h3>${esc(d.name)} ${d.hasLicense&&d.verified==='approved'?'<span class="vbadge">✔ موثّق</span>':''}</h3><span class="status ${d.available?'on':'off'}"><i></i>${d.available?'متاح':'مشغول'}</span></div><div class="c-sub">🚕 ${esc(d.taxiType)} · ${esc(d.car||'')}</div><div class="c-sub">📍 ${esc(d.city)}${d.district?' · '+esc(d.district):''} — ${esc(d.spot||'')}</div><div class="c-meta"><span class="stars">${stars(a)}</span> ${a?a.toFixed(1):'جديد'} <small style="color:var(--gray)">(${d.ratingCount||0})</small>${dm!=null?`<b style="color:var(--blue)">· يبعد ${fmtDist(dm)}</b>`:''}<button type="button" class="maplink" onclick="event.stopPropagation();openMapId('${d.id}')">🗺</button></div></div><div class="c-actions"><a class="ca call" href="tel:${digits(d.phone)}" onclick="event.stopPropagation()">📞<small>اتصال</small></a><a class="ca wa" href="https://wa.me/${digits(d.wa||d.phone)}" target="_blank" onclick="event.stopPropagation()">💬<small>واتساب</small></a><button class="ca chat" onclick="event.stopPropagation();openChatWithDriver('${d.id}')">🗨️<small>دردشة</small></button><button class="ca more" onclick="openDetail('${d.id}')">ℹ️<small>التفاصيل</small></button></div></article>`;}
+return `<article class="card"><button class="fav ${favs.has(d.id)?'on':''}" aria-label="${favs.has(d.id)?'إزالة من المفضلة':'إضافة إلى المفضلة'}" onclick="event.stopPropagation();toggleFav('${d.id}',this)"><svg viewBox="0 0 24 24"><path d="M12 21C7 16.5 2 13 2 8.6 2 5.5 4.4 3.5 7 3.5c1.9 0 3.8 1.1 5 3 1.2-1.9 3.1-3 5-3 2.6 0 5 2 5 5.1C22 13 17 16.5 12 21z"/></svg></button><div class="c-main" onclick="openDetail('${d.id}')"><div class="c-top"><h3>${esc(d.name)} ${d.hasLicense&&d.verified==='approved'?'<span class="vbadge">✔ موثّق</span>':''}</h3><span class="status ${d.available?'on':'off'}"><i></i>${d.available?'متاح':'مشغول'}</span></div><div class="c-sub">🚕 ${esc(d.taxiType)} · ${esc(d.car||'')}</div><div class="c-sub">📍 ${esc(d.city)}${d.district?' · '+esc(d.district):''} — ${esc(d.spot||'')}</div><div class="c-meta"><span class="stars">${stars(a)}</span> ${a?a.toFixed(1):'جديد'} <small style="color:var(--gray)">(${d.ratingCount||0})</small>${dm!=null?`<b style="color:var(--blue)">· يبعد ${fmtDist(dm)}</b>`:''}<button type="button" class="maplink" onclick="event.stopPropagation();openMapId('${d.id}')">🗺</button></div></div><div class="c-actions"><a class="ca call" href="tel:${digits(d.phone)}" onclick="event.stopPropagation()">📞<small>اتصال</small></a><a class="ca wa" href="https://wa.me/${digits(d.wa||d.phone)}" target="_blank" onclick="event.stopPropagation()">💬<small>واتساب</small></a><button class="ca chat" onclick="event.stopPropagation();openChatWithDriver('${d.id}')">🗨️<small>دردشة</small></button><button class="ca more" onclick="openDetail('${d.id}')">ℹ️<small>التفاصيل</small></button></div></article>`;}
 function renderStats(){const tot=drivers.length,av=drivers.filter(d=>d.available).length,ci=new Set(drivers.map(d=>d.city)).size,rt=drivers.length?(drivers.reduce((s,d)=>s+avg(d),0)/drivers.length).toFixed(1):'—';countUp($('stTotal'),tot);countUp($('stAvail'),av);countUp($('stCities'),ci);$('stRate').textContent=rt;}
 function countUp(el,to){let v=0;const step=Math.max(1,Math.ceil(to/30));const t=setInterval(()=>{v+=step;if(v>=to){v=to;clearInterval(t);}el.textContent=v;},28);}
 function openDetail(id){const d=drivers.find(x=>x.id===id);if(!d)return;const a=avg(d),mine=myDoc&&user&&id===user.uid;
 $('detailBox').innerHTML=`<span class="status ${d.available?'on':'off'}" style="margin-bottom:8px"><i></i>${d.available?'متاح الآن':'غير متاح'}</span><h3 class="title">${esc(d.name)} ${d.hasLicense&&d.verified==='approved'?'<span class="vbadge">✔ موثّق</span>':''}</h3><div class="c-sub" style="font-size:14px">🚕 ${esc(d.taxiType)} · ${esc(d.car||'—')} · ${esc(d.color||'')}</div><div class="c-meta" style="margin-top:8px"><span class="stars">${stars(a)}</span> ${a?a.toFixed(1):'جديد'} <small>(${d.ratingCount||0})</small></div>${d.bio?`<p style="margin-top:10px;background:var(--paper);border-radius:12px;padding:12px;font-size:14px">${esc(d.bio)}</p>`:''}<div class="d-grid"><div class="d-cell"><div class="k">📍 المحافظة</div><div class="v">${esc(d.city)}${d.district?' — '+esc(d.district):''}</div></div><div class="d-cell"><div class="k">🅿️ الموقف</div><div class="v">${esc(d.spot||'—')}</div></div><div class="d-cell"><div class="k">🕐 الدوام</div><div class="v">${fmtTime(d.from)} ← ${fmtTime(d.to)}</div></div><div class="d-cell"><div class="k">🔢 اللوحة</div><div class="v">${esc(d.plate||'—')}</div></div><div class="d-cell d-full"><div class="k">🗺 الموقع</div><div class="v"><button class="mini" onclick="openMapId('${d.id}')">🗺 افتح موقع السائق في خرائط جوجل</button></div></div><div class="d-cell d-full"><div class="k">📅 الأيام</div><div class="days" style="margin-top:6px">${daysHTML(d)}</div></div><div class="d-cell d-full"><div class="k">🧾 الخدمات</div><div class="tags" style="margin-top:6px">${svcTags(d)}</div></div></div>${!mine?`<div class="big-acts"><a class="btn call" href="tel:${digits(d.phone)}">📞 اتصال مباشر</a><a class="btn wa" target="_blank" href="https://wa.me/${digits(d.wa||d.phone)}">💬 واتساب</a></div><div class="small-acts"><button class="mini" onclick="closeOv('ovDetail');openChatWithDriver('${d.id}')">🗨️ تواصل عبر البرنامج</button><button class="mini" onclick="toggleFav('${d.id}')">${favs.has(d.id)?'💔 إزالة':'❤️ حفظ'}</button><button class="mini" onclick="shareDriver('${d.id}')">↗ مشاركة</button><button class="mini" onclick="reportTarget='${d.id}';closeOv('ovDetail');openOv('ovReport')">🚩 إبلاغ</button></div><div class="rate-pick"><b>قيّم تجربتك:</b>${[1,2,3,4,5].map(i=>`<button class="rstar" onclick="rateDriver('${d.id}',${i},this)">★</button>`).join('')}</div>`:`<button class="btn dark" style="width:100%" onclick="closeOv('ovDetail');openDash()">⚙️ فتح لوحة السائق</button>`}`;openOv('ovDetail');}
-async function rateDriver(id,n,el){if(localStorage.getItem('rated_'+id))return toast('سبق أن قيّمت');[...el.parentElement.querySelectorAll('.rstar')].forEach((s,i)=>s.classList.toggle('on',i<n));const d=drivers.find(x=>x.id===id);if(LIVE&&user){try{await db.collection('drivers').doc(id).update({ratingSum:firebase.firestore.FieldValue.increment(n),ratingCount:firebase.firestore.FieldValue.increment(1)});}catch(err){toast('تعذر حفظ التقييم');return;}}else{d.ratingSum=(d.ratingSum||0)+n;d.ratingCount=(d.ratingCount||0)+1;renderCards();renderStats();}localStorage.setItem('rated_'+id,1);toast('شكرًا ⭐');}
+async function rateDriver(id,n,el){if(localStorage.getItem('rated_'+id))return toast('سبق أن قيّمت');[...el.parentElement.querySelectorAll('.rstar')].forEach((s,i)=>s.classList.toggle('on',i<n));const d=drivers.find(x=>x.id===id);if(LIVE){try{const u=await ensureUser();if(!u)throw new Error('no-user');await db.collection('drivers').doc(id).update({ratingSum:firebase.firestore.FieldValue.increment(n),ratingCount:firebase.firestore.FieldValue.increment(1)});}catch(err){toast('تعذر حفظ التقييم');return;}}else{d.ratingSum=(d.ratingSum||0)+n;d.ratingCount=(d.ratingCount||0)+1;renderCards();renderStats();}localStorage.setItem('rated_'+id,1);toast('شكرًا ⭐');}
 function shareDriver(id){const d=drivers.find(x=>x.id===id);const txt=`🚕 ${d.name} — ${d.taxiType} في ${d.city}\n📞 ${d.phone}`;if(navigator.share)navigator.share({title:'تاكسي البلد',text:txt}).catch(()=>{});else navigator.clipboard.writeText(txt).then(()=>toast('تم النسخ'));}
-async function sendReport(){if(LIVE&&user)await db.collection('reports').add({driverId:reportTarget,reason:$('repReason').value,note:$('repNote').value,by:user.uid,at:Date.now()}).catch(()=>{});closeOv('ovReport');$('repNote').value='';toast('وصل بلاغك 🚩');}
+async function sendReport(){if(!LIVE){closeOv('ovReport');$('repNote').value='';toast('وصل بلاغك 🚩');return;}try{const u=await ensureUser();if(!u)throw new Error('no-user');await db.collection('reports').add({driverId:reportTarget,reason:$('repReason').value,note:$('repNote').value,by:u.uid,at:Date.now()});closeOv('ovReport');$('repNote').value='';toast('وصل بلاغك 🚩');}catch(e){toast('تعذر إرسال البلاغ، حاول مرة أخرى');}}
 function toggleFav(id,btn){favs.has(id)?favs.delete(id):favs.add(id);localStorage.setItem('taxi_favs',JSON.stringify([...favs]));if(btn)btn.classList.toggle('on');if(filters.svc==='fav')renderCards();}
-function openOv(id){$(id).classList.add('show');document.body.style.overflow='hidden';}
-function closeOv(id){$(id).classList.remove('show');document.body.style.overflow='';}
+let ovStack=[],poppingOv=false;
+function openOv(id){$(id).classList.add('show');document.body.style.overflow='hidden';if(ovStack[ovStack.length-1]!==id){ovStack.push(id);try{history.pushState({ov:id},'');}catch(e){}}try{if(navigator.vibrate)navigator.vibrate(8);}catch(e){}}
+function closeOv(id){if(!$(id).classList.contains('show'))return;$(id).classList.remove('show');ovStack=ovStack.filter(x=>x!==id);document.body.style.overflow=ovStack.length?'hidden':'';
+if(!poppingOv){poppingOv=true;try{history.back();}catch(e){}setTimeout(()=>poppingOv=false,60);}}
+window.addEventListener('popstate',()=>{if(ovStack.length){poppingOv=true;const top=ovStack[ovStack.length-1];if(top==='ovChat')closeChat();else closeOv(top);setTimeout(()=>poppingOv=false,60);}});
 document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o&&o.id!=='ovChat')closeOv(o.id);}));
 function tglSw(el){el.classList.toggle('on');}
 function getSw(id){return $(id).classList.contains('on');}
@@ -652,7 +673,7 @@ if(LIVE){const s=await db.collection('drivers').get();all=s.docs.map(x=>({id:x.i
 const r=await db.collection('reports').get().catch(()=>({docs:[]}));reports=r.docs.map(x=>({id:x.id,...x.data()}));
 const th=await db.collection('threads').get().catch(()=>({docs:[]}));threads=th.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>(b.lastMsgAt||0)-(a.lastMsgAt||0));
 const ad=await db.collection('ads').get().catch(()=>({docs:[]}));ads=ad.docs.map(x=>({id:x.id,...x.data()})).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));}
-else ads=ADALL;
+else ads=ADALL.slice().sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
 all.sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));const pend=all.filter(d=>d.verified==='pending');
 $('adminBox').innerHTML=`<h3 class="title">🛡️ لوحة التحكم</h3><div class="astats"><div class="astat"><b>${all.length}</b><span>سائقون</span></div><div class="astat"><b style="color:#9C7200">${pend.length}</b><span>بانتظار</span></div><div class="astat"><b style="color:var(--blue)">${threads.length}</b><span>قنوات تواصل</span></div><div class="astat"><b style="color:var(--red)">${reports.length}</b><span>بلاغات</span></div></div><div class="asec">📢 الإعلانات (${ads.length})</div><div class="f-row"><textarea id="admAdText" rows="2" placeholder="اكتب نص إعلان جديد…"></textarea></div><button class="btn dark" style="width:100%" onclick="addAd()">➕ إضافة إعلان للشريط</button><div style="height:10px"></div>${ads.map(a=>`<div class="arow"><div class="hd"><b style="font-size:13px">${esc(a.text)}</b><div class="sw ${a.on?'on':''}" onclick="toggleAd('${a.id}',${!a.on})"></div></div><div class="acts"><button class="abtn no" onclick="delAd('${a.id}')">🗑 حذف</button></div></div>`).join('')}<div style="height:14px"></div><button class="btn dark" style="width:100%" onclick="openEdit(null)">🚕 أضف سائقًا</button><div class="asec">💬 قنوات التواصل (${threads.length})</div>${threads.length?threads.map(t=>`<div class="arow"><div class="hd"><b>${esc(t.userName)} ↔ ${esc(t.driverName)}</b>${statusPill(t.status)}</div><small>📞 ${esc(t.userPhone)}${t.cancelReason?' · سبب الإلغاء: '+esc(t.cancelReason):''}</small><div class="acts"><button class="abtn blue" onclick="openAdminThread('${t.id}')">👁 عرض كامل المحادثة</button></div></div>`).join(''):'<p style="color:var(--gray)">لا توجد قنوات بعد</p>'}<div class="asec">⏳ بانتظار التوثيق (${pend.length})</div>${pend.length?pend.map(d=>`<div class="arow"><div class="hd"><b>${esc(d.name)}</b><span class="vstatus pending">${esc(d.city)}</span></div><small>📞 ${esc(d.phone)} · 🅿️ ${esc(d.spot||'—')}</small>${d.licenseImg?`<div class="lic-box"><img src="${d.licenseImg}"></div>`:''}<div class="acts" style="margin-top:10px"><button class="abtn ok" onclick="setVerify('${d.id}','approved')">✔ موافقة</button><button class="abtn no" onclick="setVerify('${d.id}','rejected')">✖ رفض</button><button class="abtn blue" onclick="openEdit('${d.id}')">✏️ تعديل</button></div></div>`).join(''):'<p style="color:var(--gray)">لا توجد طلبات</p>'}<div class="asec">🚕 كل السائقين (${all.length})</div><input type="search" id="admSearch" placeholder="🔍 ابحث…" oninput="admFilter(this.value)" style="margin-bottom:12px" autocomplete="off"><div id="admList">${all.map(adminRow).join('')}</div><div class="asec">🚩 البلاغات (${reports.length})</div>${reports.length?reports.map(r=>`<div class="arow"><small>${esc(r.reason)} — ${esc(r.note||'')}<br>السائق: ${esc(r.driverId)}</small><button class="abtn no" onclick="delReport('${r.id}')">🗑 حذف</button></div>`).join(''):'<p style="color:var(--gray)">لا توجد بلاغات</p>'}<div class="small-acts"><button class="mini" onclick="doLogout()">🚪 خروج</button></div>`;}
 function adminRow(d){return `<div class="arow" data-name="${esc(d.name)} ${esc(d.city)}"><div class="hd"><b>${esc(d.name)}</b><span class="vstatus ${d.verified}">${{pending:'بانتظار',approved:'منشور',rejected:'مرفوض'}[d.verified]}</span></div><small>${esc(d.taxiType)} · ${esc(d.city)} · 📞 ${esc(d.phone)}</small><div class="acts"><button class="abtn blue" onclick="openEdit('${d.id}')">✏️ تعديل</button><button class="abtn ${d.available?'warn':'ok'}" onclick="admToggleAvail('${d.id}',${!d.available})">${d.available?'⏸ إيقاف':'▶ إتاحة'}</button><button class="abtn warn" onclick="resetRate('${d.id}')">⭐ تصفير</button><button class="abtn no" onclick="admDelete('${d.id}','${esc(d.name)}')">🗑 حذف</button></div></div>`;}
@@ -664,7 +685,9 @@ async function admDelete(id,name){if(!confirm('حذف «'+name+'»؟'))return;if
 async function delReport(id){if(LIVE)await db.collection('reports').doc(id).delete();toast('حُذف');openAdmin();}
 function openEdit(id){editingId=id;const d=id?drivers.find(x=>x.id===id):{};const dd=d||{};const sv=(k,v)=>dd[k]!==undefined?dd[k]:v;$('editBox').innerHTML=`<h3 class="title">${id?'✏️ تعديل':'🚕 إضافة سائق'}</h3><div class="err" id="edErr"></div><div class="f-row"><label>الاسم *</label><input id="eName" value="${esc(sv('name',''))}"></div><div class="f-2"><div class="f-row"><label>الهاتف *</label><input id="ePhone" dir="ltr" value="${esc(sv('phone',''))}"></div><div class="f-row"><label>الواتساب</label><input id="eWa" dir="ltr" value="${esc(sv('wa',''))}"></div></div><div class="f-2"><div class="f-row"><label>المحافظة</label><select id="eCity">${GOVS.map(g=>`<option ${g===dd.city?'selected':''}>${g}</option>`).join('')}</select></div><div class="f-row"><label>المنطقة</label><input id="eDistrict" value="${esc(sv('district',''))}"></div></div><div class="f-row"><label>الموقف</label><input id="eSpot" value="${esc(sv('spot',''))}"></div><div class="f-2"><div class="f-row"><label>خط العرض</label><input id="eLat" dir="ltr" placeholder="33.510" value="${sv('lat','')||''}"></div><div class="f-row"><label>خط الطول</label><input id="eLng" dir="ltr" placeholder="36.278" value="${sv('lng','')||''}"></div></div><div class="f-row"><label>نوع التاكسي</label><div class="pick" id="eType">${['عمومي (عداد)','تاكسي مطار','فان عائلي','سيدان فاخر','توصيل وطلبات'].map(t=>`<button type="button" class="${t===(dd.taxiType||'عمومي (عداد)')?'on':''}">${t}</button>`).join('')}</div></div><div class="f-2"><div class="f-row"><label>السيارة</label><input id="eCar" value="${esc(sv('car',''))}"></div><div class="f-row"><label>اللوحة</label><input id="ePlate" dir="ltr" value="${esc(sv('plate',''))}"></div></div><div class="f-row"><label>أيام الدوام</label><div class="pick" id="eDays" data-multi="1">${DAYS.map((n,i)=>`<button type="button" class="${(dd.days||[0,1,2,3,4,5]).includes(i)?'on':''}" data-i="${i}">${DAYS_SHORT[i]}</button>`).join('')}</div></div><div class="f-2"><div class="f-row"><label>من</label><input type="time" id="eFrom" value="${sv('from','08:00')}"></div><div class="f-row"><label>حتى</label><input type="time" id="eTo" value="${sv('to','22:00')}"></div></div><div class="tgl"><span>داخل البلد</span><div class="sw ${sv('inner',true)?'on':''}" id="esInner" onclick="tglSw(this)"></div></div><div class="tgl"><span>طلبات خارجية</span><div class="sw ${sv('outer',false)?'on':''}" id="esOuter" onclick="tglSw(this)"></div></div><div class="tgl"><span>مطار</span><div class="sw ${sv('airport',false)?'on':''}" id="esAirport" onclick="tglSw(this)"></div></div><div class="tgl"><span>توصيل</span><div class="sw ${sv('delivery',false)?'on':''}" id="esDelivery" onclick="tglSw(this)"></div></div><div class="tgl"><span>عداد</span><div class="sw ${sv('meter',true)?'on':''}" id="esMeter" onclick="tglSw(this)"></div></div><div class="tgl"><span>متاح الآن</span><div class="sw ${sv('available',true)?'on':''}" id="esAvail" onclick="tglSw(this)"></div></div><div class="f-row"><label>حالة النشر</label><select id="eVerified"><option value="approved" ${dd.verified==='approved'?'selected':''}>منشور</option><option value="pending" ${dd.verified==='pending'?'selected':''}>بانتظار</option><option value="rejected" ${dd.verified==='rejected'?'selected':''}>مرفوض</option></select></div><div class="form-foot"><button class="btn line" onclick="closeOv('ovEdit')">إلغاء</button><button class="btn dark" onclick="saveEdit()">${id?'حفظ':'إضافة'}</button></div>`;openOv('ovEdit');}
 async function saveEdit(){const err=m=>{const e=$('edErr');e.style.display=m?'block':'none';e.textContent=m;};const name=$('eName').value.trim(),phone=$('ePhone').value.trim();if(!name||!phone)return err('الاسم والهاتف مطلوبان');const upd={name,phone,wa:digits($('eWa').value)||digits(phone),city:$('eCity').value,district:$('eDistrict').value.trim(),spot:$('eSpot').value.trim(),lat:parseFloat($('eLat').value)||null,lng:parseFloat($('eLng').value)||null,taxiType:$('eType').querySelector('.on').textContent,car:$('eCar').value.trim(),plate:$('ePlate').value.trim(),days:selDays($('eDays')).sort(),from:$('eFrom').value,to:$('eTo').value,inner:$('esInner').classList.contains('on'),outer:$('esOuter').classList.contains('on'),airport:$('esAirport').classList.contains('on'),delivery:$('esDelivery').classList.contains('on'),meter:$('esMeter').classList.contains('on'),available:$('esAvail').classList.contains('on'),verified:$('eVerified').value};if(editingId){if(LIVE)await db.collection('drivers').doc(editingId).update(upd);else{const d=drivers.find(x=>x.id===editingId);Object.assign(d,upd);}toast('✔ تم');}else{const doc={...upd,email:'',color:'',bio:'',licenseImg:'',hasLicense:false,ratingSum:0,ratingCount:0,createdAt:Date.now()};if(LIVE)await db.collection('drivers').add(doc);else{doc.id='m'+Date.now();drivers.push(doc);renderAll();}toast('🚕 تمت الإضافة');}closeOv('ovEdit');openAdmin();}
-$('fQ').oninput=e=>{filters.q=e.target.value.trim();renderCards();};
+function debounce(fn,ms){let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>fn(...a),ms);};}
+const doRenderCards=debounce(renderCards,220);
+$('fQ').oninput=e=>{filters.q=e.target.value.trim();doRenderCards();};
 $('fCity').onchange=e=>{filters.city=e.target.value;renderCards();};
 $('fType').onchange=e=>{filters.type=e.target.value;renderCards();};
 $('fSort').onchange=e=>{filters.sort=e.target.value;if(filters.sort==='near'&&!userLoc){if(!navigator.geolocation)return toast('المتصفح لا يدعم');navigator.geolocation.getCurrentPosition(p=>{userLoc={lat:p.coords.latitude,lng:p.coords.longitude};renderCards();},()=>{toast('تعذّر التحديد');$('fSort').value='new';filters.sort='new';});return;}renderCards();};
